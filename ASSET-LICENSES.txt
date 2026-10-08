@@ -1,0 +1,43 @@
+実物写真の出典とライセンス
+
+assets/hozan-electrical-tools.jpg
+MS300「HOZANTOOL.jpg」／Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:HOZANTOOL.jpg
+CC BY-SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
+変更: 変更なし
+
+assets/wire-stripper-hozan.jpg
+Shampoorobot（A16504601）「Wire stripper HOZAN JAPAN 01.jpg」／Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:Wire_stripper_HOZAN_JAPAN_01.jpg
+CC BY-SA 3.0
+https://creativecommons.org/licenses/by-sa/3.0/
+変更: 変更なし
+
+assets/em-eef-cable.jpg
+ちゃたま（Chatama）「EM-EEFケーブル.jpg」／Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:EM-EEF%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB.jpg
+CC BY-SA 3.0
+https://creativecommons.org/licenses/by-sa/3.0/
+変更: 変更なし
+
+assets/clamp-meter-hioki.jpg
+HIOKI E.E. Corporation「HIOKI AC-Stromzange-CM4141.jpg」／Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:HIOKI_AC-Stromzange-CM4141.jpg
+CC BY-SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
+変更: 変更なし
+
+assets/insulation-meter-hioki.jpg
+HIOKI E.E. Corporation「1974 HIOKI Resistance Meter IR-305.jpg」／Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:1974_HIOKI_Resistance_Meter_IR-305.jpg
+CC BY-SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
+変更: 変更なし
+
+assets/earth-resistance-meter.jpg
+Powerfox「Digital Earth resistance tester.jpg」／Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:Digital_Earth_resistance_tester.jpg
+CC BY-SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
+変更: 変更なし
