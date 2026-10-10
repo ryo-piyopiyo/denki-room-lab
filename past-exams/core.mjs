@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '1.1.0';
 export const SCHEMA_VERSION = 2;
 export const STORAGE_KEY = 'denki.official-pastpapers.history.v2';
 export const LEGACY_KEY = 'denki.official-pastpapers.history.v1';
@@ -10,7 +10,7 @@ const LIMIT = 100000;
 export const freshHistory = () => ({ format: 'denki-pastpaper-history', schemaVersion: SCHEMA_VERSION, appVersion: APP_VERSION, events: [] });
 export const uid = () => globalThis.crypto?.randomUUID?.() || `e-${Date.now()}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
 export const ordered = events => [...events].sort((a,b) => a.occurredAt.localeCompare(b.occurredAt) || a.id.localeCompare(b.id));
-function stable(value) { return JSON.stringify(value, Object.keys(value).sort()); }
+function stable(value) { const canonical=v=>Array.isArray(v)?v.map(canonical):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])])):v;return JSON.stringify(canonical(value)); }
 function assert(ok, message) { if (!ok) throw new Error(message); }
 const text = (s, max=200) => typeof s === 'string' && s.length > 0 && s.length <= max;
 export function validateHistory(value, questions=null) {
@@ -27,7 +27,7 @@ export function validateHistory(value, questions=null) {
     assert(text(e.topic) && text(e.visitId,160) && text(e.sessionId,160), '記録の識別情報が不足しています。');
     assert(text(e.appVersion,60) && text(e.dataVersion,100), '記録のバージョンが不足しています。');
     assert(typeof e.occurredAt === 'string' && /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{3})?Z$/.test(e.occurredAt) && Number.isFinite(Date.parse(e.occurredAt)), '日時が不正です。');
-    if(catalog){const q=catalog.get(e.questionId);if(q){assert(q.examId===e.examId && q.number===e.number,'問題ID・実施回・番号が現在の問題集と一致しません。取り込みは中止されました。');if(e.type==='attempt')assert(e.officialCorrectAnswer===q.answer,'公式正答と一致しない記録があります。取り込みは中止されました。');}else{assert(/^d2-\d{8}$/.test(e.examId)&&e.questionId===`${e.examId}-${String(e.number).padStart(2,'0')}`,'未収録問題の識別情報が不正です。');}}
+    if(catalog){const q=catalog.get(e.questionId);if(q){assert(q.examId===e.examId && q.number===e.number,'問題ID・実施回・番号が現在の問題集と一致しません。取り込みは中止されました。');if(e.type==='attempt')assert(e.officialCorrectAnswer===q.answer,'公式正答と一致しない記録があります。取り込みは中止されました。');}else{assert(/^d2-\d{8}(?:-[a-z][a-z0-9]{0,15})?$/.test(e.examId)&&e.questionId===`${e.examId}-${String(e.number).padStart(2,'0')}`,'未収録問題の識別情報が不正です。');}}
     if (e.type === 'attempt') {
       assert(CHOICES.includes(e.officialCorrectAnswer), '正答情報が不正です。');
       assert(e.selectedAnswer === null || CHOICES.includes(e.selectedAnswer), '選択した解答が不正です。');
@@ -143,15 +143,15 @@ export class HistoryStore {
       catch{this.fail('protected','以前の履歴を安全に読み込めないため、上書きを止めています。元データを救出して保管してください。',raw);return;}
     }
     try{
-      if(raw!==null&&(legacy||parsed.schemaVersion!==SCHEMA_VERSION)){const backup=`${this.sourceKey}.pre-migration`;if(this.storage.getItem(backup)===null)this.storage.setItem(backup,raw);this.storage.setItem(STORAGE_KEY,JSON.stringify(this.history));this.message='旧記録を保護して新しい形式に移行しました';}
-      const probe=`${STORAGE_KEY}.probe`;this.storage.setItem(probe,'1');this.storage.removeItem(probe);
+      if(raw!==null&&(legacy||parsed.schemaVersion!==SCHEMA_VERSION)){const base=`${this.sourceKey}.pre-migration`;const existing=this.storage.getItem(base);const backup=existing!==null&&existing!==raw?`${base}.${uid()}`:base;if(this.storage.getItem(backup)===null)this.storage.setItem(backup,raw);if(this.storage.getItem(backup)!==raw)throw new Error('移行前の記録を保護できませんでした。');const migrated=JSON.stringify(this.history);this.storage.setItem(STORAGE_KEY,migrated);if(this.storage.getItem(STORAGE_KEY)!==migrated)throw new Error('移行後の保存を確認できませんでした。');this.message='旧記録を保護して新しい形式に移行しました';}
+      const probe=`${STORAGE_KEY}.probe`;this.storage.setItem(probe,'1');if(this.storage.getItem(probe)!=='1')throw new Error('保存を確認できませんでした。');this.storage.removeItem(probe);
     }catch{this.fail('blocked','以前の履歴は読み込めましたが、保存ができません。今の学習は閉じる前にJSONを保存してください。',raw);}
   }
   commit(next){
     let merged=previewMerge(this.history,next).history;
     if(this.status==='ok'){
       try{const raw=this.storage.getItem(STORAGE_KEY);if(raw!==null){let disk;try{disk=validateHistory(JSON.parse(raw),this.questions);}catch{this.fail('protected','別の画面の履歴を読み込めないため、上書きを止めました。元データを救出して保管してください。',raw);this.history=merged;return false;}merged=previewMerge(merged,disk).history;}
-        this.storage.setItem(STORAGE_KEY,JSON.stringify(merged));this.history=merged;return true;
+        const serialized=JSON.stringify(merged);this.storage.setItem(STORAGE_KEY,serialized);if(this.storage.getItem(STORAGE_KEY)!==serialized)throw new Error('保存を確認できませんでした。');this.history=merged;return true;
       }catch(error){this.fail('blocked','保存できませんでした。今の学習はこの画面内だけです。閉じる前にJSONを保存してください。');}
     }
     this.history=merged;return false;
@@ -170,7 +170,7 @@ export class HistoryStore {
         this.recoveryRaw=raw;this.recoveryKey=key;
       }}
       const merged=disk?previewMerge(this.history,disk).history:this.history;
-      this.storage.setItem(STORAGE_KEY,JSON.stringify(merged));
+      const serialized=JSON.stringify(merged);this.storage.setItem(STORAGE_KEY,serialized);if(this.storage.getItem(STORAGE_KEY)!==serialized)throw new Error('保存を確認できませんでした。');
       this.history=merged;this.status='ok';this.message='履歴の保存を復旧しました';return true;
     }catch(error){this.message=`保存を復旧できませんでした。${error.message} この画面を閉じる前にJSONを保存してください。`;return false;}
   }

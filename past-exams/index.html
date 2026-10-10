@@ -6,8 +6,8 @@
 <meta name="color-scheme" content="light">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' blob:; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>過去問の勉強室 | 第二種電気工事士</title>
-<link rel="stylesheet" href="styles.css">
-<script type="module" src="app.mjs"></script>
+<link rel="stylesheet" href="styles.css?v=1.1.0">
+<script type="module" src="app.mjs?v=1.1.0"></script>
 </head>
 <body>
 <a href="#main" class="skip-link">本文へ</a>
@@ -26,7 +26,7 @@
 <main id="main" tabindex="-1">
 <div id="loading" class="panel">公式問題を読み込んでいます…</div>
 <section id="learn-screen" hidden>
-<div class="intro"><div><span class="eyebrow">OFFICIAL PAST PAPERS</span><h1>ゆっくり、確かな一歩に。</h1><p>2017年の公式問題・写真・図を見て、1問ずつ解く。<br>計算も図も、各回50問。法令変更などの要注意問題は分けて扱います。</p></div><div class="intro-mark" aria-hidden="true"><span>1</span><small>QUESTION<br>AT A TIME</small></div></div>
+<div class="intro"><div><span class="eyebrow">OFFICIAL PAST PAPERS</span><h1>ゆっくり、確かな一歩に。</h1><p><span id="intro-paper-years">公式の問題・写真・図を見て、1問ずつ解く。</span><br>計算も図も、各回50問。法令変更などの要注意問題は分けて扱います。</p></div><div class="intro-mark" aria-hidden="true"><span>1</span><small>QUESTION<br>AT A TIME</small></div></div>
 <details class="panel filters" open><summary>取り組む問題を選ぶ <span id="filter-count"></span></summary><div class="filter-grid">
 <label>年度<select id="year-filter"><option value="">すべての年度</option></select></label><label>実施回<select id="exam-filter"><option value="">すべての実施回</option></select></label>
 <label>分野<select id="topic-filter"><option value="">すべての分野</option></select></label>
