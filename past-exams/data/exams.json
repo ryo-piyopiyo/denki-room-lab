@@ -1,5 +1,5 @@
 {
-  "dataVersion": "2017-2026-study-25papers-48507821a2e1f827-v1",
+  "dataVersion": "2017-2026-study-25papers-errata-a97ac04f20aa-v3",
   "generatedAt": "2026-10-10",
   "publisher": "一般財団法人 電気技術者試験センター",
   "exams": [
@@ -29517,7 +29517,7 @@
                 "section": "リングスリーブ（E形）"
               }
             ],
-            "note": "2.0mm2本は小スリーブ・小刻印の組合せであり、中スリーブ・小刻印とするハが不適切。2.0mm3本は中／中、1.6mm3本は小／小、1.6mm1本＋2.0mm2本は中／中という他肢も現行メーカー組合せ表に整合。",
+            "note": "2.0mm2本は小スリーブ・小刻印の組合せであり、中スリーブ・中刻印とするハが不適切。2.0mm3本は中／中、1.6mm3本は小／小、1.6mm1本＋2.0mm2本は中／中という他肢も現行メーカー組合せ表に整合。",
             "historicalCorrect": "ハ",
             "currentCorrect": "ハ",
             "normalPracticeIncluded": true,
@@ -71767,7 +71767,7 @@
           },
           "explanation": {
             "summary": "正解はニ。F2は2種金属製可とう電線管、破線は露出配線を表す。",
-            "reasoning": "配線の線種と括弧内の管種表示を独立に読む。実線は天井隠ぺい配線、破線は露出配線。E19はねじなし電線管、PF16は合成樹脂製可とう電線管、管種記号のない16は薄鋼電線管、F2 17は2種金属製可とう電線管を示す。ニだけが線種・管種とも説明と一致する。",
+            "reasoning": "配線の線種と括弧内の管種表示を独立に読む。実線は天井隠ぺい配線、破線は露出配線。E19はねじなし電線管、PF16は合成樹脂製可とう電線管、管種記号のない16は厚鋼電線管、F2 17は2種金属製可とう電線管を示す。ニだけが線種・管種とも説明と一致する。",
             "prerequisites": [
               "配線図では線の種類で施工位置、傍記で管や電線の種類を示す。",
               "IV1.6は直径1.6 mmのビニル絶縁電線。"
@@ -71775,7 +71775,7 @@
             "options": {
               "イ": "破線・E19を厚鋼管の天井隠ぺいとする：実際はねじなし電線管の露出配線であり、管種と線種の両方が違う。",
               "ロ": "実線・PF16を硬質塩化ビニル管の露出とする：PFは合成樹脂製可とう電線管、実線は天井隠ぺいなので一致しない。",
-              "ハ": "実線・(16)を合成樹脂製可とう電線管とする：天井隠ぺいという線種は合うが、(16)は薄鋼電線管で管種が違う。",
+              "ハ": "実線・(16)を合成樹脂製可とう電線管とする：天井隠ぺいという線種は合うが、(16)は厚鋼電線管で管種が違う。",
               "ニ": "破線・F2 17を2種金属製可とう電線管の露出とする：管種と施工位置の両方が合っている。"
             },
             "topic": "配線図記号／管種と施工位置",
@@ -110029,7 +110029,7 @@
           },
           "explanation": {
             "summary": "正解はニ。F2は2種金属製可とう電線管、破線は露出配線を示す。",
-            "reasoning": "図記号は配線の線種と管種の文字を別々に読む。破線は露出配線、実線は天井隠ぺい配線。F2 17は2種金属製可とう電線管の呼び17を示すため、ニの説明が一致する。Eはねじなし電線管、PFは合成樹脂製可とう電線管、管種の文字を省いた16は薄鋼電線管を示す。",
+            "reasoning": "図記号は配線の線種と管種の文字を別々に読む。破線は露出配線、実線は天井隠ぺい配線。F2 17は2種金属製可とう電線管の呼び17を示すため、ニの説明が一致する。Eはねじなし電線管、PFは合成樹脂製可とう電線管、管種の文字を省いた16は厚鋼電線管を示す。",
             "prerequisites": [
               "配線の線種は施工場所・方法を表す。",
               "括弧内の文字と数値は管の種類と呼びを表す。"
@@ -110037,7 +110037,7 @@
             "options": {
               "イ": "破線・E19を厚鋼管の天井隠ぺいとする：破線は露出、E19はねじなし電線管なので両方が違う。",
               "ロ": "実線・PF16を硬質塩化ビニル管の露出とする：実線は天井隠ぺい、PFは合成樹脂製可とう電線管。硬質管はVEの表示。",
-              "ハ": "実線・(16)を合成樹脂製可とう管の天井隠ぺいとする：線種の説明は合うが、管は薄鋼電線管でありPF管ではない。",
+              "ハ": "実線・(16)を合成樹脂製可とう管の天井隠ぺいとする：線種の説明は合うが、管は厚鋼電線管でありPF管ではない。",
               "ニ": "破線・F2 17を2種金属製可とう管の露出とする：線種と管種の両方が一致し、正しい。"
             },
             "topic": "図記号／配線線種と電線管の表示",
@@ -151958,5 +151958,130 @@
       "method": "公式過去問題一覧の現在のリンクおよび2026年度第二種電気工事士学科試験の訂正・修正を公式サイト限定で検索。",
       "result": "現在公開中の公式問題・解答PDFを使用。確認した公式一覧・公式検索では、この上期試験に紐づく訂正・中止告知は見つかりませんでした。各公開PDFの本文と共通図も目視確認しています。不存在を保証するものではありません。"
     }
-  }
+  },
+  "editorialCorrections": [
+    {
+      "id": "conduit-16-thick-steel-20261011",
+      "status": "verified",
+      "checkedAt": "2026-10-11",
+      "questionIds": [
+        "d2-20220529-am-21",
+        "d2-20231029-am-21"
+      ],
+      "summary": "図中の管種記号を省いた (16) の名称を「厚鋼電線管」に訂正しました。公式正答・採点は変わりません。",
+      "scope": "対象2問の解説4箇所だけを再確認した訂正です。全問題の再監査を示すものではありません。",
+      "previousReviewScope": "既存の explanationReview は訂正前の原稿に対する確認記録として保持しています。この4箇所の訂正は本記録の独立確認に基づきます。",
+      "beforeBaseSha256": "c28dc6b63b6ce2fa0768d5ea11a157af1657b3e002e1b8bfbc2078c79c76f151",
+      "reportSha256": "27aec37600e5fe3f94e38a12be6eb5e60028693dd6e24ec70bffa50e89f4aefb",
+      "reviewerFingerprintSha256": "63a9437616e1aa2f7ec1c9a1031909eca0e0ed36c2fc98ce0b85c44ced88c729",
+      "fieldChanges": [
+        {
+          "questionId": "d2-20220529-am-21",
+          "fieldPath": "explanation.reasoning",
+          "beforeSha256": "9db7a21136e72dab5498a48b5202691ea62dd09cc344b5292e760b0e44581100",
+          "afterSha256": "cc5cd5bb89cb58cac35cd0078b0307492f550b781c71160f79bddca3ac335a7f"
+        },
+        {
+          "questionId": "d2-20220529-am-21",
+          "fieldPath": "explanation.options.ハ",
+          "beforeSha256": "a5371a66546c83fbf6f8f0ecafdaeb9e78608ffd292e313cc88999d783fadd04",
+          "afterSha256": "a47f52f9f920fa74259fa9593460e311558466d14ca62fe1fbd55ebebdd259f2"
+        },
+        {
+          "questionId": "d2-20231029-am-21",
+          "fieldPath": "explanation.reasoning",
+          "beforeSha256": "7152a1b30ac4d40eceb710345e1e9afc3b71ff142a3ce65495000fb8b23b0286",
+          "afterSha256": "28be738a45864f372d9a0d43eed55e781d1917a7537e6b120fe7a075a8eb8f6a"
+        },
+        {
+          "questionId": "d2-20231029-am-21",
+          "fieldPath": "explanation.options.ハ",
+          "beforeSha256": "00b5c7eb53b70cf44139728b48c63662dfbee19ff4bebbca9b49d83a68fb45c5",
+          "afterSha256": "31c27814556abe40a57191b719690f1b8e2336ab9eb3814fafa9648f7e231a80"
+        }
+      ],
+      "sources": [
+        {
+          "id": "original-2022",
+          "title": "電気技術者試験センター 令和4年度上期筆記試験 午前 問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20220529_co_second_q01.pdf#page=9",
+          "locator": "p.9 問21 ハ・ニ。表紙は原則JIS C 0303:2000を使用と明記。",
+          "checkedAt": "2026-10-11"
+        },
+        {
+          "id": "answer-2022",
+          "title": "電気技術者試験センター 令和4年度上期筆記試験 午前 解答",
+          "url": "https://www.shiken.or.jp/construction/upload/20220529_co_second_a01.pdf",
+          "locator": "問21 ニ",
+          "checkedAt": "2026-10-11"
+        },
+        {
+          "id": "original-2023",
+          "title": "電気技術者試験センター 令和5年度下期学科試験 午前 問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20231029_co_second_q01.pdf#page=9",
+          "locator": "p.9 問21 ハ・ニ。表紙は原則JIS C 0303:2000を使用と明記。",
+          "checkedAt": "2026-10-11"
+        },
+        {
+          "id": "answer-2023",
+          "title": "電気技術者試験センター 令和5年度下期学科試験 午前 解答",
+          "url": "https://www.shiken.or.jp/construction/upload/20231029_co_second_a01.pdf",
+          "locator": "問21 ニ",
+          "checkedAt": "2026-10-11"
+        },
+        {
+          "id": "maruichi-jis-c8305",
+          "title": "丸一鋼管 鋼製電線管及び附属品",
+          "url": "https://www.maruichikokan.co.jp/products/349/",
+          "locator": "厚鋼電線管・薄鋼電線管の各JIS C 8305表。厚鋼はG16/G22等、薄鋼はC19/C25等。",
+          "checkedAt": "2026-10-11"
+        },
+        {
+          "id": "sankei-size-comparison",
+          "title": "三桂製作所 サンパイプと従来電線管の寸法比較",
+          "url": "https://www.sankei-ss.co.jp/company_q_a_sancable.html",
+          "locator": "質問1・回答の比較表。厚鋼G16、ねじなしE19、薄鋼C19の列。",
+          "checkedAt": "2026-10-11"
+        }
+      ]
+    },
+    {
+      "id": "audit-note-20191006-q19-stamp-20261012",
+      "status": "verified",
+      "checkedAt": "2026-10-12",
+      "questionIds": [
+        "d2-20191006-19"
+      ],
+      "summary": "確認メモに記した選択肢ハの刻印を、原問どおり「中」に訂正しました。2.0 mm 2本に適切な小スリーブ・小刻印、および公式正答ハは変わりません。",
+      "scope": "対象1問の確認メモ1箇所だけを原問と照合した訂正です。全問題の再監査を示すものではありません。",
+      "previousReviewScope": "既存の法令確認情報は以前の確認記録として保持し、この記述訂正は本記録の独立確認に基づきます。",
+      "beforeBaseSha256": "57eb1b366e69d781f2ebe18ac219801eb47a8551cab711864cedbd929dfdc73e",
+      "reportSha256": "a97ac04f20aad2ad973b3f77e1eec4d6331b614424afb131a1cc4f7333193c0c",
+      "reviewerFingerprintSha256": "63a9437616e1aa2f7ec1c9a1031909eca0e0ed36c2fc98ce0b85c44ced88c729",
+      "fieldChanges": [
+        {
+          "questionId": "d2-20191006-19",
+          "fieldPath": "lawAudit.note",
+          "beforeSha256": "1d01c6ce81a2e3cc912c4f7a3091f76167a59cda1a8e0a561f83827660f4eae6",
+          "afterSha256": "45dbc72415005ce1568b60b62d53c4e56958f6c408106b0fcda4cb9051a0f1c9"
+        }
+      ],
+      "sources": [
+        {
+          "id": "official-question",
+          "title": "電気技術者試験センター 2019年度下期 問19（公式問題）",
+          "url": "https://www.shiken.or.jp/construction/upload/20191006_co_second_q01.pdf#page=8",
+          "locator": "8ページ・問19・選択肢ハ",
+          "checkedAt": "2026-10-12"
+        },
+        {
+          "id": "official-answer",
+          "title": "電気技術者試験センター 2019年度下期 公式解答",
+          "url": "https://www.shiken.or.jp/construction/upload/20191006_co_second_a01.pdf",
+          "locator": "問19：ハ",
+          "checkedAt": "2026-10-12"
+        }
+      ]
+    }
+  ]
 }

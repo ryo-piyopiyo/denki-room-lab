@@ -1,8 +1,11 @@
-import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,validateHistory,previewMerge} from './core.mjs?v=1.1.0';
+import {createKnowledgeLoader,createKnowledgeSection} from './knowledge.mjs?v=1.2.0';
+import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,validateHistory,previewMerge} from './core.mjs?v=1.2.0';
 const $ = id=>document.getElementById(id);
 const el=(tag,cls,text)=>{const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;};
 let data,questions,store,queue=[],position=0,current=null,context=null,answered=false,selected=null,screen='learn',pendingImport=null,importReadId=0;
 const sessionId=uid();
+let loadKnowledge;
+const knowledgeSection=()=>createKnowledgeSection({document,question:current,loadKnowledge});
 const safeUrl=url=>{try{const u=new URL(url,location.href);return ['https:','http:'].includes(u.protocol)?u.href:null;}catch{return null;}};
 const sourceLink=(title,url)=>{const a=el('a','',title);const safe=safeUrl(url);if(safe){a.href=safe;a.target='_blank';a.rel='noopener noreferrer';}return a;};
 const filters=()=>({year:$('year-filter').value,exam:$('exam-filter').value,topic:$('topic-filter').value,mode:$('mode-filter').value,nonCalculation:$('non-calculation').checked,validity:$('validity-filter').value});
@@ -52,7 +55,9 @@ function displayExplanation(result){
   for(const c of CHOICES){const row=el('div','option-explanation');row.append(el('strong','',`${c}${c===current.answer?' · 当時の公式正答':''}${c===result.selectedAnswer?' · あなたの選択':''}`));const content=ex.options?.[c];row.append(el('p','',typeof content==='string'?content:content?Object.values(content).filter(v=>typeof v==='string').join('\n'):'この選択肢の解説は確認中です。'));box.append(row);}
   if(current.lawAudit?.note){box.append(el('h4','','現在の法令・基準との関係'),el('p','',current.lawAudit.note));}
   if(current.lawAudit?.checkedAt){const kind=current.lawAudit.status==='not_rule_dependent'?'原理・器具等の確認':'現行の法令・基準との関係の確認';box.append(el('p','audit-note',`${kind}：${current.lawAudit.checkedAt}。${current.lawAudit.status==='not_rule_dependent'?'':'その後の改正は反映されていない場合があります。'}`));}
-  const sources=[...(ex.sources||[]),...(current.lawAudit?.sources||[])];if(sources.length){const d=el('details');d.append(el('summary','','解説・現行基準の確認資料'));const ul=el('ul');for(const s of sources){const li=el('li');li.append(sourceLink(s.title||s.url,s.url));ul.append(li);}d.append(ul);box.append(d);}
+  const corrections=(data.editorialCorrections||[]).filter(c=>c.questionIds?.includes(current.id));
+  for(const correction of corrections){box.append(el('h4','','解説の訂正'),el('p','',correction.summary),el('p','small quiet',`${correction.checkedAt}確認。${correction.scope}`));}
+  const sources=[...(ex.sources||[]),...(current.lawAudit?.sources||[]),...corrections.flatMap(c=>c.sources||[])];if(sources.length){const d=el('details');d.append(el('summary','','解説・現行基準の確認資料'));const ul=el('ul');for(const s of sources){const li=el('li');li.append(sourceLink(s.title||s.url,s.url));ul.append(li);}d.append(ul);box.append(d);}
   return box;
 }
 function submit(answer,{reveal=false}={}){
@@ -63,8 +68,8 @@ function submit(answer,{reveal=false}={}){
   const r=$('result');r.hidden=false;r.className=`result ${attempt.result==='incorrect'?'incorrect':''}`;r.replaceChildren();
   const title=attempt.result==='correct'?'正解です。':attempt.result==='incorrect'?'ここを、いっしょに確認。':reveal?'正答を見て学習しました。':'スキップとして記録しました。';
   r.append(el('h3','',title));
-  if(answer!==null||reveal){if(!reveal)append('reveal');r.append(el('p','',`${current.excluded?`${current.year}年当時の公式正答`:'公式正答'}：${current.answer}${answer!==null?`　あなたの解答：${answer}`:''}`));r.append(displayExplanation(attempt));}
-  else {r.append(el('p','','まだ選択回答はありません。スキップは正答率の分母に入りません。'));const b=el('button','secondary','この問題の正答・解説を見る');b.onclick=()=>{append('reveal');r.append(el('p','',`当時の公式正答：${current.answer}`),displayExplanation(attempt));b.remove();};r.append(b);}
+  if(answer!==null||reveal){if(!reveal)append('reveal');r.append(el('p','',`${current.excluded?`${current.year}年当時の公式正答`:'公式正答'}：${current.answer}${answer!==null?`　あなたの解答：${answer}`:''}`));r.append(displayExplanation(attempt),knowledgeSection());}
+  else {r.append(el('p','','まだ選択回答はありません。スキップは正答率の分母に入りません。'));const b=el('button','secondary','この問題の正答・解説を見る');b.onclick=()=>{append('reveal');r.append(el('p','',`当時の公式正答：${current.answer}`),displayExplanation(attempt),knowledgeSection());b.remove();};r.append(b);}
   r.append(el('p','small quiet',attempt.firstEncounterUnaided&&answer!==null&&!current.excluded?'初見・自力の初回答として記録しました。':attempt.firstAttempt?'初回の試行として記録しました。初見・自力の成績とは分けて残します。':'再挑戦として記録しました。初見の成績は変わりません。'));
   $('next').hidden=false;$('next').textContent=position+1<queue.length?'次の1問へ →':'今回の記録を見る →';
   $('record-note').textContent=store.status==='ok'?'解答記録をこのブラウザに保存しました。':'この画面内に記録しました。閉じる前にJSONで保存してください。';
@@ -93,6 +98,7 @@ async function load(){
   try{const response=await fetch('./data/exams.json',{cache:'no-cache'});if(!response.ok)throw new Error(`HTTP ${response.status}`);data=await response.json();if(!data.exams?.length)throw new Error('問題データが空です');questions=data.exams.flatMap(exam=>exam.questions.map(q=>({...q,examId:exam.id,year:exam.year,examTitle:labelExam(exam),contexts:exam.contexts||[],excluded:q.excluded===true||!['unchanged_verified','not_rule_dependent'].includes(q.lawAudit?.status)})));
     if(questions.some(q=>!q.id||!CHOICES.includes(q.answer)||!Array.isArray(q.images)||!q.images.length))throw new Error('問題データの形式が不正です');
     let local;try{local=window.localStorage;}catch{local={getItem(){throw new Error('blocked');}};}
+    loadKnowledge=createKnowledgeLoader({fetcher:fetch,questions,dataVersion:data.dataVersion});
     store=new HistoryStore(local,questions);refreshStatus();
     for(const year of [...new Set(data.exams.map(e=>e.year))]){const o=el('option','',`${year}年`);o.value=year;$('year-filter').append(o);}
     for(const exam of data.exams){const o=el('option','',labelExam(exam));o.value=exam.id;$('exam-filter').append(o);}const topics=new Map(questions.map(q=>[q.topic,q.topicLabel||q.topic]));for(const [id,title] of topics){const o=el('option','',title);o.value=id;$('topic-filter').append(o);}
