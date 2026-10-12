@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.2.0';
+export const APP_VERSION = '1.3.0';
 export const SCHEMA_VERSION = 2;
 export const STORAGE_KEY = 'denki.official-pastpapers.history.v2';
 export const LEGACY_KEY = 'denki.official-pastpapers.history.v1';

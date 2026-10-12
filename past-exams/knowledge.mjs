@@ -1,5 +1,5 @@
 // Supplemental learning is deliberately independent of answer/history state.
-export const EXPECTED_BASE_SHA256 = 'eb6ffe0a13fb17e1668c6f0202e0aca4116f982bcaf1687d7729f77891f9dd47';
+export const EXPECTED_BASE_SHA256 = '3bbba9952bbc781db65dfe589507963580ce89623509b1b58004ea13a965f8f8';
 const DOMAINS = new Set(['theory','design','equipment','construction','inspection','diagram','law']);
 const SHA = /^[a-f0-9]{64}$/;
 const ID = /^(theory|design|equipment|construction|inspection|diagram|law)-[a-z0-9]+(?:-[a-z0-9]+)*$/;

@@ -1,5 +1,5 @@
 {
-  "dataVersion": "2017-2026-study-25papers-errata-a97ac04f20aa-v3",
+  "dataVersion": "2017-2026-study-25papers-pilot-2017-51deac51c81f-v4",
   "generatedAt": "2026-10-10",
   "publisher": "一般財団法人 電気技術者試験センター",
   "exams": [
@@ -5300,8 +5300,8 @@
             "historicalAnswerSource": "https://www.shiken.or.jp/construction/upload/20170604_co_second_a01.pdf"
           },
           "explanation": {
-            "summary": "正解はニ。位置表示灯を内蔵した3路スイッチは、この配線図には使われていない。",
-            "reasoning": "写真の下の接点図を読む。ロは0を1か3へ切り替える通常の3路スイッチで、階段の「3ア」に使う。ハは片切接点に表示灯を並列につないだ位置表示灯内蔵スイッチで、図のH付きスイッチに対応する。イはBLの確認表示灯付き押しボタン。ニは3路接点の1・3間に表示灯を持つ位置表示灯内蔵3路スイッチで、図には3H等の指定がない。",
+            "summary": "正解はニ。確認表示灯を内蔵した片切スイッチは、この配線図には使われていない。",
+            "reasoning": "写真の下の接点図を読む。ロは0を1か3へ切り替える通常の3路スイッチで、階段の「3ア」に使う。ハは片切接点に表示灯を並列につないだ位置表示灯内蔵スイッチで、図のH付きスイッチに対応する。イはBLの確認表示灯付き押しボタン。ニは0・1間を入切する片切接点と1・3間の表示灯を持つ確認表示灯内蔵の片切スイッチで、図にはこの器具を示すLの指定がない。端子が3つあっても、3路とは限らない。",
             "prerequisites": [
               "位置表示灯は主に消灯中に小さく光り、暗い場所でスイッチの位置を知らせる。",
               "確認表示灯は負荷の運転状態等を知らせる。両者は同じ意味ではない。",
@@ -5311,7 +5311,7 @@
               "イ": "確認表示灯付の電磁開閉器用押しボタン：地下1階のBLの器具に使用されている。",
               "ロ": "表示灯のない3路スイッチ：階段照明アを上下階で操作する「3ア」に使用されている。",
               "ハ": "位置表示灯内蔵の片切スイッチ：集会所や地下室にあるH付きの点滅器に使用されている。",
-              "ニ": "位置表示灯内蔵の3路スイッチ：この組合せを示す3H等の指定はなく、使用されていないので正解。"
+              "ニ": "確認表示灯内蔵の片切スイッチ：この器具を示すLの指定はなく、使用されていないので正解。"
             },
             "topic": "スイッチ／接点図と表示灯",
             "pitfall": "外観が似たスイッチも内部の接点図は異なる。表示灯の有無と片切・3路の二軸で読む。",
@@ -10534,7 +10534,7 @@
           },
           "explanation": {
             "summary": "正解はハ、2極スイッチ。この配線図には使われていない。",
-            "reasoning": "写真だけでなく、その下の接点構成を読む。ハは独立した2つの接点を同時に開閉する2極スイッチで、図中に該当する点滅器の表示はない。イはWPの防雨形片切、ロはHの位置表示灯付き片切、ニは3路の接点構成に対応する。共通注意4では器具を一般形の図記号で表すとしており、事務所のイ3がニの表示灯の有無まで明記しているわけではない。ここでは3路機能の対応で判断する。",
+            "reasoning": "写真だけでなく、その下の接点構成を読む。ハは独立した2つの接点を同時に開閉する2極スイッチで、図中に該当する点滅器の表示はない。イはWPの防雨形片切、ロはHの位置表示灯付き片切。ニは0・1間を入切する片切接点と1・3間の確認表示灯を持ち、工場の右下の出入口にあるL付き点滅器に対応する。端子が0・1・3でも、3路の切替接点とは限らない。",
             "prerequisites": [
               "片切は1つの回路を入切し、2極は2本の回路を連動して開閉する。",
               "3路スイッチは共通端子0を端子1または3へ切り替え、2箇所から照明を操作する。",
@@ -10544,7 +10544,7 @@
               "イ": "イは防雨形の片切スイッチ。工場の屋外側照明の操作部にWPの表示があり、使われている。",
               "ロ": "ロは位置表示灯付き片切スイッチ。接点を開いたときに表示灯へ流れる経路があり、倉庫のHアの操作部に使われている。",
               "ハ": "ハの2極スイッチが正解。図中に2極点滅器の表示はなく、使用されていない。",
-              "ニ": "ニは表示灯付き3路スイッチ。0・1・3の切替接点により、事務所のイ3の2箇所操作に対応する。写真下には1・3間の表示灯も描かれるが、一般形で示す配線図自体が表示灯付きまで明示した、とは読まない。"
+              "ニ": "ニは確認表示灯内蔵の片切スイッチ。0・1間を開閉し、1・3間に表示灯がある。工場の右下の出入口にあるL付き点滅器として使われている。"
             },
             "sources": [
               {
@@ -152079,6 +152079,111 @@
           "title": "電気技術者試験センター 2019年度下期 公式解答",
           "url": "https://www.shiken.or.jp/construction/upload/20191006_co_second_a01.pdf",
           "locator": "問19：ハ",
+          "checkedAt": "2026-10-12"
+        }
+      ]
+    },
+    {
+      "id": "2017-both-q50-confirmation-single-pole-20261012",
+      "status": "verified",
+      "checkedAt": "2026-10-12",
+      "questionIds": [
+        "d2-20170604-50",
+        "d2-20170930-50"
+      ],
+      "summary": "両期の問50にある選択肢ニを、接点図に基づき「確認表示灯内蔵の片切スイッチ」と訂正しました。端子が3つでも3路とは限りません。上期の公式正答ニ、下期の公式正答ハは変わりません。",
+      "scope": "2017年の対象2問・解説5箇所だけを原問とメーカー回路図に照合した訂正です。他年度の訂正や全問題の再監査は含みません。",
+      "previousReviewScope": "既存の解説確認情報は以前の確認記録として保持し、この記述訂正は本記録の独立確認に基づきます。",
+      "beforeBaseSha256": "eb6ffe0a13fb17e1668c6f0202e0aca4116f982bcaf1687d7729f77891f9dd47",
+      "reportSha256": "51deac51c81f53f551e5587fa6c95c1679962e5cb6a20feac5f7a13ebb637f6e",
+      "reviewerFingerprintSha256": "63a9437616e1aa2f7ec1c9a1031909eca0e0ed36c2fc98ce0b85c44ced88c729",
+      "fieldChanges": [
+        {
+          "questionId": "d2-20170604-50",
+          "fieldPath": "explanation.summary",
+          "beforeSha256": "d05a82c9cabdf2f519bbdffa1c46fe1d6d9ac2d3e2f33bb80458f8fc96d93176",
+          "afterSha256": "b6bda0b009ce4fc4cb4c8b8d8e2837afa7b350eac713e366e6dc1c0d0772858b"
+        },
+        {
+          "questionId": "d2-20170604-50",
+          "fieldPath": "explanation.reasoning",
+          "beforeSha256": "bf750d37bba7f228ff5e5cd683d3c21bccebbca648377eb5f40a899a655ffb45",
+          "afterSha256": "bdbb0241e1ba3584313193066e551e8bcd9cdf8d22d1c6dfdcdd90a313e8e7eb"
+        },
+        {
+          "questionId": "d2-20170604-50",
+          "fieldPath": "explanation.options.ニ",
+          "beforeSha256": "7335504c6633e986706cbcb5554226839f78658bc170c7d792d9d5104d0bd83d",
+          "afterSha256": "34f968d7a66cdd242fcc7c1ddcc7ba3e0286c978f1cd84a4d6187c5c0429dbdc"
+        },
+        {
+          "questionId": "d2-20170930-50",
+          "fieldPath": "explanation.reasoning",
+          "beforeSha256": "668f7acfadf69546d6ebec264cad769e4de260de3c2f84f787f49cb31c0cb650",
+          "afterSha256": "92a3b9dde8419b69191d71ec3cf3cf558a58ea80a103b3a95dfb5801a7724b1d"
+        },
+        {
+          "questionId": "d2-20170930-50",
+          "fieldPath": "explanation.options.ニ",
+          "beforeSha256": "be023ef5abd8ccfb911e3f51a045620314bcc37710076f91cd43a1651952f226",
+          "afterSha256": "372ee55da2139f4887f888b5c594bb11452b00441bbf159bdbb7e2d7ed731c46"
+        }
+      ],
+      "sources": [
+        {
+          "id": "source-1",
+          "title": "電気技術者試験センター 2017年度上期 公式問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20170604_co_second_q01.pdf",
+          "locator": "Q50, printed page13, optionニ contact diagram",
+          "checkedAt": "2026-10-12"
+        },
+        {
+          "id": "source-2",
+          "title": "同 公式配線図",
+          "url": "https://www.shiken.or.jp/construction/upload/20170604_co_second_q01.pdf#page=15",
+          "locator": "Full associated wiring diagram, printed page15",
+          "checkedAt": "2026-10-12"
+        },
+        {
+          "id": "source-3",
+          "title": "同 公式解答",
+          "url": "https://www.shiken.or.jp/construction/upload/20170604_co_second_a01.pdf",
+          "locator": "Question50, ニ",
+          "checkedAt": "2026-10-12"
+        },
+        {
+          "id": "source-4",
+          "title": "Panasonic フルカラー機器対応 埋込ひかるスイッチB 回路図",
+          "url": "https://www2.panasonic.biz/jp/densetsu/haisen/switch_concent/fullcolor/spacesave/",
+          "locator": "商品ラインアップ WN5341K / 回路図 WN5341K",
+          "checkedAt": "2026-10-12"
+        },
+        {
+          "id": "source-5",
+          "title": "Panasonic ひかるスイッチWN5341Kは何線式か",
+          "url": "https://jpn.faq.panasonic.com/app/answers/detail/a_id/108155/p/4271/related/1",
+          "locator": "3線式; linked wiring image explicitly labels B（片切）",
+          "checkedAt": "2026-10-12"
+        },
+        {
+          "id": "source-6",
+          "title": "電気技術者試験センター 2017年度下期 公式問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20170930_co_second_q01.pdf#page=13",
+          "locator": "Q50 optionニ, printed page13",
+          "checkedAt": "2026-10-12"
+        },
+        {
+          "id": "source-7",
+          "title": "電気技術者試験センター 2017年度下期 公式配線図",
+          "url": "https://www.shiken.or.jp/construction/upload/20170930_co_second_q01.pdf#page=15",
+          "locator": "Factory lower-right entrance, printed page15",
+          "checkedAt": "2026-10-12"
+        },
+        {
+          "id": "source-8",
+          "title": "電気技術者試験センター2017年度下期公式解答",
+          "url": "https://www.shiken.or.jp/construction/upload/20170930_co_second_a01.pdf",
+          "locator": "Question50=ハ",
           "checkedAt": "2026-10-12"
         }
       ]
