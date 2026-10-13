@@ -11,3 +11,9 @@
 
 /* 2017 pilot only: original selectors above remain unchanged. */
 .knowledge-beginner .knowledge-connection{font-size:.88rem;color:var(--muted);margin:0 0 14px}.knowledge-beginner .knowledge-principle{font-weight:650;line-height:1.85}.knowledge-beginner .knowledge-exam-use{line-height:1.85}.knowledge-beginner .knowledge-essential-conditions{border-left:3px solid #aec4ad;padding:8px 8px 8px 27px!important;background:#f5f7f1;font-size:.86rem}.knowledge-beginner .knowledge-details,.knowledge-beginner .knowledge-related{border-top:1px solid var(--line);padding-top:12px;margin-top:14px}.knowledge-beginner .knowledge-related>summary{font-size:.86rem;min-height:44px}.knowledge-beginner .knowledge-details>summary,.knowledge-beginner .knowledge-sources>summary{min-height:40px;font-weight:500}.knowledge-beginner .knowledge-card{padding:12px 0}.knowledge-beginner .knowledge-card h5{margin:14px 0 6px}.knowledge-beginner .knowledge-table-scroll table{min-width:0}.knowledge-beginner .knowledge-table-scroll th,.knowledge-beginner .knowledge-table-scroll td{min-width:5.5rem}.knowledge-beginner .knowledge-table-scroll caption{font-size:.82rem}.knowledge-beginner .knowledge-details p{font-size:.84rem}.knowledge-beginner .knowledge-body>.small{font-size:.72rem;margin-top:18px}
+
+/* Source-verified inline schematic examples; all text remains selectable. */
+.inline-symbol{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .22em;line-height:1;color:#172c38;background:#fff;border:1px solid #d6dee3;border-radius:4px;padding:2px;max-width:100%}
+.inline-symbol svg{display:block;width:64px;height:36px;flex:none;overflow:visible}
+.inline-symbol-note{font-size:10px;line-height:1.3;color:#334a57;max-width:90px;white-space:normal;text-align:center}
+.symbol-load-note{font-size:.88rem;margin-top:.5rem}

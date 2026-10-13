@@ -1,8 +1,8 @@
-import {createKnowledgeLoader as legacyLoader,createKnowledgeSection as legacySection} from './knowledge.mjs?v=1.4.0';
-import {isPilotQuestion} from './pilot-scope.mjs?v=1.4.0';
+import {createKnowledgeLoader as legacyLoader,createKnowledgeSection as legacySection} from './knowledge.mjs?v=1.5.0';
+import {isPilotQuestion} from './pilot-scope.mjs?v=1.5.0';
 
 // The published schema1 loader remains wholly independent from the pilot loader.
-export function createKnowledgeLoader({fetcher,questions,dataVersion,importBeginner=()=>import('./knowledge-beginner.mjs?v=1.4.0')}) {
+export function createKnowledgeLoader({fetcher,questions,dataVersion,importBeginner=()=>import('./knowledge-beginner.mjs?v=1.5.0')}) {
   const legacy=legacyLoader({fetcher,questions,dataVersion});
   let pendingModule=null,beginner=null;
   return {legacy,async beginner(){

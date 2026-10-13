@@ -1,9 +1,9 @@
 {
   "format": "denki-post-answer-knowledge",
   "schemaVersion": 2,
-  "knowledgeVersion": "knowledge-2017-2026-beginner-3ba58293f8a32159",
-  "baseDataVersion": "2017-2026-study-25papers-beginner-held-errata-v5",
-  "baseDataSha256": "d1ea0926ebd45fd28f3a79522adc78c46bd24b9b2b5b6c3d5726648c82d0adcf",
+  "knowledgeVersion": "knowledge-positive-explanations-e676593e19d18960",
+  "baseDataVersion": "2017-2026-study-25papers-positive-explanations-e676593e19d18960-v6",
+  "baseDataSha256": "378a9bd59bcf8bb9890a49e0c2cc64aa59eb204bb7da7b531998c44659f6e9eb",
   "cardCount": 184,
   "questionCount": 1250,
   "reviews": [
@@ -3759,7 +3759,7 @@
           ],
           [
             "ビニルコード1.25 mm²",
-            "太さだけでなく材質が不適合"
+            "太さは適合、材質は不適合"
           ],
           [
             "袋打ちゴムコード0.5 mm²",
@@ -5095,7 +5095,7 @@
       "details": [
         {
           "title": "独立した確認表示灯",
-          "body": "白丸の確認表示灯がスイッチと別に描かれることもある。L付きの内蔵形と同じ図記号ではない。"
+          "body": "白丸の確認表示灯がスイッチと別に描かれることもある。一般形の片切スイッチなら、別置きは小さな白丸と黒丸の組合せ、内蔵形は黒丸にLを添えた記号で表す。"
         }
       ]
     },
@@ -7089,7 +7089,7 @@
       "firstPrinciple": "金属管の加工は、作業の順番で工具を結び付けると覚えやすい。切断した管口には「ばり」という鋭い出っ張りが残るため、削って滑らかにする。整えずに電線を通すと、電線の被覆を傷つける原因になる。",
       "examUse": "工具名だけでなく、写真の先端と作業内容を対応させる。クリックボールはリーマなどを取り付けて回す道具で、刃そのものとは別。",
       "essentialConditions": [
-        "Eで表すねじなし電線管には、ねじ切りをしない。VE管の接続にパイプレンチは使わない。"
+        "Eで表すねじなし電線管には、ねじ切りをしない。VE管の接続にパイプレンチは使わない。VE管同士は、適合するTSカップリングに専用接着剤を塗布して接続する。"
       ],
       "examEvidenceIds": [
         "d2-20170930-14",
@@ -12210,7 +12210,7 @@
     "d2-20180603-41": [
       {
         "cardId": "construction-ring-sleeve-basic",
-        "connection": "すべて1.6 mmで、接続は4本・3本・3本の3組。小スリーブでも刻印○とは限らない。"
+        "connection": "すべて1.6 mmで、接続は4本・3本・3本の3組。小スリーブを使い、3組とも「小」の刻印で圧着する。"
       }
     ],
     "d2-20180603-42": [
@@ -18887,5 +18887,99 @@
         "connection": "器具の接点図を読み、経路を切るスイッチと行き先を変えるスイッチを分けよう。"
       }
     ]
-  }
+  },
+  "editorialCorrections": [
+    {
+      "status": "verified",
+      "checkedAt": "2026-10-13",
+      "scope": "肯定的な意味・表記を補うための限定審査。以前の確認記録は変更前の履歴として保持。",
+      "beforeKnowledgeSha256": "689780da56a02adc8b9a6c989fdb976ad659c9435245db76b05924a37fe15061",
+      "contentSha256": "e676593e19d189606ff460704ce4e58d048c53617418d8b7194c9493975ac4f1",
+      "reportSha256": "831ae72170ed77936b935e75fa15b7b27419edecedd702a530bf8c965af91f69",
+      "reviewerFingerprintSha256": "8ab1c4d74e3bef8925e438f55d0baa3c7412627199956a7a3d8e7d483ea2e067",
+      "changes": [
+        {
+          "kind": "card",
+          "id": "equipment-metal-conduit-tools",
+          "path": [
+            "essentialConditions",
+            0
+          ],
+          "beforeSha256": "8c9a8d48b77fef6c639ed0a17b647c372af5cf08c6e65e5fab4af45cdb608686",
+          "afterSha256": "0e8bb377c50740cbfe755ebb2345541857d58b0ae493aade52d570a563e7a46a",
+          "sources": [
+            {
+              "title": "国土交通省 公共建築工事標準仕様書（電気設備工事編）令和7年版",
+              "url": "https://www.mlit.go.jp/gobuild/content/001888825.pdf",
+              "locator": "第2編2.4.5(1)：硬質ビニル管相互はTSカップリングに接着剤を塗布して接続"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "diagram-incandescent-pendant-cord",
+          "path": [
+            "comparison",
+            "rows",
+            1,
+            1
+          ],
+          "beforeSha256": "e1dcf160c0ba49322ad6dc07a781a7337bdcae4fe424ea2092d707a1797c7a39",
+          "afterSha256": "9935e7e9363d74d23afa0cc2c505d911cf782ebc92c77f91cfcfb8f5a649ce40",
+          "sources": [
+            {
+              "title": "電気技術者試験センター 2021年度上期 午前 問39",
+              "url": "https://www.shiken.or.jp/construction/upload/20210530_co_second_q01.pdf",
+              "locator": "問39：ビニルコード1.25 mm²と丸打ちゴムコード0.75 mm²の比較"
+            },
+            {
+              "title": "経済産業省 電気設備の技術基準の解釈（令和6年10月22日）",
+              "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/sangyo/electric/files/20241022-2.pdf",
+              "locator": "第170条。既存カードの法令根拠・条件を維持した論理表現の修正"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "diagram-switch-markers",
+          "path": [
+            "details",
+            0,
+            "body"
+          ],
+          "beforeSha256": "ecb5bac9dbac8800ba931ec9c2aa56c7b52e6ac25372ea3d710b1109a364f3bd",
+          "afterSha256": "396e26bed904f9bb040bdb661a2e11c5751626fb0c9df93d35687a72b8ef46de",
+          "sources": [
+            {
+              "title": "国土交通省 公共建築設備工事標準図（電気設備工事編）令和7年版",
+              "url": "https://www.mlit.go.jp/gobuild/content/001879276.pdf",
+              "locator": "PDF通し6頁（印刷5頁）：タンブラスイッチ＋確認表示灯、確認表示灯付"
+            }
+          ]
+        },
+        {
+          "kind": "connection",
+          "id": "d2-20180603-41",
+          "path": [
+            0,
+            "connection"
+          ],
+          "beforeSha256": "96390ab216d6810e810383a013a7b3b2a5cc4ac0b041386da6abcab608f92381",
+          "afterSha256": "e0f69bb50828a75176de9be1b3f52881c1029937c7ca2316ce24fbcbd244d036",
+          "sources": [
+            {
+              "title": "出典：平成30年度上期 第二種電気工事士 筆記試験 問41・原問配線図",
+              "url": "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf",
+              "locator": "PDF通し15頁、問41の図記号と共通図"
+            },
+            {
+              "title": "ホーザン P-738 圧着工具 取扱説明書",
+              "url": "https://www.hozan.co.jp/download/manual/P-738.pdf",
+              "locator": "1.6 mm単線3～4本：リングスリーブ小、圧着ダイス小"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

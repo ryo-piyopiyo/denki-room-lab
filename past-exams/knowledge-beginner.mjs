@@ -1,6 +1,6 @@
-import {isPilotQuestion,PILOT_IDS} from './pilot-scope.mjs?v=1.4.0';
+import {isPilotQuestion,PILOT_IDS} from './pilot-scope.mjs?v=1.5.0';
 // Reviewed beginner renderer for all published 2017–2026 papers, loaded after answering and opening its section.
-export const EXPECTED_BASE_SHA256 = 'd1ea0926ebd45fd28f3a79522adc78c46bd24b9b2b5b6c3d5726648c82d0adcf';
+export const EXPECTED_BASE_SHA256 = '378a9bd59bcf8bb9890a49e0c2cc64aa59eb204bb7da7b531998c44659f6e9eb';
 const DOMAINS = new Set(['theory','design','equipment','construction','inspection','diagram','law']);
 const SHA = /^[a-f0-9]{64}$/;
 const ID = /^(theory|design|equipment|construction|inspection|diagram|law)-[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -14,7 +14,7 @@ const https = x => { try { return typeof x === 'string' && new URL(x).protocol =
 
 export function validateKnowledge(value, questions, dataVersion, evidenceQuestions=questions) {
   assert(plainObject(value) && value.format === 'denki-post-answer-knowledge' && value.schemaVersion === 2, '追加資料の形式が未対応です。');
-  keys(value,['format','schemaVersion','knowledgeVersion','baseDataVersion','baseDataSha256','cardCount','questionCount','reviews','cards','questionLinks']);
+  keys(value,['format','schemaVersion','knowledgeVersion','baseDataVersion','baseDataSha256','cardCount','questionCount','reviews','cards','questionLinks','editorialCorrections']);
   assert(text(value.knowledgeVersion) && value.knowledgeVersion.length <= 100 && value.baseDataVersion === dataVersion, '追加資料と問題データの版が一致しません。');
   assert(value.baseDataSha256 === EXPECTED_BASE_SHA256, '追加資料の原本情報が不足しています。');
   assert(plainObject(value.cards) && plainObject(value.questionLinks), '追加資料の内容が不足しています。');
@@ -40,6 +40,20 @@ export function validateKnowledge(value, questions, dataVersion, evidenceQuestio
     if (card.details !== undefined) {
       assert(Array.isArray(card.details) && card.details.length <= 3, '追加の詳しい説明が不正です。');
       for(const detail of card.details){keys(detail,['title','body']);assert(text(detail.title) && text(detail.body), '追加の詳しい説明が不完全です。');}
+    }
+  }
+  if(value.editorialCorrections!==undefined){
+    assert(Array.isArray(value.editorialCorrections)&&value.editorialCorrections.length<=20,'補足の更新記録が不正です。');
+    for(const proof of value.editorialCorrections){
+      keys(proof,['status','checkedAt','scope','beforeKnowledgeSha256','contentSha256','reportSha256','reviewerFingerprintSha256','changes']);
+      assert(proof.status==='verified'&&date(proof.checkedAt)&&text(proof.scope)&&['beforeKnowledgeSha256','contentSha256','reportSha256','reviewerFingerprintSha256'].every(k=>SHA.test(proof[k])),'補足の更新確認が不足しています。');
+      assert(Array.isArray(proof.changes)&&proof.changes.length<=500,'補足の更新範囲が不正です。');
+      for(const c of proof.changes){
+        keys(c,['kind','id','path','beforeSha256','afterSha256','sources']);
+        assert(['card','connection'].includes(c.kind)&&Object.hasOwn(c.kind==='card'?value.cards:value.questionLinks,c.id)&&Array.isArray(c.path)&&c.path.length>0&&c.path.every(k=>(typeof k==='string'||Number.isInteger(k))&&!['__proto__','prototype','constructor'].includes(k))&&SHA.test(c.beforeSha256)&&SHA.test(c.afterSha256),'補足の変更対象が不正です。');
+        assert(Array.isArray(c.sources)&&c.sources.length>0&&c.sources.length<=20,'補足の変更出典が不足しています。');
+        for(const source of c.sources){keys(source,['title','url','locator']);assert(text(source.title)&&https(source.url)&&text(source.locator),'補足の変更出典が不正です。');}
+      }
     }
   }
   const used = new Set();
@@ -73,7 +87,18 @@ export function createKnowledgeLoader({fetcher,questions,dataVersion,evidenceQue
   };
 }
 
-export function createKnowledgeSection({document,question,loadKnowledge,existingSection}) {
+
+let symbolModulePromise=null;
+function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.5.0').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
+function enhanceSymbolTargets(document,container,targets,importSymbols=loadSymbolModule){
+  let notice=null;
+  const run=()=>{if(notice)notice.remove();notice=null;importSymbols().then(module=>{if(container.isConnected)module.enhanceTargets(container,targets);}).catch(()=>{
+    if(!container.isConnected)return;
+    notice=document.createElement('div');notice.className='symbol-load-note';const message=document.createElement('p');message.setAttribute('role','status');message.setAttribute('aria-live','polite');message.textContent='図記号を読み込めませんでした。文章・採点・学習記録はそのまま使えます。';const retry=document.createElement('button');retry.type='button';retry.className='secondary';retry.textContent='図記号をもう一度読み込む';retry.onclick=()=>{container.tabIndex=-1;container.focus();run();};notice.append(message,retry);container.append(notice);
+  });};run();
+}
+
+export function createKnowledgeSection({document,question,loadKnowledge,existingSection,importSymbols=loadSymbolModule}) {
   const el=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=value;return n;};
   const list=(values,cls)=>{const ul=el('ul',cls);for(const x of values)ul.append(el('li','',x));return ul;};
   const section=existingSection||el('details');section.className='knowledge-section knowledge-beginner';section.replaceChildren();
@@ -95,27 +120,31 @@ export function createKnowledgeSection({document,question,loadKnowledge,existing
       body.replaceChildren();
       if(question.excluded)body.append(el('p','knowledge-caution','⚠ 元の問題は現行基準の通常練習対象外です。今のルールと当時の出題条件を分けて確認してください。'));
       function renderCard(link) {
-        const card=value.cards[link.cardId];const article=el('article','knowledge-card');
-        article.append(el('h4','',card.title),el('p','knowledge-connection',link.connection));
-        article.append(el('h5','','まず覚えること'),el('p','knowledge-principle',card.firstPrinciple));
-        article.append(el('h5','','試験ではここが問われる'),el('p','knowledge-exam-use',card.examUse));
-        if(card.essentialConditions.length)article.append(list(card.essentialConditions,'knowledge-essential-conditions'));
+        const card=value.cards[link.cardId];const article=el('article','knowledge-card');const targets=[];
+        const cel=(tag,cls,text,path)=>{const node=el(tag,cls,text);targets.push({node,text,kind:'card',id:card.id,path});return node;};
+        const clist=(values,cls,path)=>{const ul=el('ul',cls);values.forEach((text,i)=>ul.append(cel('li','',text,[...path,i])));return ul;};
+        const connection=el('p','knowledge-connection',link.connection);targets.push({node:connection,text:link.connection,kind:'connection',id:question.id,path:[links.indexOf(link),'connection']});article.append(cel('h4','',card.title,['title']),connection);
+        article.append(el('h5','','まず覚えること'),cel('p','knowledge-principle',card.firstPrinciple,['firstPrinciple']));
+        article.append(el('h5','','試験ではここが問われる'),cel('p','knowledge-exam-use',card.examUse,['examUse']));
+        if(card.essentialConditions.length)article.append(clist(card.essentialConditions,'knowledge-essential-conditions',['essentialConditions']));
         if(card.comparison){
           const t=card.comparison;
           const wrap=el('div','knowledge-table-scroll');wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label',t.caption+'（横にスクロールできます）');
-          const table=el('table');table.append(el('caption','',t.caption));const head=el('thead'),hr=el('tr');
-          for(const label of t.columns){const th=el('th','',label);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
-          const rows=el('tbody');for(const row of t.rows){const tr=el('tr');row.forEach((value,index)=>{const cell=el(index?'td':'th','',value);if(!index)cell.scope='row';tr.append(cell);});rows.append(tr);}table.append(rows);wrap.append(table);article.append(wrap);
-          if(t.notes.length)article.append(list(t.notes,'small knowledge-table-notes'));
+          const table=el('table');table.append(cel('caption','',t.caption,['comparison','caption']));const head=el('thead'),hr=el('tr');
+          for(const [i,label] of t.columns.entries()){const th=cel('th','',label,['comparison','columns',i]);th.scope='col';hr.append(th);}head.append(hr);table.append(head);
+          const rows=el('tbody');for(const [ri,row] of t.rows.entries()){const tr=el('tr');row.forEach((value,index)=>{const cell=cel(index?'td':'th','',value,['comparison','rows',ri,index]);if(!index)cell.scope='row';tr.append(cell);});rows.append(tr);}table.append(rows);wrap.append(table);article.append(wrap);
+          if(t.notes.length)article.append(clist(t.notes,'small knowledge-table-notes',['comparison','notes']));
         }
-        if(card.memoryAid)article.append(el('h5','','覚え方のコツ'),el('p','knowledge-memory',card.memoryAid));
+        if(card.memoryAid)article.append(el('h5','','覚え方のコツ'),cel('p','knowledge-memory',card.memoryAid,['memoryAid']));
         if(card.details?.length){
           const details=el('details','knowledge-details');details.append(el('summary','','もう少し詳しく（任意）'));
-          for(const detail of card.details)details.append(el('h5','',detail.title),el('p','',detail.body));article.append(details);
+          for(const [i,detail] of card.details.entries())details.append(cel('h5','',detail.title,['details',i,'title']),cel('p','',detail.body,['details',i,'body']));article.append(details);
         }
         const sources=el('details','knowledge-sources');sources.append(el('summary','','出典・確認日'));const ul=el('ul');
-        for(const source of card.sources){const li=el('li');const a=el('a','',source.title);a.href=source.url;a.target='_blank';a.rel='noopener noreferrer';li.append(a,el('p','small',`${source.locator} ／ 確認日：${source.checkedAt}`),el('p','small quiet',source.supports));ul.append(li);}sources.append(ul);article.append(sources);
-        return article;
+        for(const source of card.sources){const li=el('li');const a=el('a','',source.title);a.href=source.url;a.target='_blank';a.rel='noopener noreferrer';li.append(a,el('p','small',`${source.locator} ／ 確認日：${source.checkedAt}`),el('p','small quiet',source.supports));ul.append(li);}const updates=(value.editorialCorrections||[]).flatMap(p=>p.changes.filter(c=>c.kind==='card'?c.id===card.id:c.id===question.id).flatMap(c=>c.sources));
+        if(updates.length){ul.append(el('li','small quiet','今回の意味・表記の補足で確認した資料（以前の確認記録は履歴として保持）'));for(const source of updates){const li=el('li'),a=el('a','',source.title);a.href=source.url;a.target='_blank';a.rel='noopener noreferrer';li.append(a,el('p','small',source.locator));ul.append(li);}}
+        sources.append(ul);article.append(sources);
+        enhanceSymbolTargets(document,article,targets,importSymbols);return article;
       }
       body.append(renderCard(links[0]));
       // A second, distinct exam target is optional rather than another wall of text.
