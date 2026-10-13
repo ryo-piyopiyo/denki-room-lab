@@ -1,11 +1,11 @@
 {
   "format": "denki-post-answer-knowledge",
   "schemaVersion": 2,
-  "knowledgeVersion": "knowledge-pilot-2017-2424b066667966f3",
+  "knowledgeVersion": "knowledge-2017-2018-6ae550fab6ba9808",
   "baseDataVersion": "2017-2026-study-25papers-pilot-2017-51deac51c81f-v4",
   "baseDataSha256": "3bbba9952bbc781db65dfe589507963580ce89623509b1b58004ea13a965f8f8",
-  "cardCount": 72,
-  "questionCount": 100,
+  "cardCount": 104,
+  "questionCount": 200,
   "reviews": [
     {
       "status": "verified",
@@ -13,6 +13,20 @@
       "contentSha256": "33440c619354a3ceaa9b5a0c789d0fc9a8b5f1716bc72b201dd4f059d1040e08",
       "reportSha256": "1a0ee8388ff48d0ff2b82ed1d74470d57878eb143052304539c0289bed2e6040",
       "reviewerFingerprintSha256": "63a9437616e1aa2f7ec1c9a1031909eca0e0ed36c2fc98ce0b85c44ced88c729"
+    },
+    {
+      "status": "verified",
+      "pedagogyVersion": "beginner-v2",
+      "contentSha256": "aeb19f1d0554bb8fa2749367a0b02e0ab8becc17baa14a66bdfbe27d348a6de5",
+      "reportSha256": "8655e7debf996ed211954992ab76c3c644469f3d7404ad44b1129d6725dcd5b0",
+      "reviewerFingerprintSha256": "6ebe78f5e433ffe99d99cd08dd24a49bd8236638caca8b5d92808648f875256d"
+    },
+    {
+      "status": "verified",
+      "pedagogyVersion": "beginner-v2",
+      "contentSha256": "332ff0aa050e1113928b0ef9cfb09b290b56f9dcc6102ff4937419a3bc73669b",
+      "reportSha256": "87dd176047fc6352d131320dd22981400e32faf4d85347fb8c331f939d21e411",
+      "reviewerFingerprintSha256": "4dedc2389690e632544c3701874aa9e5dfb9afcf8ed2466138a907a1462a095d"
     }
   ],
   "cards": {
@@ -610,6 +624,64 @@
         "notes": []
       }
     },
+    "construction-metal-penetration-bonding": {
+      "id": "construction-metal-penetration-bonding",
+      "domain": "construction",
+      "title": "金属管は、壁の金属から絶縁し、箱とはつなぐ",
+      "firstPrinciple": "金属管が木造建物の金属ラスなどに触れる部分では、漏電が建物の金属へ広がらないように絶縁する。一方、金属管と金属製ボックスは電気的につながるように接続する。同じ「金属同士」でも、相手で処理が違う。",
+      "examUse": "木造壁の金属へ管を接触させる選択肢を見抜く。管へ接地を追加しても、貫通部の絶縁の代わりにはならない。配線用ボックスとの電気的な接続とは区別する。",
+      "essentialConditions": [
+        "金属ラス張り・ワイヤラス張り・金属板張りの木造建物の低圧配線についての比較。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-20",
+        "d2-20210530-am-21"
+      ],
+      "sources": [
+        {
+          "id": "mlit2025",
+          "title": "国土交通省 公共建築工事標準仕様書（電気設備工事編）令和7年版",
+          "url": "https://www.mlit.go.jp/gobuild/content/001888825.pdf",
+          "locator": "第2編2.1.9、2.2.5(4)～(6)、2.10.4.1(4)",
+          "checkedAt": "2026-10-13",
+          "supports": "金属張り木造造営物との絶縁、管と箱のボンディング、ケーブル引入口の損傷防止。"
+        },
+        {
+          "id": "exam-d2-20181007-20",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf",
+          "locator": "問20：金属張りの壁・貫通工事",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        },
+        {
+          "id": "exam-d2-20210530-am-21",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20210530_co_second_q01.pdf",
+          "locator": "問21：金属管工事・ボンディング・電気的接続",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ],
+      "comparison": {
+        "caption": "接触する相手を先に確認",
+        "columns": [
+          "相手",
+          "基本の処理"
+        ],
+        "rows": [
+          [
+            "木造壁の金属ラス等",
+            "管から絶縁する"
+          ],
+          [
+            "配線用の金属ボックス",
+            "電気的に確実につなぐ"
+          ]
+        ],
+        "notes": []
+      }
+    },
     "construction-neon-support": {
       "id": "construction-neon-support",
       "domain": "construction",
@@ -638,6 +710,50 @@
           "locator": "問23：ネオン放電灯・施設方法",
           "checkedAt": "2026-10-12",
           "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ]
+    },
+    "construction-resin-support-joints": {
+      "id": "construction-resin-support-joints",
+      "domain": "construction",
+      "title": "VE管は1.5 m以下ごとに支持する",
+      "firstPrinciple": "管の支持とは、サドルなどで壁や天井へ固定し、たわみや外れを防ぐこと。硬質ビニル管の配線では、支持点どうしを離し過ぎない。管をつなぐ接着と、建物へ固定する支持は別の作業として確認する。",
+      "examUse": "支持点間が2 mなどの選択肢を見抜く問題に使う。VE管の支持間隔は1.5 m以下。管端・曲がり・箱との接続付近など、力がかかる部分の支持も重要になる。",
+      "essentialConditions": [
+        "本問は硬質の合成樹脂管を造営材に沿って取り付ける場合。支持点間は1.5 m以下とし、管端や管・箱の接続点の近くにも支持を設ける。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-23",
+        "d2-20201004-am-23",
+        "d2-20211024-pm-23",
+        "d2-20220529-am-23",
+        "d2-20220529-pm-23",
+        "d2-20231029-am-23",
+        "d2-20231029-pm-23",
+        "d2-20240526-23"
+      ],
+      "sources": [
+        {
+          "id": "resin-rules",
+          "title": "経済産業省 電気設備の技術基準の解釈",
+          "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/law/files/dengikaishaku.pdf",
+          "locator": "第158条第3項第二号～第四号",
+          "checkedAt": "2026-10-11",
+          "supports": "1.2倍／接着剤使用時0.8倍、1.5m以下と端部付近の支持、防湿措置。現在公開版の検索索引本文を照合。"
+        },
+        {
+          "id": "exam-d2-20180603-23",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf",
+          "locator": "問23：合成樹脂管工事・支持点間距離",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ],
+      "details": [
+        {
+          "title": "差込み接続の条件",
+          "body": "管の差込み深さは外径の1.2倍以上が基本で、接着剤を用いる場合は外径の0.8倍以上。接着剤で建物への支持を省略できるわけではない。"
         }
       ]
     },
@@ -711,6 +827,87 @@
         "notes": []
       },
       "memoryAid": "つながる線をまとめる→太さと本数→大きさと刻印。"
+    },
+    "construction-ring-sleeve-combinations": {
+      "id": "construction-ring-sleeve-combinations",
+      "domain": "construction",
+      "title": "太さが混ざる接続は、組合せ表で選ぶ",
+      "firstPrinciple": "太さの違う電線をリングスリーブでつなぐときは、本数だけで判断できない。1.6 mmと2.0 mmを分けて数え、メーカーの組合せ表に当てはめる。圧着後の刻印まで確認して、指定された接続を仕上げる。",
+      "examUse": "「2.0 mmが1本、1.6 mmが2本」などの混合接続で使う。すべて1.6 mmの場合の本数表をそのまま流用せず、太い線が何本あるかに注目しよう。2.0 mmだけの3～4本なら、中スリーブ・刻印中となる。",
+      "essentialConditions": [
+        "下表は銅単線用の代表例。表にない組合せを断面積の足し算だけで判断しない。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-19",
+        "d2-20191006-19",
+        "d2-20211024-am-19",
+        "d2-20240526-19",
+        "d2-20251026-19",
+        "d2-20181007-48",
+        "d2-20240526-48"
+      ],
+      "sources": [
+        {
+          "id": "sleeve",
+          "title": "ホーザン P-738取扱説明書",
+          "url": "https://www.hozan.co.jp/download/manual/P-738.pdf",
+          "locator": "p.1 圧着ダイスとスリーブ・電線の組み合わせ",
+          "checkedAt": "2026-10-11",
+          "supports": "表の全組合せ、ダイス・刻印、端子メーカー規格の確認。"
+        },
+        {
+          "id": "exam-d2-20180603-19",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf",
+          "locator": "問19：リングスリーブ・圧着刻印",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        },
+        {
+          "id": "exam-d2-20181007-48",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf",
+          "locator": "問48：リングスリーブ・複線図・接続数",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ],
+      "comparison": {
+        "caption": "混合する場合と、2.0 mmだけの場合の代表例",
+        "columns": [
+          "2.0 mm",
+          "1.6 mm",
+          "スリーブ／刻印"
+        ],
+        "rows": [
+          [
+            "1本",
+            "1～2本",
+            "小／小"
+          ],
+          [
+            "1本",
+            "3～5本",
+            "中／中"
+          ],
+          [
+            "2本",
+            "1～3本",
+            "中／中"
+          ],
+          [
+            "3本",
+            "1本",
+            "中／中"
+          ],
+          [
+            "2本",
+            "0本",
+            "小／小"
+          ]
+        ],
+        "notes": []
+      }
     },
     "construction-underground-methods": {
       "id": "construction-underground-methods",
@@ -992,6 +1189,136 @@
         }
       ]
     },
+    "design-cable-temperature-reference": {
+      "id": "design-cable-temperature-reference",
+      "domain": "design",
+      "title": "VVRの許容電流は、問題の条件から計算する",
+      "firstPrinciple": "VVRは、絶縁した電線を外側の被覆でまとめた丸形ケーブル。3心なら中の絶縁電線が3本という意味。許容電流は導体の太さだけでなく、心数や周囲温度でも変わるので、導体の太さに合う基準値と、問題に示された係数を組にして使う。",
+      "examUse": "2.0mm銅単線の基準35Aに、指定係数0.70を掛ける形式では、計算値は24.5A。別温度のメーカー表の値へ0.70を重ねて掛けない。",
+      "essentialConditions": [
+        "このカードの計算例は、銅単線2.0mm・3心VVR、周囲30℃以下、係数0.70が明示された場合に限る。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-08",
+        "d2-20230528-pm-08"
+      ],
+      "sources": [
+        {
+          "id": "sfcc-vv",
+          "title": "SFCC：産業用電線・ケーブル 製品カタログ",
+          "url": "https://www.swcc.co.jp/sfcc/products/pdf/SFCC_Catlog_S_web.pdf",
+          "locator": "p.34「VV、VVF 許容電流」JCS 0168-2より",
+          "checkedAt": "2026-10-11",
+          "supports": "VV/VVFの周囲40℃・絶縁体60℃、気中・暗渠1条の2心/3心値と30℃補正1.22。原表を画像でも確認。"
+        },
+        {
+          "id": "exam-vvr-2023",
+          "title": "電気技術者試験センター：2023年度上期 午後 問8",
+          "url": "https://www.shiken.or.jp/construction/upload/20230528_co_second_q02.pdf#page=6",
+          "locator": "問8",
+          "checkedAt": "2026-10-11",
+          "supports": "周囲30℃以下、VVR2.0mm・3心、指定係数0.70という学科問題の条件。"
+        },
+        {
+          "id": "exam-2018-20181007-8",
+          "title": "電気技術者試験センター 平成30年度下期 公式問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf",
+          "locator": "問8",
+          "checkedAt": "2026-10-13",
+          "supports": "VVR2.0 mm・3心、周囲30℃以下、電流減少係数0.70という設問条件。35×0.70は独自計算。"
+        }
+      ],
+      "memoryAid": "線種・太さ・心数・温度を確認してから計算。",
+      "details": [
+        {
+          "title": "別の表と値が違うとき",
+          "body": "メーカーのVV用表には周囲40℃・3心・1条で20Aという条件がある。30℃へ補正した値と比較するには、その表自身の補正係数を使う。基準温度や算定方法が違う表を混ぜない。"
+        }
+      ]
+    },
+    "design-derating-conduit": {
+      "id": "design-derating-conduit",
+      "domain": "design",
+      "title": "管の中の電線が増えると、何を掛ける？",
+      "firstPrinciple": "管の中に電線をまとめると熱が逃げにくくなる。その分だけ流せる電流を減らす数が「電流減少係数」。許容電流は、電線の基準値×係数で求める。本数が多いほど係数が小さくなるので、掛ける前より大きな電流にはならない。",
+      "examUse": "同一管内の本数から係数を選ぶ。5本と6本は同じ0.56、7本からは0.49へ変わる。係数を本数で割らない。",
+      "essentialConditions": [
+        "IVなどの絶縁電線を、金属管・合成樹脂管等に収める場合の係数。表は周囲30℃以下の基準に使用し、ケーブルの心数表とは区別する。",
+        "表に入れる本数は、その許容電流表の算入規則による。分岐回路などの個別規定を優先する場合がある。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-23",
+        "d2-20210530-pm-23",
+        "d2-20221030-pm-23"
+      ],
+      "sources": [
+        {
+          "id": "jcma-count",
+          "title": "日本電線工業会：EM電線・ケーブル",
+          "url": "https://www.jcma2.jp/gijyutu/kankyo/em/index.html",
+          "locator": "「IE/F電線管等に収める場合の許容電流値」備考1",
+          "checkedAt": "2026-10-11",
+          "supports": "管内許容電流表の中性線・接地線・制御回路用電線の算入除外と単相3線式2回路の例。IVの数値をこのEM表から転記していない。"
+        },
+        {
+          "id": "fdc-derating",
+          "title": "フジクラ・ダイヤケーブル：電設資材総合カタログ",
+          "url": "https://www.fujikura-dia.co.jp/catalog-book/contents/pages/pdf/all.pdf",
+          "locator": "「電線管工事の場合の許容電流減少係数」",
+          "checkedAt": "2026-10-11",
+          "supports": "3本以下0.70、4本0.63、5～6本0.56、7～15本0.49など、がいし引き値へ掛ける係数。"
+        },
+        {
+          "id": "meti-kaishaku-current",
+          "title": "経済産業省：電気設備の技術基準の解釈（現行公開版）",
+          "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/law/files/dengikaishaku.pdf",
+          "locator": "第146条146-3・146-4表、第149条149-2・149-3表",
+          "checkedAt": "2026-10-11",
+          "supports": "第146条146-3・146-4表の公式PDF検索表示で、温度補正式・30℃以下の扱い・管内係数と適用除外を照合。PDFの直接取得ではなく索引本文による確認。"
+        },
+        {
+          "id": "fdc-web-current",
+          "title": "フジクラ・ダイヤケーブル 電線・ケーブルの許容電流",
+          "url": "https://www.fujikura-dia.co.jp/tech/documents/allowable-current.php",
+          "locator": "600V絶縁電線／電線管工事の場合の許容電流減少係数",
+          "checkedAt": "2026-10-13",
+          "supports": "管内3本以下0.70、4本0.63、5～6本0.56、7～15本0.49及び基準温度。"
+        }
+      ],
+      "comparison": {
+        "caption": "管内本数と電流減少係数",
+        "columns": [
+          "算入する電線数（本）",
+          "係数"
+        ],
+        "rows": [
+          [
+            "3以下",
+            "0.70"
+          ],
+          [
+            "4",
+            "0.63"
+          ],
+          [
+            "5・6",
+            "0.56"
+          ],
+          [
+            "7～15",
+            "0.49"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "本数が増えるほど、掛ける係数は小さくなる。",
+      "details": [
+        {
+          "title": "中性線などの数え方",
+          "body": "表の算入規則では中性線・接地線・制御回路用電線を除く場合がある。単相3線式2回路なら、実際6本から中性線2本を除き4本として数える。管の収容スペースを計算するときは6本とも場所を取る。"
+        }
+      ]
+    },
     "design-motor-feeder-current": {
       "id": "design-motor-feeder-current",
       "domain": "design",
@@ -1064,6 +1391,63 @@
         "notes": []
       },
       "memoryAid": "先に「MとH」、次に「Mと50A」。"
+    },
+    "design-neutral-unbalance": {
+      "id": "design-neutral-unbalance",
+      "domain": "design",
+      "title": "単相3線式の中性線には、どれだけ流れる？",
+      "firstPrinciple": "単相3線式の真ん中の線が中性線。上下の100V側で使う電流が同じなら、互いに打ち消して中性線電流は0A。抵抗負荷で電流が違う場合、中性線にはその差が流れる。外線と中性線の電圧降下を別々に考えるのがポイント。",
+      "examUse": "上下が同じ状態（平衡）なら、中性線の降下は0。スイッチの開閉で負荷が変わる問題は、変化後の各側の電流を求め直してから差を取る。",
+      "essentialConditions": [
+        "単相3線式の抵抗負荷で、中性線がつながっている場合。抵抗値が与えられた問題は、電流が一定とは限らない。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-07",
+        "d2-20210530-am-06",
+        "d2-20250525-07",
+        "d2-20260524-07"
+      ],
+      "sources": [
+        {
+          "id": "openstax-10.2",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/10-2-resistors-in-series-and-parallel",
+          "locator": "10.2",
+          "checkedAt": "2026-10-11",
+          "supports": "直列・並列の合成抵抗、枝電流と電力の関係。表の条件変更例は独自導出。"
+        },
+        {
+          "id": "openstax-9.5",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/9-5-electrical-energy-and-power",
+          "locator": "9.5",
+          "checkedAt": "2026-10-11",
+          "supports": "P=VI=I²R=V²/R、電力量=電力×時間。表の比較数値は明記した一定条件での独自計算。"
+        }
+      ],
+      "comparison": {
+        "caption": "電流値が与えられた独立例",
+        "columns": [
+          "上側／下側の電流",
+          "中性線電流の大きさ"
+        ],
+        "rows": [
+          [
+            "15A／15A",
+            "0A"
+          ],
+          [
+            "20A／10A",
+            "10A"
+          ],
+          [
+            "10A／20A",
+            "10A（向きは逆）"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "中性線は「和」ではなく「差」。"
     },
     "design-tap-distance": {
       "id": "design-tap-distance",
@@ -1184,6 +1568,67 @@
           "body": "電源から短絡点までの電線が長くなると、その区間の抵抗などが増え、短絡電流や遮断までの時間が変わり得る。だから長さと電線・保護器の条件を組にする。短絡点より先の長さまで全部が故障電流の経路に入るわけではない。"
         }
       ]
+    },
+    "design-temperature-iv": {
+      "id": "design-temperature-iv",
+      "domain": "design",
+      "title": "暑いと許容電流が減るのはなぜ？",
+      "firstPrinciple": "電線は電流が流れると発熱する。周囲が暑いと熱を逃がしにくく、絶縁物を傷めないために流せる電流を減らす必要がある。一方、同じ銅線の電気抵抗は温度が上がるほど大きくなる。「抵抗」と「許容電流」は逆向きに変わる。",
+      "examUse": "周囲温度・太さ・長さを変えたときの性質を判定する。温度が高いほど「抵抗も許容電流も大きい」とまとめて覚えない。",
+      "essentialConditions": [
+        "同じ銅電線の温度変化を比べる。許容電流は線種・太さ・配線方法を同じにして比較する。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-03",
+        "d2-20190602-02",
+        "d2-20220529-am-02",
+        "d2-20221030-am-02"
+      ],
+      "sources": [
+        {
+          "id": "meti-kaishaku-current",
+          "title": "経済産業省：電気設備の技術基準の解釈（現行公開版）",
+          "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/law/files/dengikaishaku.pdf",
+          "locator": "第146条146-3・146-4表、第149条149-2・149-3表",
+          "checkedAt": "2026-10-11",
+          "supports": "第146条146-3・146-4表の公式PDF検索表示で、温度補正式・30℃以下の扱い・管内係数と適用除外を照合。PDFの直接取得ではなく索引本文による確認。"
+        },
+        {
+          "id": "sfcc-iv",
+          "title": "SFCC：産業用電線・ケーブル 製品カタログ",
+          "url": "https://www.swcc.co.jp/sfcc/products/pdf/SFCC_Catlog_S_web.pdf",
+          "locator": "p.32「IV 許容電流」およびp.6の構造・性能",
+          "checkedAt": "2026-10-11",
+          "supports": "銅IV単線・より線のがいし引き配線値、周囲30℃・絶縁体60℃、管内表と温度補正。原表を画像でも確認。"
+        },
+        {
+          "id": "openstax-9.3",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/9-3-resistivity-and-resistance",
+          "locator": "9.3",
+          "checkedAt": "2026-10-11",
+          "supports": "R=ρL/A、抵抗率と温度の関係。寸法比・面積換算の各数値はこの関係と円の面積からの独自計算。"
+        }
+      ],
+      "comparison": {
+        "caption": "他の条件をそろえて温度が上がると",
+        "columns": [
+          "量",
+          "変化"
+        ],
+        "rows": [
+          [
+            "銅線の電気抵抗",
+            "大きくなる"
+          ],
+          [
+            "電線の許容電流",
+            "小さくなる"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "暑いほど、熱への余裕は小さくなる。"
     },
     "design-voltage-drop-systems": {
       "id": "design-voltage-drop-systems",
@@ -1740,6 +2185,79 @@
       },
       "memoryAid": "ボタンで指令、開閉器で電力を入切。"
     },
+    "diagram-outlet-location": {
+      "id": "diagram-outlet-location",
+      "domain": "diagram",
+      "title": "コンセントの記号で取付場所を読む",
+      "firstPrinciple": "コンセントは、取り付ける場所によって図形が変わる。壁付けは円の一部に黒塗り、天井付けは黒塗りのない円、床面は円の下の黒い三角形が手掛かり。二重床用は四角枠に下側の細い長方形が加わる。図形の細部まで見る。",
+      "examUse": "設置場所を選ぶ問題では図形を先に見る。そのあとE・LK・口数などの傍記を読むと、取付場所と器具の機能を取り違えにくい。",
+      "essentialConditions": [
+        "問題の図記号・凡例に従う。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-35",
+        "d2-20181007-33"
+      ],
+      "sources": [
+        {
+          "id": "mlit-standard",
+          "title": "国土交通省 公共建築設備工事標準図（電気設備工事編）令和7年版",
+          "url": "https://www.mlit.go.jp/gobuild/content/001879276.pdf",
+          "locator": "第1編 図示記号、印刷ページ7～8",
+          "checkedAt": "2026-10-13",
+          "supports": "壁面・天井面・床面・二重床用のコンセント原図"
+        },
+        {
+          "id": "d2-20180603-35",
+          "title": "電気技術者試験センター 平成30年度上期 第二種電気工事士 筆記試験 問35",
+          "url": "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf#page=11",
+          "locator": "問35・対応配線図と共通注意",
+          "checkedAt": "2026-10-13",
+          "supports": "二重床用と普通の床面・非常コンセントの図形の識別"
+        },
+        {
+          "id": "exam-20181007-33",
+          "title": "電気技術者試験センター 平成30年度下期 第二種電気工事士 筆記試験",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf#page=11",
+          "locator": "問33、15ページ③",
+          "checkedAt": "2026-10-13",
+          "supports": "黒塗りのない円の天井コンセントと、LKの機能の区別。"
+        }
+      ],
+      "comparison": {
+        "caption": "図形から見る取付場所",
+        "columns": [
+          "取付場所",
+          "見分ける手掛かり"
+        ],
+        "rows": [
+          [
+            "壁面",
+            "円の一部が黒塗り"
+          ],
+          [
+            "天井面",
+            "黒塗りのない円"
+          ],
+          [
+            "床面",
+            "円の下に黒い三角形"
+          ],
+          [
+            "二重床",
+            "四角枠＋下側の細い長方形"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "場所は図形、追加機能は文字。",
+      "details": [
+        {
+          "title": "四角の枠だけでは決めない",
+          "body": "非常コンセントにも四角枠がある。二重床用は枠の下側に加わる細い長方形まで見て区別する。"
+        }
+      ]
+    },
     "diagram-outlet-rating-poles": {
       "id": "diagram-outlet-rating-poles",
       "domain": "diagram",
@@ -1951,6 +2469,88 @@
         "notes": []
       },
       "memoryAid": "Whのhは時間。電力×時間で電力量。"
+    },
+    "diagram-remote-control-devices": {
+      "id": "diagram-remote-control-devices",
+      "domain": "diagram",
+      "title": "リモコンのスイッチ・リレー・トランス",
+      "firstPrinciple": "リモコンスイッチは操作信号を送り、リモコンリレーはその信号で照明の電源を入切する。リモコントランスは操作用の低い電圧を作る変圧器。セレクタスイッチは複数の回路を選んで操作する側の器具である。",
+      "examUse": "図記号から器具名や写真を選ぶときは、操作する側・電源を開閉する側・操作用電源を作る側に分ける。両切リレーは電源の2本を連動して開閉するので、写真の主回路の接点2組を確認する。",
+      "essentialConditions": [],
+      "examEvidenceIds": [
+        "d2-20180603-43",
+        "d2-20180603-45",
+        "d2-20181007-32",
+        "d2-20181007-37",
+        "d2-20181007-45"
+      ],
+      "sources": [
+        {
+          "id": "s1847535238",
+          "title": "国土交通省 公共建築設備工事標準図（電気設備工事編）令和7年版",
+          "url": "https://www.mlit.go.jp/gobuild/content/001879276.pdf",
+          "locator": "第1編 図示記号、印刷ページ6",
+          "checkedAt": "2026-10-13",
+          "supports": "リモコンセレクタの図記号と、操作用スイッチの区分。"
+        },
+        {
+          "id": "s457254053",
+          "title": "Panasonic 多重伝送フル2線式リモコン 商品ラインアップ",
+          "url": "https://www2.panasonic.biz/jp/densetsu/bs/lighting_control/full2/lineup/",
+          "locator": "制御部・スイッチ部・小型リモコントランス",
+          "checkedAt": "2026-10-13",
+          "supports": "スイッチ・リレー・操作電源の役割を分けること"
+        },
+        {
+          "id": "exam-20181007-remote",
+          "title": "電気技術者試験センター 平成30年度下期 第二種電気工事士 筆記試験",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf#page=12",
+          "locator": "問32・37・45、15ページ②⑦⑮と分電盤結線図",
+          "checkedAt": "2026-10-13",
+          "supports": "セレクタ、丸内TにRのトランス、単相200 V用両切リレーの図記号と写真。"
+        },
+        {
+          "id": "exam-20180603-remote",
+          "title": "電気技術者試験センター 平成30年度上期 第二種電気工事士 筆記試験",
+          "url": "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf#page=12",
+          "locator": "問43・45の器具写真、15ページ⑬⑮",
+          "checkedAt": "2026-10-13",
+          "supports": "リモコントランスと操作用スイッチの写真、および指定室内にない器具の照合。"
+        }
+      ],
+      "comparison": {
+        "caption": "図記号と役割を対応させる",
+        "columns": [
+          "器具・記号の手掛かり",
+          "役割"
+        ],
+        "rows": [
+          [
+            "リモコンスイッチ：黒丸にR",
+            "操作信号を送る"
+          ],
+          [
+            "セレクタ：円の内部を区切った形",
+            "複数の回路を選んで操作する"
+          ],
+          [
+            "リモコンリレー：黒い三角形",
+            "照明の電源を入切する"
+          ],
+          [
+            "リモコントランス：丸内TにR",
+            "操作用の電圧を作る"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "スイッチは指令、リレーは開閉、トランスは操作用電源。",
+      "details": [
+        {
+          "title": "記号の傍記",
+          "body": "セレクタやリレーのそばの数字は、回路数などの指定を表す。取り付ける場所や接続先も含めて読む。"
+        }
+      ]
     },
     "diagram-switch-automatic-controls": {
       "id": "diagram-switch-automatic-controls",
@@ -2466,6 +3066,83 @@
         }
       ]
     },
+    "equipment-cable-material-temperature": {
+      "id": "equipment-cable-material-temperature",
+      "domain": "equipment",
+      "title": "電線の許容温度は、絶縁材料で決まる",
+      "firstPrinciple": "電線の中の銅が同じでも、周りを覆う絶縁材料が違えば耐えられる温度が違う。最高許容温度は、通常の使用で導体に許される温度。周囲の気温や、手で触れてよい温度を表す数字ではない。",
+      "examUse": "IV・HIV・CV・EM-EEFの名称と温度の組合せが問われる。まず材料との対応を覚えれば、数値だけを暗記するより取り違えにくい。",
+      "essentialConditions": [
+        "この温度だけで許容電流は決まらない。太さ・本数・周囲温度・施設方法も必要。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-12",
+        "d2-20191006-12",
+        "d2-20201004-pm-12",
+        "d2-20210530-pm-12",
+        "d2-20220529-am-12",
+        "d2-20220529-pm-12",
+        "d2-20240526-12",
+        "d2-20241027-12"
+      ],
+      "sources": [
+        {
+          "id": "thermal",
+          "title": "フジクラ・ダイヤケーブル 電線・ケーブルの許容電流",
+          "url": "https://www.fujikura-dia.co.jp/tech/documents/allowable-current.php",
+          "locator": "600V絶縁電線の導体最高許容温度表、CV許容電流表",
+          "checkedAt": "2026-10-11",
+          "supports": "ビニル60、耐熱ビニル・ポリエチレン75、EPゴム80、架橋ポリエチレン90℃。条件別の電流表。"
+        },
+        {
+          "id": "eef",
+          "title": "富士電線工業 EM-EEF",
+          "url": "https://www.fujiewc.co.jp/product/em-eef/",
+          "locator": "ダウンロードデータ→製品カタログ EM-EEF（2026年8月版・印刷p.9）、構造図・仕様表・絶縁物の許容温度",
+          "checkedAt": "2026-10-12",
+          "supports": "EM-EEFのポリエチレン絶縁・耐燃性ポリエチレンシースと75℃。"
+        },
+        {
+          "id": "exam-d2-20180603-12",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf",
+          "locator": "問12：電線・ケーブル・絶縁物の許容温度",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ],
+      "comparison": {
+        "caption": "代表的な電線・ケーブルの導体最高許容温度",
+        "columns": [
+          "種類",
+          "絶縁の特徴",
+          "温度"
+        ],
+        "rows": [
+          [
+            "IV・VVF・VVR",
+            "通常のビニル",
+            "60℃"
+          ],
+          [
+            "HIV",
+            "耐熱ビニル",
+            "75℃"
+          ],
+          [
+            "EM-EEF",
+            "ポリエチレン",
+            "75℃"
+          ],
+          [
+            "CV",
+            "架橋ポリエチレン",
+            "90℃"
+          ]
+        ],
+        "notes": []
+      }
+    },
     "equipment-capacitor-current-path": {
       "id": "equipment-capacitor-current-path",
       "domain": "equipment",
@@ -2655,6 +3332,64 @@
         "notes": []
       }
     },
+    "equipment-compression-tool-families-2018": {
+      "id": "equipment-compression-tool-families-2018",
+      "domain": "equipment",
+      "title": "圧着工具は、端子の種類とサイズで選ぶ",
+      "firstPrinciple": "圧着は、端子の筒を工具で押しつぶして電線とつなぐ方法。丸い取付け穴のある裸圧着端子は、電線の端を機器のねじ端子へ接続する。電線同士をまとめるリングスリーブとは、使う工具が違う。",
+      "examUse": "写真では端子の形を確認し、次に電線サイズに合うダイスを選ぶ。ダイスは端子を押す金型のこと。IV5.5の5.5は導体の断面積mm²で、直径ではない。大きな力が出る工具でも、適合サイズ外なら使えない。",
+      "essentialConditions": [
+        "端子・電線・工具・ダイスの組合せはメーカーの適合表に従う。通電した箇所には使用しない。"
+      ],
+      "comparison": {
+        "caption": "接続する部品から工具を区別",
+        "columns": [
+          "部品",
+          "選ぶ工具・表示"
+        ],
+        "rows": [
+          [
+            "裸の丸形圧着端子",
+            "裸圧着端子用。端子の呼びと電線に合うサイズ"
+          ],
+          [
+            "E形リングスリーブ",
+            "リングスリーブ専用。○・小・中など"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "先に端子の種類、次にサイズ。",
+      "examEvidenceIds": [
+        "d2-20181007-46"
+      ],
+      "sources": [
+        {
+          "id": "hozan-p75",
+          "title": "ホーザン P-75 圧着工具 取扱説明書",
+          "url": "https://www.hozan.co.jp/download/manual/P-75.pdf",
+          "locator": "p.1 適合する圧着端子・スリーブの呼び寸法、より線の適合表、警告",
+          "checkedAt": "2026-10-13",
+          "supports": "裸圧着端子用工具の5.5対応、端子・電線・ダイスの適合と無通電条件。"
+        },
+        {
+          "id": "hozan-p738",
+          "title": "ホーザン P-738 圧着工具 取扱説明書",
+          "url": "https://www.hozan.co.jp/download/manual/P-738.pdf",
+          "locator": "p.1 圧着ダイスとスリーブ・電線の組合せ、注意2",
+          "checkedAt": "2026-10-13",
+          "supports": "E形リングスリーブ専用工具と○・小・中の区別。"
+        },
+        {
+          "id": "exam-20181007-46",
+          "title": "電気技術者試験センター 平成30年度下期 第二種電気工事士 筆記試験",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf#page=13",
+          "locator": "問46の端子・工具写真、15ページ⑯のIV5.5",
+          "checkedAt": "2026-10-13",
+          "supports": "丸形裸圧着端子とIV5.5 mm²の接地線、適切な工具を選ぶ出題。"
+        }
+      ]
+    },
     "equipment-conduit-fitting-functions": {
       "id": "equipment-conduit-fitting-functions",
       "domain": "equipment",
@@ -2727,6 +3462,118 @@
           [
             "ロックナット",
             "管やコネクタを箱に固定する"
+          ]
+        ],
+        "notes": []
+      }
+    },
+    "equipment-cv-cvt-emce": {
+      "id": "equipment-cv-cvt-emce",
+      "domain": "equipment",
+      "title": "CVとCVT、単心3本と3心の違い",
+      "firstPrinciple": "CVは、導体の周りを架橋ポリエチレンで絶縁し、外側をビニルのシースで保護したケーブル。シースは外側の保護被覆のこと。CVTは、単心のCVケーブルを3本より合わせたものなので、1本のシースに3心を収めたCVとは構造が違う。",
+      "examUse": "略号から、絶縁材料・外側のシース・心線のまとまり方を選ぶ。図のCVTを、ビニルで絶縁するVVFやVVRと取り違えない。",
+      "essentialConditions": [],
+      "examEvidenceIds": [
+        "d2-20180603-31"
+      ],
+      "sources": [
+        {
+          "id": "fdc-cvt",
+          "title": "フジクラ・ダイヤケーブル 600V CVD・CVT・CVQカタログ",
+          "url": "https://www.fujikura-dia.co.jp/pdf/catalog/catalog-600V_CVD-CVT-CVQ.pdf",
+          "locator": "印刷p.15 構造図、単心3個よりの表",
+          "checkedAt": "2026-10-13",
+          "supports": "CVTの絶縁・シース材料と単心3本より合わせの構造。"
+        },
+        {
+          "id": "fdc-cv",
+          "title": "フジクラ・ダイヤケーブル 600V CVカタログ",
+          "url": "https://www.fujikura-dia.co.jp/pdf/catalog/catalog-600V-CV.pdf",
+          "locator": "印刷p.13～14 CVの構造図、単心・多心の区分",
+          "checkedAt": "2026-10-13",
+          "supports": "CVの絶縁とシースの材料、3心CVの構造。"
+        },
+        {
+          "id": "exam-20180603-31",
+          "title": "電気技術者試験センター 平成30年度上期 第二種電気工事士 筆記試験",
+          "url": "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf#page=11",
+          "locator": "問31の選択肢、15ページ①のCVT",
+          "checkedAt": "2026-10-13",
+          "supports": "CVTとVVF・VVRの名称・絶縁材料を読み分ける出題。"
+        }
+      ],
+      "comparison": {
+        "caption": "3本の導体を使う場合の構造比較",
+        "columns": [
+          "種類",
+          "外側から見た構造"
+        ],
+        "rows": [
+          [
+            "3心CV",
+            "一つのシースの中に、絶縁された3心"
+          ],
+          [
+            "CVT",
+            "シース付きの単心CVを3本より合わせる"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "Tは単心3本のより合わせ。"
+    },
+    "equipment-em-eef": {
+      "id": "equipment-em-eef",
+      "domain": "equipment",
+      "title": "EM-EEFは、平形の環境配慮形ケーブル",
+      "firstPrinciple": "EM-EEFは、導体をポリエチレンで絶縁し、外側を燃え広がりにくいポリエチレンで覆った平形ケーブル。絶縁と外装に塩素などのハロゲンを含まない材料を使う。「EM」という名前だけで、外形や絶縁材料まで全部同じとは限らない。",
+      "examUse": "断面写真と名称の対応、材料に含まれない物質、VVFとの違いが問われる。平形かどうかと、表示された名称・材料を組み合わせて判断する。",
+      "essentialConditions": [],
+      "examEvidenceIds": [
+        "d2-20181007-16",
+        "d2-20210530-am-16",
+        "d2-20221030-am-16",
+        "d2-20221030-pm-16",
+        "d2-20230528-am-16",
+        "d2-20231029-pm-12",
+        "d2-20241027-16"
+      ],
+      "sources": [
+        {
+          "id": "em-eef",
+          "title": "富士電線工業 EM-EEF",
+          "url": "https://www.fujiewc.co.jp/product/em-eef/",
+          "locator": "製品構造・特長",
+          "checkedAt": "2026-10-12",
+          "supports": "ポリエチレン絶縁、耐燃性ポリエチレン外装、ハロゲンを含まない構成。"
+        },
+        {
+          "id": "exam-d2-20181007-16",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf",
+          "locator": "問16：電線の写真識別・表示",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ],
+      "comparison": {
+        "caption": "平形でも材料が違う",
+        "columns": [
+          "名称",
+          "絶縁",
+          "外装"
+        ],
+        "rows": [
+          [
+            "VVF",
+            "ビニル",
+            "ビニル"
+          ],
+          [
+            "EM-EEF",
+            "ポリエチレン",
+            "耐燃性ポリエチレン"
           ]
         ],
         "notes": []
@@ -2821,6 +3668,75 @@
         {
           "title": "対象材を確認",
           "body": "ホールソーには金属用・木材用などがある。工具名だけで、すべての材質や板厚へ使えるとは判断しない。"
+        }
+      ]
+    },
+    "equipment-leakage-rating-axes": {
+      "id": "equipment-leakage-rating-axes",
+      "domain": "equipment",
+      "title": "漏電遮断器のAとmAは、意味が違う",
+      "firstPrinciple": "定格電流のAは、通常使用で流す電流の大きさ。定格感度電流のmAは、漏電を検出して動作する感度を表す。さらに動作時間で、速く切る高速形かなどを分類する。三つの表示を分けて読むことが大切。",
+      "examUse": "「定格電流30 A・定格感度電流30 mA・動作時間0.1秒以内」なら、高感度形・高速形という分類を選ぶ。30 Aという数字から漏電感度を決めない。",
+      "essentialConditions": [
+        "高感度形は定格感度電流30 mA以下。高速形は定格感度電流での動作時間0.1秒以内。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-11",
+        "d2-20211024-pm-15",
+        "d2-20231029-pm-15"
+      ],
+      "sources": [
+        {
+          "id": "rcd30",
+          "title": "パナソニック 定格感度電流30mAの動作範囲",
+          "url": "https://jpn.faq.panasonic.com/app/answers/detail/a_id/78595/p/4400/related/1",
+          "locator": "FAQ回答",
+          "checkedAt": "2026-10-11",
+          "supports": "15 mA超、30 mA以内の動作範囲。"
+        },
+        {
+          "id": "rcd-select",
+          "title": "パナソニック 漏電ブレーカの感度電流選定",
+          "url": "https://jpn.faq.panasonic.com/app/answers/detail/a_id/78585",
+          "locator": "感度と動作時間の区分",
+          "checkedAt": "2026-10-11",
+          "supports": "感度電流と時間が別の指標であること。"
+        },
+        {
+          "id": "exam-d2-20181007-11",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf",
+          "locator": "問11：漏電遮断器・特性・種類",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ],
+      "comparison": {
+        "caption": "銘板の単位を手掛かりに読む",
+        "columns": [
+          "表示",
+          "意味"
+        ],
+        "rows": [
+          [
+            "A",
+            "通常使用の定格電流"
+          ],
+          [
+            "mA",
+            "漏電検出の定格感度電流"
+          ],
+          [
+            "秒",
+            "漏電検出後の動作時間"
+          ]
+        ],
+        "notes": []
+      },
+      "details": [
+        {
+          "title": "30 mAちょうどでだけ動くわけではない",
+          "body": "30 mA感度品は、15 mA以下では動作せず、30 mAでは動作するという範囲で規定される。個体が必ず30 mAちょうどで動くという意味ではない。"
         }
       ]
     },
@@ -3298,6 +4214,69 @@
         }
       ]
     },
+    "equipment-overcurrent-time-grid": {
+      "id": "equipment-overcurrent-time-grid",
+      "domain": "equipment",
+      "title": "大きな過電流ほど、短い時間で遮断する",
+      "firstPrinciple": "配線用遮断器は、定格電流を少し超えたら必ず即座に切れるわけではない。流れる電流が定格の何倍かと、遮断器の定格電流の範囲で、規定の動作時間が変わる。まず倍率を計算してから表を見る。",
+      "examUse": "20 A品に25 Aなら1.25倍なので最大60分、40 Aなら2倍なので最大2分。「以内」は上限であり、必ずその時刻に切れる意味ではない。",
+      "essentialConditions": [
+        "この表は本問で扱う住宅等の配線用遮断器の規定。定格電流の1倍では自動動作しない。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-11",
+        "d2-20191006-15",
+        "d2-20201004-am-15",
+        "d2-20211024-am-15",
+        "d2-20231029-am-15",
+        "d2-20241027-15"
+      ],
+      "sources": [
+        {
+          "id": "nite-trip",
+          "title": "NITE 配線用遮断器の動作時間について",
+          "url": "https://www.nite.go.jp/data/000152833.pdf",
+          "locator": "別紙2、PDF9ページ",
+          "checkedAt": "2026-10-11",
+          "supports": "定格30 A以下／30 A超50 A以下／50 A超100 A以下の125%・200%最大時間。"
+        },
+        {
+          "id": "exam-d2-20180603-11",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf",
+          "locator": "問11：配線用遮断器・動作時間",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ],
+      "comparison": {
+        "caption": "規定電流を流したときの動作時間",
+        "columns": [
+          "定格電流",
+          "1.25倍",
+          "2倍"
+        ],
+        "rows": [
+          [
+            "30 A以下",
+            "60分以内",
+            "2分以内"
+          ],
+          [
+            "30 A超～50 A以下",
+            "60分以内",
+            "4分以内"
+          ],
+          [
+            "50 A超～100 A以下",
+            "120分以内",
+            "6分以内"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "定格値の区分→何倍か→以内の時間。"
+    },
     "equipment-pv-grid-island": {
       "id": "equipment-pv-grid-island",
       "domain": "equipment",
@@ -3434,6 +4413,121 @@
         ],
         "notes": []
       }
+    },
+    "equipment-sensor-control-inputs": {
+      "id": "equipment-sensor-control-inputs",
+      "domain": "equipment",
+      "title": "リモコンリレーは、操作信号で照明を入切する",
+      "firstPrinciple": "リモコンリレーは、離れたスイッチからの操作信号を受け、照明などの負荷回路を入切する装置。負荷とは電気を使う機器のこと。人が押して指令を出すスイッチと、指令を受けて負荷側を開閉するリレーを分けて考える。",
+      "examUse": "写真の器具が「操作する側」か「負荷を開閉する側」かを見分ける。リレーの入切と、明るさを連続的に変える調光も同じ働きではない。",
+      "essentialConditions": [],
+      "examEvidenceIds": [
+        "d2-20181007-17"
+      ],
+      "sources": [
+        {
+          "id": "relay-input",
+          "title": "パナソニック ワンショットリモコンシステムの基本構成",
+          "url": "https://jpn.faq.panasonic.com/app/answers/detail/a_id/99905/related/1",
+          "locator": "基本動作・基本配線図",
+          "checkedAt": "2026-10-13",
+          "supports": "操作スイッチからリモコンリレーの主回路側負荷をON/OFFする構成。"
+        },
+        {
+          "id": "exam-d2-20181007-17",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf",
+          "locator": "問17：器具の写真識別",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ],
+      "comparison": {
+        "caption": "操作信号を送る側と受ける側",
+        "columns": [
+          "器具",
+          "役割"
+        ],
+        "rows": [
+          [
+            "リモコンスイッチ",
+            "人の操作を信号として送る"
+          ],
+          [
+            "リモコンリレー",
+            "信号を受けて負荷回路を入切する"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "スイッチは指令、リレーは負荷の入切。"
+    },
+    "equipment-stripping-die-compatibility": {
+      "id": "equipment-stripping-die-compatibility",
+      "domain": "equipment",
+      "title": "VVFストリッパは被覆をむく工具",
+      "firstPrinciple": "VVFケーブルは、各心線の絶縁被覆をさらに外側のシースでまとめた平形ケーブル。VVFストリッパは、この外装や心線の被覆をはぎ取る工具。電線を接続する前の下準備で使い、導体を圧着する工具とは役割が違う。",
+      "examUse": "写真の刃や適用線径の表示から用途を読む。「切る」「被覆をむく」「端子を圧着する」を取り違えない。",
+      "essentialConditions": [],
+      "examEvidenceIds": [
+        "d2-20181007-18",
+        "d2-20191006-18",
+        "d2-20230528-am-18"
+      ],
+      "sources": [
+        {
+          "id": "strip",
+          "title": "ホーザン P-958でより線をストリップできるか",
+          "url": "https://faq.hozan.co.jp/denko/denko/detail?category=3&id=67&site=ZAWBTM42",
+          "locator": "対応電線表、より線不可の回答",
+          "checkedAt": "2026-10-11",
+          "supports": "P-958のVVF/EM-EEF、1.6/2.0mm・2/3心の対応とより線不可。"
+        },
+        {
+          "id": "eco-tool",
+          "title": "ホーザン エコ電線対応ストリッパー",
+          "url": "https://faq.hozan.co.jp/support/faq/detail?id=839&site=ZAWBTM42",
+          "locator": "EM-EEF対応機種",
+          "checkedAt": "2026-10-11",
+          "supports": "EM-EEF対応が製品別であること。"
+        },
+        {
+          "id": "exam-d2-20181007-18",
+          "title": "電気技術者試験センター 公開試験問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf",
+          "locator": "問18：工具の写真識別",
+          "checkedAt": "2026-10-12",
+          "supports": "このカードの基本事項を直接問う問題・選択肢。"
+        }
+      ],
+      "comparison": {
+        "caption": "電線の加工で区別する三つの作業",
+        "columns": [
+          "したいこと",
+          "代表的な工具"
+        ],
+        "rows": [
+          [
+            "電線を切る",
+            "電線に適合するカッタ"
+          ],
+          [
+            "VVFの被覆をむく",
+            "VVFストリッパ"
+          ],
+          [
+            "接続部品を押しつぶして接続する",
+            "適合する圧着工具"
+          ]
+        ],
+        "notes": []
+      },
+      "details": [
+        {
+          "title": "機種ごとの適合",
+          "body": "対応する電線名・導体径・心数は工具ごとに確認する。VVF用というだけで、細いより線のコードにも使えるとは限らない。"
+        }
+      ]
     },
     "equipment-tool-cutting-families": {
       "id": "equipment-tool-cutting-families",
@@ -3869,6 +4963,56 @@
         "notes": []
       }
     },
+    "inspection-earth-three-pole": {
+      "id": "inspection-earth-three-pole",
+      "domain": "inspection",
+      "title": "接地抵抗計のE・P・Cは、何の端子？",
+      "firstPrinciple": "接地抵抗計は、接地極から大地へ電流がどれだけ流れやすいかをΩで測る。三極法では、測りたい接地極Eに加え、電圧を調べる補助極Pと電流を流す補助極Cを使う。基本の並びはE－P－Cで、Pを間に置く。",
+      "examUse": "配置図では、測るEが端にあり、P、Cの順にほぼ一直線かを確かめる。問題に示される約10 mずつの配置は標準的な例で、実際の間隔は計器・接地極・敷地条件による。",
+      "essentialConditions": [
+        "機器の説明書に従う三極法の基本配置。現場のあらゆる接地極へ同じ距離を指定するものではない。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-26",
+        "d2-20210530-am-26",
+        "d2-20220529-pm-26",
+        "d2-20251026-26",
+        "d2-20220529-am-18"
+      ],
+      "sources": [
+        {
+          "id": "earth-two-three",
+          "title": "共立電気計器 接地抵抗計ガイドブック",
+          "url": "https://www.kew-ltd.co.jp/tech-library/knowledge/guidebook/earth/",
+          "locator": "3 接地抵抗／6 測定原理／8 補助極配置／9 測定方法",
+          "checkedAt": "2026-10-11",
+          "supports": "接地抵抗の意味、交流試験電流、E・P・Cの役割と配置、事前確認。"
+        }
+      ],
+      "comparison": {
+        "caption": "三つの端子と役割",
+        "columns": [
+          "端子",
+          "接続する極"
+        ],
+        "rows": [
+          [
+            "E",
+            "測る接地極"
+          ],
+          [
+            "P",
+            "電圧を調べる補助接地極"
+          ],
+          [
+            "C",
+            "試験電流を流す補助接地極"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "Eから出発、Pが間、Cが遠方。"
+    },
     "inspection-earth-thresholds": {
       "id": "inspection-earth-thresholds",
       "domain": "inspection",
@@ -4192,6 +5336,314 @@
       },
       "memoryAid": "検電は電圧の有無、検相は相の順番。"
     },
+    "inspection-meter-symbols": {
+      "id": "inspection-meter-symbols",
+      "domain": "inspection",
+      "title": "計器の記号は「方式・姿勢・交流直流」を別々に読む",
+      "firstPrinciple": "指針式計器の目盛板には、何の力で針を動かすかという方式と、置き方の指定がある。永久磁石可動コイル形は、磁石の中でコイルを動かす基本的な直流用。可動鉄片形は、コイルの磁力で鉄片を動かす方式で、交流・直流に使われる。",
+      "examUse": "方式が合っていても、水平と鉛直が逆なら選択肢は不正解。Vは電圧、～は交流を表す。原理・姿勢・測定対象を一つずつ照合する。",
+      "essentialConditions": [
+        "可動コイル形に整流器などを組み合わせた計器は別。使用姿勢は機器ごとの指定に従う。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-27",
+        "d2-20201004-am-27",
+        "d2-20220529-am-27",
+        "d2-20250525-27",
+        "d2-20251026-27"
+      ],
+      "sources": [
+        {
+          "id": "analog-principles",
+          "title": "日本電気技術者協会 アナログ計器の種類・構造・動作原理",
+          "url": "https://www.jeea.or.jp/course/contents/12117/",
+          "locator": "〔2〕(a)可動コイル形、(e)可動鉄片形、(f)整流器形",
+          "checkedAt": "2026-10-12",
+          "supports": "二方式の原理と交流・直流の区分。"
+        },
+        {
+          "id": "yokogawa-analog",
+          "title": "横河計測 携帯用指示計器 Bulletin 2000",
+          "url": "https://cdn.tmi.yokogawa.com/18/2699/files/BU2000.pdf",
+          "locator": "携帯用直流／交流計器・使用姿勢／Q&A",
+          "checkedAt": "2026-10-12",
+          "supports": "表示単位、方式及び使用姿勢を区別すること。"
+        }
+      ],
+      "comparison": {
+        "caption": "姿勢の指定",
+        "columns": [
+          "指定",
+          "目盛板の向き"
+        ],
+        "rows": [
+          [
+            "水平使用",
+            "机の上へ寝かせる向き"
+          ],
+          [
+            "鉛直使用（⊥）",
+            "壁のように立てる向き"
+          ]
+        ],
+        "notes": []
+      }
+    },
+    "inspection-neutral-loss-power": {
+      "id": "inspection-neutral-loss-power",
+      "domain": "inspection",
+      "title": "中性線が切れると、100 Vの機器に過電圧",
+      "firstPrinciple": "単相3線100/200 Vの中性線は、二つの100 V回路の基準を保つ線。これが切れると、両側の負荷が200 Vに対する直列回路のようになり、100 Vずつに分かれるとは限らない。片側の機器に100 Vを超える電圧がかかるおそれがある。",
+      "examUse": "一方が高い電圧、他方が低い電圧になる故障問題では、中性線断線を考える。例えば抵抗負荷の比が3対1なら、200 Vは150 Vと50 Vに分かれる。",
+      "essentialConditions": [
+        "例は両側を一定の抵抗負荷とした学習用計算。実際の機器の挙動は種類・状態による。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-27",
+        "d2-20190602-24",
+        "d2-20221030-pm-25",
+        "d2-20230528-pm-25"
+      ],
+      "sources": [
+        {
+          "id": "neutral-fault",
+          "title": "三菱電機FA 単3中性線欠相保護付ノーヒューズ遮断器",
+          "url": "https://fa-faq.mitsubishielectric.co.jp/faq/show/12790?site_domain=default",
+          "locator": "中性線欠相時の異常電圧と保護",
+          "checkedAt": "2026-10-11",
+          "supports": "正常な単相3線100/200 Vの接続と、中性線断線による異常電圧。抵抗比3対1の分圧例は独立した回路計算。"
+        }
+      ],
+      "memoryAid": "中性線は100 Vずつを保つ基準。切れると分担が崩れる。"
+    },
+    "inspection-resistance-judgment": {
+      "id": "inspection-resistance-judgment",
+      "domain": "inspection",
+      "title": "絶縁は「以上」、接地は「以下」で判定",
+      "firstPrinciple": "検査で並ぶ二つの抵抗は、合格の向きが逆。絶縁抵抗は漏れにくさなので基準以上、接地抵抗は大地への通りやすさなので上限以下にする。片方がよくても、もう片方の不足を補うことはできない。",
+      "examUse": "組合せ問題は、絶縁と接地を別々に判定し、両方を満たす行だけを残す。地絡時に0.5秒以内で自動遮断する装置がある場合、C・D種の接地抵抗上限は500 Ωになる。",
+      "essentialConditions": [
+        "表は、接地が必要な交流低圧機器の金属外箱と、その電路の検査。遮断時間による緩和を使わない基本値。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-26",
+        "d2-20190602-26",
+        "d2-20220529-am-26",
+        "d2-20241027-26"
+      ],
+      "sources": [
+        {
+          "id": "technical-58",
+          "title": "電気設備に関する技術基準を定める省令",
+          "url": "https://laws.e-gov.go.jp/law/409M50000400052",
+          "locator": "第58条・表及び対地電圧の定義",
+          "checkedAt": "2026-10-11",
+          "supports": "3区分の最低抵抗、測定対象及び接地式／非接地式の定義。"
+        },
+        {
+          "id": "interpretation-17-29",
+          "title": "経済産業省 電気設備の技術基準の解釈（令和7年11月20日改正）",
+          "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/law/files/dengikaishaku.pdf",
+          "locator": "第17条第3項第一・二号、第4項／第29条第1項",
+          "checkedAt": "2026-10-10",
+          "supports": "C・D種の抵抗上限、0.5秒以内遮断による500 Ω、通常の接地線条件と機器の電圧区分。"
+        }
+      ],
+      "comparison": {
+        "caption": "電圧の条件と二つの合格基準",
+        "columns": [
+          "使用電圧・対地電圧",
+          "絶縁抵抗",
+          "接地の種類・抵抗"
+        ],
+        "rows": [
+          [
+            "使用300 V以下・対地150 V以下",
+            "0.1 MΩ以上",
+            "D種・100 Ω以下"
+          ],
+          [
+            "使用300 V以下・対地150 V超",
+            "0.2 MΩ以上",
+            "D種・100 Ω以下"
+          ],
+          [
+            "使用300 V超の低圧",
+            "0.4 MΩ以上",
+            "C種・10 Ω以下"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "絶縁は上へ、接地は下へ。両方○で合格。"
+    },
+    "inspection-single-three-voltage": {
+      "id": "inspection-single-three-voltage",
+      "domain": "inspection",
+      "title": "単相3線式は、100 Vと200 Vを使い分ける",
+      "firstPrinciple": "単相3線100/200 Vは、外側の2本と中央の中性線の計3本。接地された中性線を基準にすると、外線と中性線の間は100 V、外線どうしは200 Vになる。中性線と大地の間は理想的には0 V。",
+      "examUse": "電圧表を選ぶときは、二点が「外線と外線」か「外線と中性線」かを見る。対地電圧は外線でも100 Vなので、線間200 Vと混同しない。",
+      "essentialConditions": [
+        "正常な単相3線100/200 Vで、中性線が接地されている理想的な関係。色だけで現場の無電圧を保証しない。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-25",
+        "d2-20201004-am-24",
+        "d2-20220529-am-24"
+      ],
+      "sources": [
+        {
+          "id": "neutral-fault",
+          "title": "三菱電機FA 単3中性線欠相保護付ノーヒューズ遮断器",
+          "url": "https://fa-faq.mitsubishielectric.co.jp/faq/show/12790?site_domain=default",
+          "locator": "中性線欠相時の異常電圧と保護",
+          "checkedAt": "2026-10-11",
+          "supports": "正常な単相3線100/200 Vの接続と、中性線断線による異常電圧。抵抗比3対1の分圧例は独立した回路計算。"
+        },
+        {
+          "id": "exam-2018-20181007-25",
+          "title": "電気技術者試験センター 平成30年度下期 公式問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf",
+          "locator": "問25",
+          "checkedAt": "2026-10-13",
+          "supports": "接地された白の中性線・赤黒の外線における、100/200 Vと対地電圧の理想的な関係。"
+        }
+      ],
+      "comparison": {
+        "caption": "二点間の電圧",
+        "columns": [
+          "二点",
+          "電圧"
+        ],
+        "rows": [
+          [
+            "外線－中性線",
+            "100 V"
+          ],
+          [
+            "外線－もう一方の外線",
+            "200 V"
+          ],
+          [
+            "外線－大地",
+            "100 V"
+          ],
+          [
+            "中性線－大地",
+            "0 V"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "中性線から片側100、外線の両端200。"
+    },
+    "inspection-tester-ohms": {
+      "id": "inspection-tester-ohms",
+      "domain": "inspection",
+      "title": "抵抗レンジは、0 Ω調整して倍率を掛ける",
+      "firstPrinciple": "アナログテスタの抵抗測定は内蔵電池を使う。0 Ω調整はテストリードの先端を短絡、つまり互いに触れさせた状態で行う。測定値はΩ目盛の読み×レンジ倍率。例えば目盛20、×10レンジなら200 Ωで、10で割らない。",
+      "examUse": "開放と短絡、掛け算と割り算の取り違えを選ぶ問題に使える。レンジを変えたら、再び0 Ω調整を確認する。",
+      "essentialConditions": [
+        "抵抗測定は停電・無電圧で、必要な放電をした対象に限る。電圧がある回路へΩレンジを接続しない。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-24",
+        "d2-20211024-am-27",
+        "d2-20231029-pm-24",
+        "d2-20250525-24"
+      ],
+      "sources": [
+        {
+          "id": "sanwa-basic",
+          "title": "三和電気計器 YX-361TR 取扱説明書",
+          "url": "https://overseas.sanwa-meter.co.jp/pdf/manual/analog_multitester/YX361TR_JP.pdf",
+          "locator": "冊子7～9頁（レンジ・接続・目盛）、10～12頁（電圧・電流）、17～18頁（抵抗・0 Ω調整）",
+          "checkedAt": "2026-10-12",
+          "supports": "電圧の並列接続、電流の直列接続、Ω調整、測定範囲と目盛の読取り。"
+        }
+      ],
+      "comparison": {
+        "caption": "リードの状態と抵抗",
+        "columns": [
+          "状態",
+          "理想的な抵抗"
+        ],
+        "rows": [
+          [
+            "短絡：先端どうしを接触",
+            "0 Ω"
+          ],
+          [
+            "開放：先端どうしを離す",
+            "∞ Ω"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "短絡でゼロ、読んだら掛ける。"
+    },
+    "inspection-tester-purpose": {
+      "id": "inspection-tester-purpose",
+      "domain": "inspection",
+      "title": "テスタで測れるもの、専用計器が要るもの",
+      "firstPrinciple": "回路計（テスタ）は、一台で電圧や抵抗などを測れる計器。切換えのAC Vは交流電圧、DC Vは直流電圧、Ωは抵抗を表す。一般的なテスタの抵抗レンジを、絶縁抵抗計や漏れ電流計の代わりにはしない。",
+      "examUse": "「測定できない量」を選ぶ問題では、一般的なテスタの基本機能と、専用の試験電圧・感度が必要な測定を分ける。特殊機能のある機種を勝手に想定しない。",
+      "essentialConditions": [
+        "抵抗測定は停電・無電圧の対象で行う。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-24",
+        "d2-20170930-24"
+      ],
+      "sources": [
+        {
+          "id": "sanwa-basic",
+          "title": "三和電気計器 YX-361TR 取扱説明書",
+          "url": "https://overseas.sanwa-meter.co.jp/pdf/manual/analog_multitester/YX361TR_JP.pdf",
+          "locator": "冊子7～9頁（レンジ・接続・目盛）、10～12頁（電圧・電流）、17～18頁（抵抗・0 Ω調整）",
+          "checkedAt": "2026-10-12",
+          "supports": "電圧の並列接続、電流の直列接続、Ω調整、測定範囲と目盛の読取り。"
+        },
+        {
+          "id": "hioki-ir-method",
+          "title": "HIOKI 絶縁抵抗の測定方法",
+          "url": "https://www.hioki.com/jp-ja/learning/methods/insulation-resistance-measurement-methods.html",
+          "locator": "絶縁抵抗計の原理・測定手順・注意点",
+          "checkedAt": "2026-10-12",
+          "supports": "絶縁抵抗の意味、直流試験電圧、測定対象に合わせた測定電圧の設定。"
+        },
+        {
+          "id": "clamp-path",
+          "title": "共立電気計器 クランプメータガイドブック",
+          "url": "https://www.kew-ltd.co.jp/tech-library/knowledge/guidebook/clampmeter/",
+          "locator": "5(4)-1 A零相／Bアース線測定",
+          "checkedAt": "2026-10-11",
+          "supports": "零相測定と接地線測定が一致しない場合。"
+        }
+      ],
+      "comparison": {
+        "caption": "一般的なテスタと専用計器",
+        "columns": [
+          "調べる量",
+          "計器"
+        ],
+        "rows": [
+          [
+            "電圧（V）・回路抵抗（Ω）",
+            "回路計（テスタ）"
+          ],
+          [
+            "絶縁抵抗（MΩ）",
+            "絶縁抵抗計"
+          ],
+          [
+            "小さな漏れ電流（mA）",
+            "漏れ電流に対応したクランプ計"
+          ]
+        ],
+        "notes": []
+      }
+    },
     "law-generation-current-boundaries": {
       "id": "law-generation-current-boundaries",
       "domain": "law",
@@ -4389,6 +5841,145 @@
         {
           "title": "定格を変える問題では",
           "body": "交流100～300 Vの通常品について、タイムスイッチ等の点滅器は30 A以下、配線用・漏電遮断器は100 A以下、差込み接続器は50 A以下・5極以下が基本の対象範囲。別表第二の器種、特殊構造、電動機容量による条件なども区別する。"
+        }
+      ]
+    },
+    "law-pse-marks": {
+      "id": "law-pse-marks",
+      "domain": "law",
+      "title": "PSEは、ひし形と丸形で何が違う？",
+      "firstPrinciple": "PSEは、電気用品安全法の対象製品に付ける表示。特定電気用品はひし形、特定電気用品以外は丸形を使う。特定は、構造や使い方から特に危険のおそれが多いものとして法令が指定する区分で、輸入品か国産品かの違いではない。",
+      "examUse": "表示を入れ替えた説明や「輸入品だから丸形」という説明を見分ける。対象用品は、適法な表示のないものを原則として販売できない。丸形の用品にも安全上の義務がある。",
+      "essentialConditions": [
+        "PSEの対象に指定された用品についての説明。法定の承認等の例外を除く。",
+        "簡易表示は、構造上表示スペースを確保しにくい電線・ヒューズ・配線器具等の部品材料に限る。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-29",
+        "d2-20190602-29",
+        "d2-20211024-pm-29",
+        "d2-20230528-am-29",
+        "d2-20240526-29"
+      ],
+      "sources": [
+        {
+          "id": "pse-duty",
+          "title": "経済産業省 電気用品安全法 法令業務実施手引書Ver6.0.0",
+          "url": "https://www.meti.go.jp/policy/consumer/seian/denan/file/06_guide/denan_guide_ver600.pdf",
+          "locator": "1.1 制度概要／6 表示、印刷p.93「PSEマークの簡易表示」",
+          "checkedAt": "2026-10-13",
+          "supports": "特定・特定以外の表示と販売の制限、簡易表示の形及び適用条件。公開資料の検索索引本文でも照合。"
+        },
+        {
+          "id": "pse-duty-meti-html",
+          "title": "近畿経済産業局 電気用品安全法 手続きの流れについて",
+          "url": "https://www.kansai.meti.go.jp/3-3seihinanzen/denkiannzen/jigyousyanominasamahe.html",
+          "locator": "2 製造・輸入事業者の手続き (3)〜(7)（2026年6月17日更新）",
+          "checkedAt": "2026-10-12",
+          "supports": "公開ページの索引本文で、技術基準適合、特定の適合性検査、自主検査及び表示の各義務を再確認。"
+        }
+      ],
+      "comparison": {
+        "caption": "区分と表示",
+        "columns": [
+          "区分",
+          "通常の形",
+          "認められた簡易表示"
+        ],
+        "rows": [
+          [
+            "特定電気用品",
+            "ひし形PSE",
+            "〈PS〉E"
+          ],
+          [
+            "特定電気用品以外",
+            "丸形PSE",
+            "(PS)E"
+          ]
+        ],
+        "notes": []
+      }
+    },
+    "law-qualification-matrix": {
+      "id": "law-qualification-matrix",
+      "domain": "law",
+      "title": "第二種でできるのは、どの設備の工事？",
+      "firstPrinciple": "第二種電気工事士は、住宅や小規模店舗などに代表される「一般用電気工作物等」の工事ができる。一方、高圧で受電するビル・工場などの「自家用電気工作物」は、内部の100 V・200 V部分でも、第二種免状だけでは電線同士を接続できない。",
+      "examUse": "最初に設備が一般用等か自家用かを確認する。低圧部分という言葉だけで第二種の範囲と決めない。自家用のネオン・非常用予備発電装置工事は、第一種免状だけでもできない。",
+      "essentialConditions": [
+        "表の自家用は最大電力500 kW未満の需要設備。一般用等には小規模事業用電気工作物も含む。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-28",
+        "d2-20181007-28",
+        "d2-20211024-pm-28",
+        "d2-20230528-am-28"
+      ],
+      "sources": [
+        {
+          "id": "qualification-act",
+          "title": "電気工事士法",
+          "url": "https://laws.e-gov.go.jp/law/335AC0000000139",
+          "locator": "第2条第1・2項、第3条",
+          "checkedAt": "2026-10-11",
+          "supports": "一般用等の定義、500 kW境界、第一種・第二種・特種・認定の範囲。"
+        },
+        {
+          "id": "qualification-reg",
+          "title": "電気工事士法施行規則",
+          "url": "https://laws.e-gov.go.jp/law/335M50000400097",
+          "locator": "第2条の2、第2条の3",
+          "checkedAt": "2026-10-11",
+          "supports": "特殊電気工事、600 V以下の簡易電気工事と電線路の除外。"
+        },
+        {
+          "id": "shiken-current-scope",
+          "title": "電気技術者試験センター 電気工作物の概要（電気技術者資格との関係）",
+          "url": "https://www.shiken.or.jp/shiken/qualification/",
+          "locator": "電気工事士／第一種・第二種の範囲",
+          "checkedAt": "2026-10-13",
+          "supports": "一般用電気工作物等は一般用と小規模事業用を含み、第二種の範囲である。自家用需要設備の500 kW未満の区分。"
+        },
+        {
+          "id": "meti-current-scope",
+          "title": "中部近畿産業保安監督部 電気工事士法の申請・届出等の手引き",
+          "url": "https://www.safety-chubu.meti.go.jp/denryoku/kouzi/detail/koujishi.html",
+          "locator": "電気工事士が従事できる範囲",
+          "checkedAt": "2026-10-13",
+          "supports": "第一種・認定電気工事従事者・特種資格の区別。第一種免状だけで自家用の特殊電気工事はできない。"
+        }
+      ],
+      "comparison": {
+        "caption": "資格と代表的な範囲",
+        "columns": [
+          "資格",
+          "作業範囲"
+        ],
+        "rows": [
+          [
+            "第二種電気工事士",
+            "一般用電気工作物等"
+          ],
+          [
+            "第一種電気工事士",
+            "一般用等＋自家用（特殊電気工事を除く）"
+          ],
+          [
+            "認定電気工事従事者",
+            "自家用の600 V以下の簡易電気工事（電線路を除く）"
+          ]
+        ],
+        "notes": []
+      },
+      "details": [
+        {
+          "title": "特種資格が必要な工事",
+          "body": "自家用のネオン工事・非常用予備発電装置工事には、対応する特種電気工事資格者の資格が必要。一般用等の工事と混同しない。"
+        },
+        {
+          "title": "500 kW以上なら自由なのか",
+          "body": "電気工事士法の対象範囲を外れても、誰でも自由に作業してよいという意味ではない。電気事業法の保安体制等を別に確認する。"
         }
       ]
     },
@@ -4643,6 +6234,115 @@
       },
       "memoryAid": "直列は電流共通。電圧は直角に合成。"
     },
+    "theory-diameter-area": {
+      "id": "theory-diameter-area",
+      "domain": "theory",
+      "title": "2.6mmと5.5mm²は、何が違う？",
+      "firstPrinciple": "mmは線の直径、mm²は切り口の面積。丸い単線の断面積はA＝πd²/4で求める。例えば直径2.6mmは約5.31mm²なので、同じ長さ・材料なら断面積5.5mm²のより線と抵抗が近い。より線は、細い線を束ねた電線のこと。",
+      "examUse": "単線とより線を比較する問題では、先に単線の直径を面積へ直す。より線の束の外径を円の面積へ入れると、隙間まで数えてしまう。",
+      "essentialConditions": [
+        "表は被覆を除いた丸い導体の面積の独自計算。抵抗を比べる場合は同じ材料・温度。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-03",
+        "d2-20210530-pm-02",
+        "d2-20191006-02"
+      ],
+      "sources": [
+        {
+          "id": "openstax-9.3",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/9-3-resistivity-and-resistance",
+          "locator": "9.3",
+          "checkedAt": "2026-10-11",
+          "supports": "R=ρL/A、抵抗率と温度の関係。寸法比・面積換算の各数値はこの関係と円の面積からの独自計算。"
+        },
+        {
+          "id": "sfcc-iv",
+          "title": "SFCC：産業用電線・ケーブル 製品カタログ",
+          "url": "https://www.swcc.co.jp/sfcc/products/pdf/SFCC_Catlog_S_web.pdf",
+          "locator": "p.32「IV 許容電流」およびp.6の構造・性能",
+          "checkedAt": "2026-10-11",
+          "supports": "銅IV単線・より線のがいし引き配線値、周囲30℃・絶縁体60℃、管内表と温度補正。原表を画像でも確認。"
+        }
+      ],
+      "comparison": {
+        "caption": "単線の直径から断面積へ",
+        "columns": [
+          "導体直径（mm）",
+          "断面積（mm²）"
+        ],
+        "rows": [
+          [
+            "1.6",
+            "約2.01"
+          ],
+          [
+            "2.0",
+            "約3.14"
+          ],
+          [
+            "2.6",
+            "約5.31"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "単線のmmは、面積に直してから比べる。",
+      "details": [
+        {
+          "title": "面積が近いだけでは交換できない",
+          "body": "許容電流、端子の適合、工事の規定は別に確認する。面積の近さだけで電線を置き換えてよいとは判断しない。"
+        }
+      ]
+    },
+    "theory-divider-loading": {
+      "id": "theory-divider-loading",
+      "domain": "theory",
+      "title": "切れた枝にも電圧はある？",
+      "firstPrinciple": "途中が開いて電流の通り道がない枝では、電流は0A。抵抗の電圧降下は電流×抵抗なので、その枝の抵抗では電圧が下がらない。ただし、開いた端子どうしの電圧まで0Vになるとは限らない。",
+      "examUse": "スイッチの開閉や開放端子がある回路で、電流が流れる道を先に見つける。開いた枝の抵抗を、流れる枝へ勝手に直列加算しない。",
+      "essentialConditions": [
+        "理想電圧計には電流が流れないとする学科の回路計算。実際の活線に計器を接続する手順ではない。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-01",
+        "d2-20190602-01",
+        "d2-20210530-am-01",
+        "d2-20220529-pm-01"
+      ],
+      "sources": [
+        {
+          "id": "openstax-10.2",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/10-2-resistors-in-series-and-parallel",
+          "locator": "10.2",
+          "checkedAt": "2026-10-11",
+          "supports": "直列・並列の合成抵抗、枝電流と電力の関係。表の条件変更例は独自導出。"
+        }
+      ],
+      "comparison": {
+        "caption": "理想回路での区別",
+        "columns": [
+          "場所",
+          "0になる量"
+        ],
+        "rows": [
+          [
+            "通り道のない枝",
+            "電流は0A"
+          ],
+          [
+            "電流0Aの抵抗の両端",
+            "電圧降下は0V"
+          ]
+        ],
+        "notes": [
+          "開放した2端子間の電圧は、残る回路の電位から求める。"
+        ]
+      },
+      "memoryAid": "「電流0」と「端子電圧0」を別に考える。"
+    },
     "theory-energy-duty": {
       "id": "theory-energy-duty",
       "domain": "theory",
@@ -4691,6 +6391,47 @@
         "notes": []
       },
       "memoryAid": "求める量＝電力×時間。逆算は時間で割る。"
+    },
+    "theory-heat-efficiency": {
+      "id": "theory-heat-efficiency",
+      "domain": "theory",
+      "title": "水を温める電力量は、何から求める？",
+      "firstPrinciple": "水に必要な熱量は「水の質量×比熱×温度上昇」。比熱は1kgを1℃上げるのに必要な熱量のこと。温度上昇は最後の温度そのものではなく、最後−最初で求める。熱量を出してから、問題が求めるkWhなどへ換算する。",
+      "examUse": "質量kg×比熱kJ/(kg・K)×温度上昇Kなら、熱量はkJで出る。温度差1 Kは1℃と同じ幅。1 kWh＝3,600 kJなので、kWhへ直すときは3,600で割る。",
+      "essentialConditions": [
+        "水を沸騰させず温める問題。比熱は問題の指定値を使う。熱損失なしなら入力電力量＝水に伝わる熱量。"
+      ],
+      "examEvidenceIds": [
+        "d2-20181007-04",
+        "d2-20190602-03",
+        "d2-20221030-am-03",
+        "d2-20251026-03"
+      ],
+      "sources": [
+        {
+          "id": "openstax-1.4",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/1-4-heat-transfer-specific-heat-and-calorimetry",
+          "locator": "1.4",
+          "checkedAt": "2026-10-11",
+          "supports": "熱量Q=mcΔT。効率を含む例はエネルギー収支から独自計算。"
+        },
+        {
+          "id": "openstax-9.5",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/9-5-electrical-energy-and-power",
+          "locator": "9.5",
+          "checkedAt": "2026-10-11",
+          "supports": "P=VI=I²R=V²/R、電力量=電力×時間。表の比較数値は明記した一定条件での独自計算。"
+        }
+      ],
+      "memoryAid": "先に温度差、次に掛け算、最後に単位換算。",
+      "details": [
+        {
+          "title": "効率が指定されたら",
+          "body": "入力のうち水に伝わる割合を効率ηとすると、必要な入力電力量＝水に必要な熱量÷η。例えば80%は0.8で割る。特定製品の効率を示した値ではない。"
+        }
+      ]
     },
     "theory-network-power": {
       "id": "theory-network-power",
@@ -4788,6 +6529,104 @@
         }
       ]
     },
+    "theory-power-fixed-condition": {
+      "id": "theory-power-fixed-condition",
+      "domain": "theory",
+      "title": "接触部の小さな抵抗でも熱くなる？",
+      "firstPrinciple": "抵抗に電流が流れると、電力P＝I²Rの熱が生じる。Iは電流、Rは抵抗。「電流の2乗」なので、同じ抵抗なら電流2倍で発熱の電力は4倍。電圧Vが分かる場合はP＝VIやP＝V²/Rでも求められる。",
+      "examUse": "接触抵抗の発熱や、電力の式を選ぶ問題で使う。接触部を計算するときのVは、その部分の電圧降下であり、回路全体の電源電圧ではない。",
+      "essentialConditions": [
+        "直流または純抵抗負荷。PはW、IはA、RはΩ、Vはその抵抗の両端電圧。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-04",
+        "d2-20210530-am-02",
+        "d2-20220529-pm-03",
+        "d2-20241027-03"
+      ],
+      "sources": [
+        {
+          "id": "openstax-9.5",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/9-5-electrical-energy-and-power",
+          "locator": "9.5",
+          "checkedAt": "2026-10-11",
+          "supports": "P=VI=I²R=V²/R、電力量=電力×時間。表の比較数値は明記した一定条件での独自計算。"
+        }
+      ],
+      "comparison": {
+        "caption": "既知の量に合う式を選ぶ",
+        "columns": [
+          "分かる量",
+          "電力P（W）"
+        ],
+        "rows": [
+          [
+            "電流I・抵抗R",
+            "I²R"
+          ],
+          [
+            "電圧V・電流I",
+            "VI"
+          ],
+          [
+            "電圧V・抵抗R",
+            "V²/R"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "熱量J＝電力W×時間秒。1時間は3,600秒、kJに直すときは1,000で割る。",
+      "details": [
+        {
+          "title": "何を一定にするか",
+          "body": "電流一定なら抵抗2倍で電力2倍。抵抗両端の電圧一定なら抵抗2倍で電力1/2。実際の接触不良は抵抗も電流も変わるため、この比例だけで安全とは判断できない。"
+        }
+      ]
+    },
+    "theory-reactance-frequency": {
+      "id": "theory-reactance-frequency",
+      "domain": "theory",
+      "title": "周波数が上がるとコイルの電流は？",
+      "firstPrinciple": "周波数は、交流の波が1秒に繰り返す回数。理想コイルは周波数が高いほど電流を通しにくくなる。コイルのリアクタンスX＝2πfLで、fが周波数、Lがコイルの性質を表すインダクタンス。電圧一定なら電流I＝V/Xは小さくなる。",
+      "examUse": "同じコイルを50Hzと60Hzで比べると、電流の比は周波数の逆比。電流にも60/50を掛ける間違いを防ぐ。",
+      "essentialConditions": [
+        "抵抗を無視した同じ理想コイル。コイルに加わる電圧の通常の表示値（実効値）は一定。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-02",
+        "d2-20220529-pm-04"
+      ],
+      "sources": [
+        {
+          "id": "openstax-15.2",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/15-2-simple-ac-circuits",
+          "locator": "15.2",
+          "checkedAt": "2026-10-11",
+          "supports": "理想R・L・Cの位相、XL=2πfL、XC=1/(2πfC)。周波数変更例は独自計算。"
+        }
+      ],
+      "comparison": {
+        "caption": "周波数を50Hzから60Hzへ変えたときの倍率",
+        "columns": [
+          "量",
+          "倍率"
+        ],
+        "rows": [
+          [
+            "リアクタンスX",
+            "60/50"
+          ],
+          [
+            "電流I",
+            "50/60"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "周波数が増える→流れにくくなる→電流は減る。"
+    },
     "theory-resistance-scaling": {
       "id": "theory-resistance-scaling",
       "domain": "theory",
@@ -4881,6 +6720,84 @@
         "notes": []
       },
       "memoryAid": "円の面積→m²へ換算→R＝ρL/Aの順。"
+    },
+    "theory-threephase-connections": {
+      "id": "theory-threephase-connections",
+      "domain": "theory",
+      "title": "Y結線の電圧は、どこに√3を使う？",
+      "firstPrinciple": "三相の「線間電圧」は電源線どうしの電圧、「相電圧」は負荷1個にかかる電圧。Y（星形）では1個にかかる電圧が線間電圧の1/√3。Δ（三角形）では1個が電源線どうしにつながるので、両者は同じになる。",
+      "examUse": "Y結線の電流は、線間電圧を√3で割った相電圧から求める。純抵抗なら抵抗Rで割り、コイルを含む相なら交流全体の流れにくさ「インピーダンスZ」で割る。",
+      "essentialConditions": [
+        "3つの負荷が同じ平衡三相回路。表の「相電流」は負荷1個、「線電流」は電源線1本を流れる電流。"
+      ],
+      "examEvidenceIds": [
+        "d2-20180603-05",
+        "d2-20181007-05",
+        "d2-20201004-pm-05",
+        "d2-20250525-05"
+      ],
+      "sources": [
+        {
+          "id": "keisoku-threephase",
+          "title": "計測技術研究所：交流電源の巻 その2",
+          "url": "https://www.keisoku.co.jp/solution/portal/tes-mas-guide/pe_g06/",
+          "locator": "三相交流の覚えておくと便利な公式",
+          "checkedAt": "2026-10-11",
+          "supports": "平衡三相のY/Δ関係、P=√3×線間電圧×線電流×力率。結線変更・断線時の値は理想負荷の独自導出。"
+        },
+        {
+          "id": "openstax-15.4",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/15-4-power-in-an-ac-circuit",
+          "locator": "15.4",
+          "checkedAt": "2026-10-11",
+          "supports": "正弦波の実効値、有効電力P=VIcosφ、力率R/Z。比率と損失の例は独自計算。"
+        },
+        {
+          "id": "openstax-15.2",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/15-2-simple-ac-circuits",
+          "locator": "15.2",
+          "checkedAt": "2026-10-11",
+          "supports": "理想R・L・Cの位相、XL=2πfL、XC=1/(2πfC)。周波数変更例は独自計算。"
+        },
+        {
+          "id": "openstax-15.3",
+          "title": "OpenStax University Physics Volume 2",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/15-3-rlc-series-circuits-with-ac",
+          "locator": "15.3",
+          "checkedAt": "2026-10-11",
+          "supports": "直列交流回路のZ=√(R²+(XL−XC)²)と位相。RCとの比較はこの式からの独自導出。"
+        }
+      ],
+      "comparison": {
+        "caption": "平衡三相の関係（√3≈1.73）",
+        "columns": [
+          "結線",
+          "相電圧",
+          "線電流"
+        ],
+        "rows": [
+          [
+            "Y（星形）",
+            "線間電圧/√3",
+            "相電流と同じ"
+          ],
+          [
+            "Δ（三角形）",
+            "線間電圧と同じ",
+            "相電流×√3"
+          ]
+        ],
+        "notes": []
+      },
+      "memoryAid": "Yは電圧、Δは電流に√3の違い。",
+      "details": [
+        {
+          "title": "抵抗とコイルがある1相の計算",
+          "body": "抵抗Rと理想コイルのリアクタンスXが直列なら、Z＝√(R²+X²)。RとXを普通に足したR+Xや、Rだけで相電圧を割らない。"
+        }
+      ]
     },
     "theory-threephase-open": {
       "id": "theory-threephase-open",
@@ -5690,6 +7607,610 @@
       {
         "cardId": "diagram-switch-contact-types",
         "connection": "器具の接点図を読み、経路を切るスイッチと行き先を変えるスイッチを分けよう。"
+      }
+    ],
+    "d2-20180603-01": [
+      {
+        "cardId": "theory-divider-loading",
+        "connection": "Sを閉じると上の30 Ωは短絡される。一方、端子aへ向かう枝は開放なので電流0 Aとなり、その30 Ωでは電圧が下がらない。"
+      }
+    ],
+    "d2-20180603-02": [
+      {
+        "cardId": "theory-reactance-frequency",
+        "connection": "この問題は同じ電圧・同じコイルで周波数だけが変化。周波数が増える分、電流は逆比で小さくなる。"
+      }
+    ],
+    "d2-20180603-03": [
+      {
+        "cardId": "design-temperature-iv",
+        "connection": "この問題では、温度上昇で抵抗は増える一方、流せる電流の上限は減ることを分けて判断する。"
+      }
+    ],
+    "d2-20180603-04": [
+      {
+        "cardId": "theory-power-fixed-condition",
+        "connection": "この問題の発熱は、まず抵抗で消費する電力を求め、通電時間を掛ける。電圧は計算対象の部分の値を使う。"
+      }
+    ],
+    "d2-20180603-05": [
+      {
+        "cardId": "theory-threephase-connections",
+        "connection": "本問はY結線の線間電圧を求める。まず1個の抵抗の相電圧を20 A×6 Ωで求め、それに√3を掛ける。"
+      }
+    ],
+    "d2-20180603-06": [
+      {
+        "cardId": "design-voltage-drop-systems",
+        "connection": "この問題の単相2線式は行きと帰りの2本がある。片道の抵抗から往復の電圧降下を計算する。"
+      }
+    ],
+    "d2-20180603-07": [
+      {
+        "cardId": "design-neutral-unbalance",
+        "connection": "この問題は上下の負荷電流から中性線電流を考える。上下が同じなら中性線の電圧降下は0になる。"
+      }
+    ],
+    "d2-20180603-08": [
+      {
+        "cardId": "design-ampacity-iv-single",
+        "connection": "この問題はIV銅単線の直径mmから基準の許容電流を選び、管内本数に対応する電流減少係数を掛ける。"
+      }
+    ],
+    "d2-20180603-09": [
+      {
+        "cardId": "design-tap-distance",
+        "connection": "この問題の長さは分岐点から分岐遮断器まで。分岐線の許容電流と、上流の幹線遮断器の定格を比べる。"
+      }
+    ],
+    "d2-20180603-10": [
+      {
+        "cardId": "design-branch-ratings",
+        "connection": "本問は遮断器とコンセントの組合せ。30 A回路に15 Aコンセントは使えず、2個の定格を足して30 Aとは判断しない。"
+      }
+    ],
+    "d2-20180603-11": [
+      {
+        "cardId": "equipment-overcurrent-time-grid",
+        "connection": "本問の25 Aは定格20 Aの1.25倍。表の「定格30 A以下・1.25倍」から最大60分を選ぶ。"
+      }
+    ],
+    "d2-20180603-12": [
+      {
+        "cardId": "equipment-cable-material-temperature",
+        "connection": "この問題の電線名を絶縁材料へ置き換えると、最高許容温度を選びやすくなる。"
+      }
+    ],
+    "d2-20180603-13": [
+      {
+        "cardId": "equipment-motor-speed-grid",
+        "connection": "この問題の周波数・極数・回転速度を、同期速度の式と表に当てはめよう。"
+      }
+    ],
+    "d2-20180603-14": [
+      {
+        "cardId": "equipment-metal-conduit-tools",
+        "connection": "切る・削る・曲げる・ねじを切る作業と、工具を一組で覚えよう。"
+      }
+    ],
+    "d2-20180603-15": [
+      {
+        "cardId": "equipment-led-features",
+        "connection": "白熱電球と比べたLEDの基本的な長所を、消費電力と寿命から確認しよう。"
+      }
+    ],
+    "d2-20180603-16": [
+      {
+        "cardId": "equipment-metal-conduit-tools",
+        "connection": "写真はクリックボール。先端へリーマを取り付けて回し、金属管の切断口の内側を滑らかにする。"
+      }
+    ],
+    "d2-20180603-17": [
+      {
+        "cardId": "equipment-conduit-fitting-functions",
+        "connection": "写真はVE管用のTSカップリング。同じ硬質ビニル管どうしをつなぐ部品で、波形のPF・CD管用とは区別する。"
+      }
+    ],
+    "d2-20180603-18": [
+      {
+        "cardId": "equipment-capacitor-current-path",
+        "connection": "進相コンデンサの名前・写真・図記号を、並列接続による力率改善と結び付けよう。"
+      }
+    ],
+    "d2-20180603-19": [
+      {
+        "cardId": "construction-ring-sleeve-combinations",
+        "connection": "電線を太さ別に数え、スリーブの大きさと刻印の両方を照合しよう。"
+      },
+      {
+        "cardId": "construction-ring-sleeve-basic",
+        "connection": "1.6 mmだけの接続は、こちらの本数表で刻印○と小・中を確認しよう。"
+      }
+    ],
+    "d2-20180603-20": [
+      {
+        "cardId": "construction-duct-functions",
+        "connection": "この乾燥した点検できない隠ぺい場所では、CD管を除く合成樹脂管工事を選ぶ。金属ダクトは点検できる場所に限る。"
+      }
+    ],
+    "d2-20180603-21": [
+      {
+        "cardId": "construction-flexible-conduit",
+        "connection": "湿気のある場所に合う管種か、接続部品がその管に適合するかを確認する。"
+      }
+    ],
+    "d2-20180603-22": [
+      {
+        "cardId": "construction-earth-decisions",
+        "connection": "機器の場所と漏電遮断器の数値を確認し、どの接地省略条件を使うか判断しよう。"
+      }
+    ],
+    "d2-20180603-23": [
+      {
+        "cardId": "construction-resin-support-joints",
+        "connection": "VE管を建物へ固定する支持点間は1.5 m以下。金属管の値と混ぜない。"
+      }
+    ],
+    "d2-20180603-24": [
+      {
+        "cardId": "inspection-tester-purpose",
+        "connection": "本問のテスタの用途を、電圧・抵抗と専用計器が必要な測定に分けて整理できます。"
+      }
+    ],
+    "d2-20180603-25": [
+      {
+        "cardId": "inspection-insulation-method",
+        "connection": "本問の使用方法は、外部の電源を切り、計器自身の直流で絶縁を調べると考えると判断できます。"
+      }
+    ],
+    "d2-20180603-26": [
+      {
+        "cardId": "inspection-resistance-judgment",
+        "connection": "本問は地絡時0.1秒で遮断するので、接地抵抗は500 Ω以下。絶縁抵抗0.1 MΩ以上と別々に判定し、600 Ωの行を除く。"
+      }
+    ],
+    "d2-20180603-27": [
+      {
+        "cardId": "inspection-meter-symbols",
+        "connection": "本問は左が可動鉄片形、右の⊥が鉛直使用。方式と目盛板の向きを別々に照合すると選べる。"
+      }
+    ],
+    "d2-20180603-28": [
+      {
+        "cardId": "law-qualification-matrix",
+        "connection": "本問は低圧かどうかだけでなく、設備の区分と資格の範囲を照合すると判断できます。"
+      }
+    ],
+    "d2-20180603-29": [
+      {
+        "cardId": "law-pse-marks",
+        "connection": "本問のPSE表示は、特定＝ひし形、特定以外＝丸形で整理します。輸入品かどうかで形は変わりません。"
+      }
+    ],
+    "d2-20180603-30": [
+      {
+        "cardId": "law-generation-current-boundaries",
+        "connection": "本問は制度改正で現行の単一正答として使えない歴史問題です。当時の公式解答と、現在の設備区分を分けて確認します。"
+      }
+    ],
+    "d2-20180603-31": [
+      {
+        "cardId": "equipment-cv-cvt-emce",
+        "connection": "①のCVTは「単心ケーブル3本のより合わせ」。絶縁材料と外側のシースも分けて読もう。"
+      }
+    ],
+    "d2-20180603-32": [
+      {
+        "cardId": "diagram-switch-markers",
+        "connection": "ワイドハンドル形は黒いひし形。操作部の形と、D・WP・Rなどの追加機能を分けて読もう。"
+      }
+    ],
+    "d2-20180603-33": [
+      {
+        "cardId": "diagram-water-level-devices",
+        "connection": "③のFは浮きで動くフロートスイッチ。電極を使うLFと、検出の仕組みを比べよう。"
+      }
+    ],
+    "d2-20180603-34": [
+      {
+        "cardId": "diagram-outlet-special-markers",
+        "connection": "引掛形の傍記はT。抜止形LKや、接地端子ETとは別の機能として覚えよう。"
+      }
+    ],
+    "d2-20180603-35": [
+      {
+        "cardId": "diagram-outlet-location",
+        "connection": "二重床用は四角枠の下の細い長方形まで見る。床面用の黒い三角形と区別しよう。"
+      }
+    ],
+    "d2-20180603-36": [
+      {
+        "cardId": "diagram-motor-control-devices",
+        "connection": "⑥の電磁開閉器は、制御線からの指令で電動機の電源を開閉する側の器具。"
+      }
+    ],
+    "d2-20180603-37": [
+      {
+        "cardId": "design-branch-ratings",
+        "connection": "回路fの15 Aコンセントに使える配線用遮断器は最大20 A。器具と保護器を組で見よう。"
+      }
+    ],
+    "d2-20180603-38": [
+      {
+        "cardId": "inspection-earth-thresholds",
+        "connection": "金属製の盤はD種・100 Ω以下。電源側に地絡遮断装置がない条件では500 Ωへ緩和しない。"
+      }
+    ],
+    "d2-20180603-39": [
+      {
+        "cardId": "diagram-conductor-count",
+        "connection": "⑨は接地側1本・照明の戻り1本・3路の渡り2本で4本。区間を通る役割ごとに数えよう。"
+      }
+    ],
+    "d2-20180603-40": [
+      {
+        "cardId": "inspection-insulation-thresholds",
+        "connection": "⑩は三相200 V回路で0.2 MΩ以上。単相3線100/200 Vの区分と分けて考えよう。"
+      }
+    ],
+    "d2-20180603-41": [
+      {
+        "cardId": "construction-ring-sleeve-basic",
+        "connection": "すべて1.6 mmで、接続は4本・3本・3本の3組。小スリーブでも刻印○とは限らない。"
+      }
+    ],
+    "d2-20180603-42": [
+      {
+        "cardId": "inspection-meter-purpose",
+        "connection": "電圧の値はテスタ、接地側・非接地側の確認は検電器。調べる目的を二つに分けよう。"
+      }
+    ],
+    "d2-20180603-43": [
+      {
+        "cardId": "diagram-remote-control-devices",
+        "connection": "⑬はリモコン操作用の電圧を作るトランス。写真のリレーや操作スイッチと役割を分けよう。"
+      }
+    ],
+    "d2-20180603-44": [
+      {
+        "cardId": "equipment-conduit-fitting-functions",
+        "connection": "⑭はE19管と箱の接続。管同士のカップリングではなく、ねじなし管用コネクタを選ぶ。"
+      }
+    ],
+    "d2-20180603-45": [
+      {
+        "cardId": "diagram-remote-control-devices",
+        "connection": "指定された二室にはリモコンスイッチの記号がない。別の場所にあるリモコン設備と混同しない。"
+      }
+    ],
+    "d2-20180603-46": [
+      {
+        "cardId": "construction-ring-sleeve-basic",
+        "connection": "⑯は1.6 mmの3本接続1組と2本接続4組。3路の渡り2本を別々の接続として数えよう。"
+      }
+    ],
+    "d2-20180603-47": [
+      {
+        "cardId": "diagram-joint-count",
+        "connection": "⑰は2本接続3組と3本接続1組。照明2方向へ分かれる戻り線の組を見落とさない。"
+      }
+    ],
+    "d2-20180603-48": [
+      {
+        "cardId": "equipment-wiring-box-types",
+        "connection": "⑱はE19管を使う露出配管。スイッチ用の箱でも、管を留める接続口まで合わせよう。"
+      }
+    ],
+    "d2-20180603-49": [
+      {
+        "cardId": "equipment-hole-making-tools",
+        "connection": "対象は金属製の分電盤。木工用ドリルを外し、加工する材料に合う工具かを確かめよう。"
+      }
+    ],
+    "d2-20180603-50": [
+      {
+        "cardId": "diagram-outlet-special-markers",
+        "connection": "図の防雨コンセントはWP・LK。写真の防雨形でも、引掛形Tなら指定と一致しない。"
+      }
+    ],
+    "d2-20181007-01": [
+      {
+        "cardId": "theory-network-power",
+        "connection": "この問題も、導線でつながる点と電流の通り道を整理してから、直列・並列の合成抵抗を求める。"
+      }
+    ],
+    "d2-20181007-02": [
+      {
+        "cardId": "theory-ac-series-parallel",
+        "connection": "本問は抵抗12 Ωの両端電圧を求める。Z＝√(12²＋16²)＝20 Ωで電流を出し、その電流に12 Ωを掛ける。"
+      }
+    ],
+    "d2-20181007-03": [
+      {
+        "cardId": "theory-diameter-area",
+        "connection": "この問題の単線とより線は、直径mmと断面積mm²のまま比べず、面積へそろえて抵抗を比較する。"
+      }
+    ],
+    "d2-20181007-04": [
+      {
+        "cardId": "theory-heat-efficiency",
+        "connection": "本問は温度上昇20 Kをそのまま使い、60×4.2×20＝5,040 kJ。熱効率100％なので、3,600で割って1.4 kWhに直す。"
+      }
+    ],
+    "d2-20181007-05": [
+      {
+        "cardId": "theory-threephase-connections",
+        "connection": "この問題はY結線の各相に抵抗8Ωとコイル6Ωがある。Z＝√(8²+6²)＝10Ωを求め、相電圧200/√3Vを10Ωで割る。"
+      }
+    ],
+    "d2-20181007-06": [
+      {
+        "cardId": "design-voltage-drop-systems",
+        "connection": "この問題の単相2線式は行きと帰りの2本がある。片道の抵抗から往復の電圧降下を計算する。"
+      }
+    ],
+    "d2-20181007-07": [
+      {
+        "cardId": "design-neutral-unbalance",
+        "connection": "この問題は上下の負荷電流から中性線電流を考える。上下が同じなら中性線の電圧降下は0になる。"
+      }
+    ],
+    "d2-20181007-08": [
+      {
+        "cardId": "design-cable-temperature-reference",
+        "connection": "この問題は2.0mm・3心VVR、周囲30℃以下、係数0.70の指定。35×0.70＝24.5Aから判断する。"
+      }
+    ],
+    "d2-20181007-09": [
+      {
+        "cardId": "design-tap-distance",
+        "connection": "この問題の長さは分岐点から分岐遮断器まで。分岐線の許容電流と、上流の幹線遮断器の定格を比べる。"
+      }
+    ],
+    "d2-20181007-10": [
+      {
+        "cardId": "design-branch-ratings",
+        "connection": "この問題は20A・30Aと銅単線の組合せ。遮断器に対する電線の直径と、コンセント1個の定格を照合する。"
+      }
+    ],
+    "d2-20181007-11": [
+      {
+        "cardId": "equipment-leakage-rating-axes",
+        "connection": "感度を表すmAと、動作の速さを表す秒を分けて分類しよう。"
+      }
+    ],
+    "d2-20181007-12": [
+      {
+        "cardId": "construction-underground-methods",
+        "connection": "地中に使うものはケーブル。IVなどの絶縁電線と区別して選ぼう。"
+      }
+    ],
+    "d2-20181007-13": [
+      {
+        "cardId": "equipment-motor-speed-grid",
+        "connection": "6極・50 Hzの同期速度は1,000 min⁻¹。実際の回転子は少し遅いが、本問の選択肢では1,000に最も近い。"
+      }
+    ],
+    "d2-20181007-14": [
+      {
+        "cardId": "equipment-metal-conduit-tools",
+        "connection": "切る・削る・曲げる・ねじを切る作業と、工具を一組で覚えよう。"
+      }
+    ],
+    "d2-20181007-15": [
+      {
+        "cardId": "equipment-pv-grid-island",
+        "connection": "太陽電池の直流を交流へ変える機器がパワーコンディショナだと確認しよう。"
+      }
+    ],
+    "d2-20181007-16": [
+      {
+        "cardId": "equipment-em-eef",
+        "connection": "写真の表示は「EM600V EEF/F」。平形という外見だけでVVFと決めず、ポリエチレン絶縁・耐燃性ポリエチレンシースと結び付ける。"
+      }
+    ],
+    "d2-20181007-17": [
+      {
+        "cardId": "equipment-sensor-control-inputs",
+        "connection": "写真は操作信号を受け、照明などの負荷回路を入切するリモコンリレー。指令を出すスイッチ側とは役割が違う。"
+      }
+    ],
+    "d2-20181007-18": [
+      {
+        "cardId": "equipment-stripping-die-compatibility",
+        "connection": "写真は平形VVFの外装と心線の絶縁をむくストリッパー。似た名前のVFFコードや丸形VVRとは適用電線が違う。"
+      }
+    ],
+    "d2-20181007-19": [
+      {
+        "cardId": "construction-joint-methods",
+        "connection": "接続後も電気抵抗・引張強さ・絶縁性能を保つ、という三つの条件で判断しよう。"
+      }
+    ],
+    "d2-20181007-20": [
+      {
+        "cardId": "construction-metal-penetration-bonding",
+        "connection": "本問の木造・金属板張り壁では、貫通部を壁の金属から絶縁する。壁と管をつないだまま接地しても代わりにならない。"
+      }
+    ],
+    "d2-20181007-21": [
+      {
+        "cardId": "equipment-resin-conduit-types",
+        "connection": "本問のCD管は、そのまま木造の床下・壁内・天井裏へ配管している点が誤り。隠ぺい場所なら自由に使えるわけではない。"
+      }
+    ],
+    "d2-20181007-22": [
+      {
+        "cardId": "construction-earth-decisions",
+        "connection": "本問は水気のある場所が決め手。15 mA・0.1秒の漏電遮断器でも、この条件で機器外箱の接地は省略できない。"
+      }
+    ],
+    "d2-20181007-23": [
+      {
+        "cardId": "design-derating-conduit",
+        "connection": "この問題は管内本数と電流減少係数の対応を選ぶ。本数が増えるほど係数は小さくなる。"
+      }
+    ],
+    "d2-20181007-24": [
+      {
+        "cardId": "inspection-tester-ohms",
+        "connection": "本問の抵抗測定は、短絡で0 Ω調整し、目盛に倍率を掛ける二点を押さえると判断できます。"
+      }
+    ],
+    "d2-20181007-25": [
+      {
+        "cardId": "inspection-single-three-voltage",
+        "connection": "本問の電圧は、接地された中性線を基準に、外線まで100 V、外線どうしは200 Vと整理できます。"
+      }
+    ],
+    "d2-20181007-26": [
+      {
+        "cardId": "inspection-earth-three-pole",
+        "connection": "本問の配置は、測るEを端にして、電圧用P・電流用Cの順に追うと選べます。"
+      }
+    ],
+    "d2-20181007-27": [
+      {
+        "cardId": "inspection-neutral-loss-power",
+        "connection": "本問の片側が高く片側が低い電圧は、中性線が切れて100 Vずつの分担が崩れる現象です。"
+      }
+    ],
+    "d2-20181007-28": [
+      {
+        "cardId": "law-qualification-matrix",
+        "connection": "本問の「第一種なら低圧部分のすべてが可能」は、自家用のネオン・非常用予備発電装置工事を除いていない点に注意します。"
+      }
+    ],
+    "d2-20181007-29": [
+      {
+        "cardId": "law-pse-devices",
+        "connection": "本問の20 A配線用遮断器は特定電気用品に該当する。用品名を分類してから、定格が対象範囲に入るかを確かめる。"
+      }
+    ],
+    "d2-20181007-30": [
+      {
+        "cardId": "law-voltage-boundaries",
+        "connection": "本問の電圧区分は、交流600 V・直流750 Vという低圧の上限と、「以下」の境界を確認します。"
+      }
+    ],
+    "d2-20181007-31": [
+      {
+        "cardId": "diagram-switch-automatic-controls",
+        "connection": "明るさで動く自動点滅器はA。図の括弧内3 Aは容量で、3路スイッチの意味ではない。"
+      }
+    ],
+    "d2-20181007-32": [
+      {
+        "cardId": "diagram-remote-control-devices",
+        "connection": "②の円を区切った記号はリモコンセレクタ。傍記6は操作する回路数を示す。"
+      }
+    ],
+    "d2-20181007-33": [
+      {
+        "cardId": "diagram-outlet-location",
+        "connection": "③は黒塗りのない円で天井面を示す。LKは抜止形の機能で、取付場所とは別に読む。"
+      }
+    ],
+    "d2-20181007-34": [
+      {
+        "cardId": "diagram-outlet-rating-poles",
+        "connection": "④は100 V回路iの接地極付き20 A。20 A・125 V用の刃受けと接地極を照合しよう。"
+      }
+    ],
+    "d2-20181007-35": [
+      {
+        "cardId": "equipment-resin-conduit-types",
+        "connection": "VE28は硬質塩化ビニル電線管で、内径約28 mm。管の種類と内径・外径を分けて読もう。"
+      }
+    ],
+    "d2-20181007-36": [
+      {
+        "cardId": "inspection-earth-thresholds",
+        "connection": "分岐回路だけの漏電遮断器では盤全体を保護できない。盤のD種接地は100 Ω以下で考える。"
+      }
+    ],
+    "d2-20181007-37": [
+      {
+        "cardId": "diagram-remote-control-devices",
+        "connection": "⑦は操作用電源を作るリモコントランス。丸内TにRの記号を、黒丸Rのスイッチと区別しよう。"
+      }
+    ],
+    "d2-20181007-38": [
+      {
+        "cardId": "inspection-insulation-thresholds",
+        "connection": "⑧は単相3線100/200 Vから取る200 V回路。対地100 Vなので0.1 MΩ以上を使う。"
+      }
+    ],
+    "d2-20181007-39": [
+      {
+        "cardId": "equipment-breaker-functions",
+        "connection": "⑨のf20Aは20 Aのヒューズ。保護する対象は過電流で、漏電検出とは区別する。"
+      }
+    ],
+    "d2-20181007-40": [
+      {
+        "cardId": "diagram-conductor-count",
+        "connection": "⑩は右の3路スイッチだけへ行く区間。渡り2本と0端子の線1本で3本になる。"
+      }
+    ],
+    "d2-20181007-41": [
+      {
+        "cardId": "construction-ring-sleeve-combinations",
+        "connection": "⑪は2.0 mm2本＋1.6 mm1本の組が二つ。1.6 mm2本だけの戻り線とはスリーブを分ける。"
+      }
+    ],
+    "d2-20181007-42": [
+      {
+        "cardId": "equipment-conduit-fitting-functions",
+        "connection": "⑫はVE28の管同士をつなぐ。管種はVE、接続相手は管なのでTSカップリングを選ぶ。"
+      }
+    ],
+    "d2-20181007-43": [
+      {
+        "cardId": "equipment-metal-conduit-tools",
+        "connection": "⑬は硬質塩化ビニルのVE管。金属管をつかんで回すパイプレンチは通常の加工に使わない。"
+      }
+    ],
+    "d2-20181007-44": [
+      {
+        "cardId": "inspection-clamp-cancellation",
+        "connection": "⑭の三相3線をまとめて挟むと漏れ電流を調べられる。負荷電流を測る1本挟みと区別しよう。"
+      }
+    ],
+    "d2-20181007-45": [
+      {
+        "cardId": "diagram-remote-control-devices",
+        "connection": "⑮の単相200 V回路には両切リモコンリレー。写真で主回路の接点が2組あることを確認する。"
+      }
+    ],
+    "d2-20181007-46": [
+      {
+        "cardId": "equipment-compression-tool-families-2018",
+        "connection": "⑯はIV5.5 mm²の接地線と裸の丸形端子。端子の種類と5.5対応の両方から工具を選ぼう。"
+      }
+    ],
+    "d2-20181007-47": [
+      {
+        "cardId": "diagram-switch-markers",
+        "connection": "⑰のLは確認表示灯内蔵。写真の小窓だけでなく、表示灯を含む接点図も合わせて見よう。"
+      }
+    ],
+    "d2-20181007-48": [
+      {
+        "cardId": "construction-ring-sleeve-combinations",
+        "connection": "⑱は2.0 mm4本の電源接続が2組、3本の接地線接続が1組。接地線も別の組として数える。"
+      }
+    ],
+    "d2-20181007-49": [
+      {
+        "cardId": "diagram-joint-count",
+        "connection": "⑲は2本ずつの接続が5組。3路の渡り2本も、注意書きに従い別々に接続して数える。"
+      }
+    ],
+    "d2-20181007-50": [
+      {
+        "cardId": "diagram-outlet-rating-poles",
+        "connection": "三相の動力回路があっても3極コンセントを使うとは限らない。図のコンセント指定を一つずつ照合する。"
       }
     ]
   }

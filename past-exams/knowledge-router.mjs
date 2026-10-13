@@ -1,8 +1,8 @@
-import {createKnowledgeLoader as legacyLoader,createKnowledgeSection as legacySection} from './knowledge.mjs?v=1.3.0';
+import {createKnowledgeLoader as legacyLoader,createKnowledgeSection as legacySection} from './knowledge.mjs?v=1.3.1';
 import {isPilotQuestion} from './pilot-scope.mjs';
 
 // The published schema1 loader remains wholly independent from the pilot loader.
-export function createKnowledgeLoader({fetcher,questions,dataVersion,importBeginner=()=>import('./knowledge-beginner.mjs?v=1.3.0')}) {
+export function createKnowledgeLoader({fetcher,questions,dataVersion,importBeginner=()=>import('./knowledge-beginner.mjs?v=1.3.1')}) {
   const legacy=legacyLoader({fetcher,questions,dataVersion});
   let pendingModule=null,beginner=null;
   return {legacy,async beginner(){
@@ -32,7 +32,7 @@ export function createKnowledgeSection({document,question,loadKnowledge}) {
       if(restoreFocus)section.childNodes[0].focus();
     }catch{
       if(!section.isConnected){state='idle';return;}
-      state='error';status.textContent='2017年の新しい補足を読み込めませんでした。採点・学習記録はそのままです。';body.replaceChildren();
+      state='error';status.textContent='新しい補足を読み込めませんでした。採点・学習記録はそのままです。';body.replaceChildren();
       const retry=document.createElement('button');retry.type='button';retry.className='secondary';retry.textContent='補足をもう一度読み込む';retry.onclick=()=>{summary.focus();initialize();};body.append(retry);
     }
   }

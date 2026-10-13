@@ -1,5 +1,5 @@
 import {isPilotQuestion,PILOT_IDS} from './pilot-scope.mjs';
-// 2017-only beginner renderer, loaded after answering and opening its section.
+// Reviewed beginner renderer for 2017 and 2018, loaded after answering and opening its section.
 export const EXPECTED_BASE_SHA256 = '3bbba9952bbc781db65dfe589507963580ce89623509b1b58004ea13a965f8f8';
 const DOMAINS = new Set(['theory','design','equipment','construction','inspection','diagram','law']);
 const SHA = /^[a-f0-9]{64}$/;
