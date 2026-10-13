@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-10-13T01:06:21.391143+00:00",
+  "createdAt": "2026-10-13T01:47:37.725242+00:00",
   "exams": [
     "d2-20170604",
     "d2-20170930",
@@ -29,14 +29,14 @@
   ],
   "questionCount": 1250,
   "knowledgeVersion": "knowledge-v1-0783f14049a44acd",
-  "beginnerKnowledgeVersion": "knowledge-2017-2018-6ae550fab6ba9808",
-  "beginnerQuestionCount": 200,
+  "beginnerKnowledgeVersion": "knowledge-2017-2026-beginner-3ba58293f8a32159",
+  "beginnerQuestionCount": 1250,
   "files": {
-    "app.mjs": "aeadbe29a0dd30ac8007cf56c8823ffe8c02b2cd49e783f4de8f5d33d1083558",
-    "core.mjs": "f64c5510e3006c91064f3b02b8a9d3f6093a16c018e9fcd92a52aee3d0fab826",
-    "data/exams.json": "3bbba9952bbc781db65dfe589507963580ce89623509b1b58004ea13a965f8f8",
-    "data/knowledge-beginner.json": "fceee7571fd8c5af2985cd9562ee10541da55e9d1ef4a308f439a933b2e55b0c",
-    "data/knowledge.json": "b225700b22c5cf22c5767847d935cd768a6051007eb54c0305e21e632d4c661a",
+    "app.mjs": "4f4d0333d0fd7618cfab24a6eb480b9e114c9e4edcf799fd307ede9c6db86bc0",
+    "core.mjs": "020b6b36db1ae96694dc521accb42a7167b2ba4682859b3907d2390380418c4a",
+    "data/exams.json": "d1ea0926ebd45fd28f3a79522adc78c46bd24b9b2b5b6c3d5726648c82d0adcf",
+    "data/knowledge-beginner.json": "689780da56a02adc8b9a6c989fdb976ad659c9435245db76b05924a37fe15061",
+    "data/knowledge.json": "b820080b4cb24737d9927b3565ed8d8ec47262ee8062d379e182406415822f04",
     "images/20170604/diagram-notes.webp": "73871a9a60a96744e22ea18274ffcf8f01d48cf65a6501b76b6e8fefc7742590",
     "images/20170604/general.webp": "5fc4494e8a78070f3abbf5119bb727bde00bbe7c724c529ae5836b5ae55e82f0",
     "images/20170604/q01.webp": "0112418083a117f8c04e3fe997cc135a4473d3b97373bc8c24db5613bf203598",
@@ -1362,11 +1362,11 @@
     "images/20260524/q49.webp": "94d9eed500c3777ddc59017b70b23e551ac4ce456d47f27e1e395cf1578676f9",
     "images/20260524/q50.webp": "88adea450cf516d0cf8fb367cc8b7f9992aeb58c86972db5f598142b7dca93b0",
     "images/20260524/wiring.webp": "fe685e323c92010ddcfe269b4486e8c8f16c66d1f982647a87ebc8e7e53ea2f3",
-    "index.html": "cbeddb78c83c659c9145cd8660922c448f5e5fa2998c93b2f033350cb2499d70",
-    "knowledge-beginner.mjs": "c1699269aafa0ed14caf8bbd2f348d4f6893cddcabbacc4f762019cea4add3d3",
-    "knowledge-router.mjs": "bf3dda96af536301c3c7bb61ccfb23bac8548ada531cc972dc638d82f7b57ed0",
-    "knowledge.mjs": "6e68214f5d3ed1b7bf4165c2958148df3bcfef90472c81aa652fa443d063ffb2",
-    "pilot-scope.mjs": "550cd9f34e695c7ebe0caede29f8c6700ffa8226e19daabde535e5b5950ba33f",
+    "index.html": "c7a1dc36f881fe9ad2809261f4121f206df24f2b93cbaa900bf9558644b47f94",
+    "knowledge-beginner.mjs": "21915e9340c54c9b664a7b8a4c8dc0bc4f5df9de66fa2a1a8e49b73f394d13d4",
+    "knowledge-router.mjs": "98b3152c0de3816d81629ffb12ed039ba79746ba56f673bf64bf4ec3c892b333",
+    "knowledge.mjs": "ebea050e9088fe0092ea30c04fa813a7a105177dbbdf123b2da4470b7ba51727",
+    "pilot-scope.mjs": "764b437335d77ec301dd4b205347e7a7bbb065ca08238f1e30ea00cdc03b8caf",
     "styles.css": "447cb6969391960908fa1dd0ec230e318c006aa6fa6d97e570e146f3f6376f3d"
   }
 }

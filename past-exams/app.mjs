@@ -1,5 +1,5 @@
-import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.3.1';
-import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,validateHistory,previewMerge} from './core.mjs?v=1.3.1';
+import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.4.0';
+import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,validateHistory,previewMerge} from './core.mjs?v=1.4.0';
 const $ = id=>document.getElementById(id);
 const el=(tag,cls,text)=>{const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;};
 let data,questions,store,queue=[],position=0,current=null,context=null,answered=false,selected=null,screen='learn',pendingImport=null,importReadId=0;

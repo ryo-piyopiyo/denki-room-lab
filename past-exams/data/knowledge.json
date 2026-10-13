@@ -2,8 +2,8 @@
   "format": "denki-post-answer-knowledge",
   "schemaVersion": 1,
   "knowledgeVersion": "knowledge-v1-0783f14049a44acd",
-  "baseDataVersion": "2017-2026-study-25papers-pilot-2017-51deac51c81f-v4",
-  "baseDataSha256": "3bbba9952bbc781db65dfe589507963580ce89623509b1b58004ea13a965f8f8",
+  "baseDataVersion": "2017-2026-study-25papers-beginner-held-errata-v5",
+  "baseDataSha256": "d1ea0926ebd45fd28f3a79522adc78c46bd24b9b2b5b6c3d5726648c82d0adcf",
   "cardCount": 139,
   "questionCount": 1250,
   "reviews": [

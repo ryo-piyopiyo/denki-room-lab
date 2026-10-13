@@ -1,6 +1,6 @@
-import {isPilotQuestion,PILOT_IDS} from './pilot-scope.mjs';
-// Reviewed beginner renderer for 2017 and 2018, loaded after answering and opening its section.
-export const EXPECTED_BASE_SHA256 = '3bbba9952bbc781db65dfe589507963580ce89623509b1b58004ea13a965f8f8';
+import {isPilotQuestion,PILOT_IDS} from './pilot-scope.mjs?v=1.4.0';
+// Reviewed beginner renderer for all published 2017–2026 papers, loaded after answering and opening its section.
+export const EXPECTED_BASE_SHA256 = 'd1ea0926ebd45fd28f3a79522adc78c46bd24b9b2b5b6c3d5726648c82d0adcf';
 const DOMAINS = new Set(['theory','design','equipment','construction','inspection','diagram','law']);
 const SHA = /^[a-f0-9]{64}$/;
 const ID = /^(theory|design|equipment|construction|inspection|diagram|law)-[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -19,7 +19,7 @@ export function validateKnowledge(value, questions, dataVersion, evidenceQuestio
   assert(value.baseDataSha256 === EXPECTED_BASE_SHA256, '追加資料の原本情報が不足しています。');
   assert(plainObject(value.cards) && plainObject(value.questionLinks), '追加資料の内容が不足しています。');
   const ids = new Set(questions.map(q=>q.id));
-  assert(ids.size===PILOT_IDS.length && [...ids].every(isPilotQuestion), '先行版の対象外の問題が含まれています。');
+  assert(ids.size===PILOT_IDS.length && [...ids].every(isPilotQuestion), '公開済み資料の対象外の問題が含まれています。');
   assert(ids.size === questions.length && Object.keys(value.questionLinks).length === ids.size, '追加資料の問題対応が不完全です。');
   assert(Array.isArray(value.reviews) && value.reviews.length > 0 && value.reviews.every(r => plainObject(r) && r.status === 'verified' && r.pedagogyVersion === 'beginner-v2' && SHA.test(r.contentSha256) && SHA.test(r.reportSha256) && SHA.test(r.reviewerFingerprintSha256)), '追加資料の確認情報が不足しています。');
   for(const review of value.reviews) keys(review,['status','pedagogyVersion','contentSha256','reportSha256','reviewerFingerprintSha256']);

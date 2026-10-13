@@ -1,5 +1,5 @@
 {
-  "dataVersion": "2017-2026-study-25papers-pilot-2017-51deac51c81f-v4",
+  "dataVersion": "2017-2026-study-25papers-beginner-held-errata-v5",
   "generatedAt": "2026-10-10",
   "publisher": "一般財団法人 電気技術者試験センター",
   "exams": [
@@ -26304,7 +26304,7 @@
           },
           "explanation": {
             "summary": "正解はロ、床隠ぺい配線。⑩の配線は破線で描かれている。",
-            "reasoning": "2階左側洋室のコンセントを結ぶ⑩の線は、長い線と隙間が繰り返される破線。屋内配線図では床隠ぺい配線を表す。実線で描く天井隠ぺい配線、一点鎖線で描く露出配線などと区別する。建物の床平面図に描かれているからといって、すべての線が床配線になるわけではなく、線種が施工位置を示す。",
+            "reasoning": "2階左側洋室のコンセントを結ぶ⑩の線は、長い線と隙間が繰り返される破線。屋内配線図では床隠ぺい配線を表す。実線で描く天井隠ぺい配線、点線で描く露出配線などと区別する。建物の床平面図に描かれているからといって、すべての線が床配線になるわけではなく、線種が施工位置を示す。",
             "prerequisites": [
               "隠ぺい配線は天井裏や床内など、通常は見えない部分に設ける配線。",
               "配線図の線種には施工方法の意味がある。"
@@ -26312,11 +26312,11 @@
             "options": {
               "イ": "天井隠ぺい配線：通常は実線で表す。⑩の破線とは違う。",
               "ロ": "床隠ぺい配線：⑩の破線は床内などへ隠して施設する配線を表し、この方法に一致する。",
-              "ハ": "露出配線：天井や壁面等に見える形で施設する配線で、通常は一点鎖線で表す。⑩の単純な破線とは異なる。",
+              "ハ": "露出配線：天井や壁面等に見える形で施設する配線で、通常は点線で表す。⑩の単純な破線とは異なる。",
               "ニ": "ライティングダクト配線：照明用ダクトを示す専用の表し方で、⑩のコンセント間の破線ではない。"
             },
             "topic": "配線図記号／配線の線種",
-            "pitfall": "壁に沿った位置だけで露出配線と判断せず、実線・破線・一点鎖線を見分ける。",
+            "pitfall": "壁に沿った位置だけで露出配線と判断せず、実線・破線・点線を見分ける。",
             "sources": [
               {
                 "title": "電気技術者試験センター 2019年度上期 公式問題・問40",
@@ -40059,7 +40059,7 @@
                 "url": "https://public-comment.e-gov.go.jp/pcm/1040?CLASSNAME=PCM1040&Mode=1&id=595125099"
               }
             ],
-            "note": "40A配線用遮断器・8mm²・30Aコンセントのハが適合。イは20A分岐に30Aコンセント、ロは30A分岐で2.0mm、ニは30A分岐で2.0mmと15Aコンセントが不適切。遮断器からコンセントまで8mなので末端3m特例を適用しない。",
+            "note": "40A配線用遮断器・8mm²・30Aコンセントのハが適合。イは20A分岐に30Aコンセント、ロは30A分岐で2.0mm、ニは30A分岐で2.6mmの電線は適合するが15Aコンセントが不適切。遮断器からコンセントまで8mなので末端3m特例を適用しない。",
             "historicalCorrect": "ハ",
             "currentCorrect": "ハ",
             "normalPracticeIncluded": true,
@@ -42680,7 +42680,7 @@
               "イ": "天井隠ぺい配線は本問の破線ではなく実線で表す。③の線種と合わない。",
               "ロ": "壁隠ぺい配線も実線で表す。平面図で壁沿いだからという理由では選べない。",
               "ハ": "床隠ぺい配線が正しい。③の破線に対応する。",
-              "ニ": "露出配線には一点鎖線を使う。③はその線種ではない。"
+              "ニ": "露出配線には点線を使う。③はその線種ではない。"
             },
             "sources": [
               {
@@ -152185,6 +152185,115 @@
           "url": "https://www.shiken.or.jp/construction/upload/20170930_co_second_a01.pdf",
           "locator": "Question50=ハ",
           "checkedAt": "2026-10-12"
+        }
+      ]
+    },
+    {
+      "id": "exposed-wiring-dotted-line-20261012-published-rebase-20261013",
+      "status": "verified",
+      "checkedAt": "2026-10-13",
+      "questionIds": [
+        "d2-20190602-40",
+        "d2-20201004-pm-33"
+      ],
+      "summary": "露出配線の線種の記述を、原問と図記号資料に基づき「一点鎖線」から「点線」へ訂正しました。公式正答は変わりません。",
+      "scope": "既に保留していた4箇所を原問・一次資料で再確認した限定訂正です。",
+      "previousReviewScope": "既存の解説確認情報は以前の確認記録として保持し、この限定訂正は本記録の再確認に基づきます。",
+      "beforeBaseSha256": "3bbba9952bbc781db65dfe589507963580ce89623509b1b58004ea13a965f8f8",
+      "reportSha256": "17a73b482ea2b099ae29ad72b0d97d62eeee8cc54722f0b171dc22758b280da8",
+      "reviewerFingerprintSha256": "23bd62aa1b156e1e5629bf81c19fe83dd0d11024d5b60227f86bc406a88936ba",
+      "fieldChanges": [
+        {
+          "questionId": "d2-20190602-40",
+          "fieldPath": "explanation.reasoning",
+          "beforeSha256": "69d7ee9971ae8e5f9aac184378bc98046d4d57c8ca3133d78f0dc1847171a639",
+          "afterSha256": "c3e4efc99072429354b0941c2de5db10a465abe1e9905c9105d964298fc066e8"
+        },
+        {
+          "questionId": "d2-20190602-40",
+          "fieldPath": "explanation.options.ハ",
+          "beforeSha256": "1e9beea2abde8032a266975a303cf06a42455cfc48181d94a37896b0f493f563",
+          "afterSha256": "21ac66526e656de953acd7242a3c5d951cb50fb927d5468aac80d6e7b0a4764f"
+        },
+        {
+          "questionId": "d2-20190602-40",
+          "fieldPath": "explanation.pitfall",
+          "beforeSha256": "1c34422100c04611cdfba083300d5fedabbd82dcdb196b4f8fbd968c64b8a6e3",
+          "afterSha256": "2a8656e2ed4e17451a07e060cd0584a45d513a01e26f073902b5bbae86c10944"
+        },
+        {
+          "questionId": "d2-20201004-pm-33",
+          "fieldPath": "explanation.options.ニ",
+          "beforeSha256": "83899e18d70cc0bc869f3beab9db39d94a56425bd56b30c6d54417b6932f9dce",
+          "afterSha256": "5828d66c094849db191c4e5f58024ba2fe178c9b8e803a04ca61e67a4fbc814b"
+        }
+      ],
+      "sources": [
+        {
+          "id": "source-1",
+          "title": "国土交通省 公共建築設備工事標準図（電気設備工事編）令和7年版",
+          "url": "https://www.mlit.go.jp/gobuild/content/001879276.pdf",
+          "locator": "printed page3/PDF page4, top3配管配線 symbols; original pixels inspected",
+          "checkedAt": "2026-10-13"
+        },
+        {
+          "id": "source-2",
+          "title": "Panasonic 配線図記号の読み方：配管・配線",
+          "url": "https://www2.panasonic.biz/jp/basics/electric/electricity/symbols/conduits-cables/",
+          "locator": "配管配線 table,露出配線 row; image06-03.png inspected",
+          "checkedAt": "2026-10-13"
+        },
+        {
+          "id": "source-3",
+          "title": "2019年度上期公式問題・解答",
+          "url": "https://www.shiken.or.jp/construction/upload/20190602_co_second_q01.pdf",
+          "locator": "question40 onprintedp11; diagram⑩ onp15 directly inspected",
+          "checkedAt": "2026-10-13"
+        },
+        {
+          "id": "source-4",
+          "title": "2020年度下期午後公式問題・解答",
+          "url": "https://www.shiken.or.jp/construction/upload/20201004_co_second_q02.pdf",
+          "locator": "question33 onprintedp11; diagram③ onp15 directly inspected",
+          "checkedAt": "2026-10-13"
+        }
+      ]
+    },
+    {
+      "id": "2020-pm-q10-audit-conductor-note-20261012-published-rebase-20261013",
+      "status": "verified",
+      "checkedAt": "2026-10-13",
+      "questionIds": [
+        "d2-20201004-pm-10"
+      ],
+      "summary": "2020年度下期午後問10の選択肢ニは電線2.6mmが適合し、15Aコンセントが不適合であることを監査注記に訂正しました。公式正答ハは変わりません。",
+      "scope": "既に保留していた1箇所を原問・一次資料で再確認した限定訂正です。",
+      "previousReviewScope": "既存の解説確認情報は以前の確認記録として保持し、この限定訂正は本記録の再確認に基づきます。",
+      "beforeBaseSha256": "3bbba9952bbc781db65dfe589507963580ce89623509b1b58004ea13a965f8f8",
+      "reportSha256": "b3f09529c407c0129c9ccfd84a385ffc18d211ca2fc755158bf01f215c99459d",
+      "reviewerFingerprintSha256": "5f4df446298e93a173732f20cd05a629d953faa3a2e19e1c6955f4a1f31273a1",
+      "fieldChanges": [
+        {
+          "questionId": "d2-20201004-pm-10",
+          "fieldPath": "lawAudit.note",
+          "beforeSha256": "f8f150466ace67cbf4a5e7bd8953fcf182d140f1c4325937c47e7884fed6bc64",
+          "afterSha256": "d6a4d4b6a29f4aa863b77d8cf4d5ae5c6e09bc8edd2f769b43c360f9447ce67f"
+        }
+      ],
+      "sources": [
+        {
+          "id": "source-1",
+          "title": "電気技術者試験センター2020年度下期午後問題",
+          "url": "https://www.shiken.or.jp/construction/upload/20201004_co_second_q02.pdf#page=7",
+          "locator": "Original saved page7 render actually viewed on 2026-10-13; optionニ visibly reads30A,2.6mm,15A two receptacles.",
+          "checkedAt": "2026-10-13"
+        },
+        {
+          "id": "source-2",
+          "title": "電気技術者試験センター2020年度下期午後公式解答",
+          "url": "https://www.shiken.or.jp/construction/upload/20201004_co_second_a02.pdf",
+          "locator": "Official answer PDF freshly opened on 2026-10-13 via web; page1, question10 =ハ.",
+          "checkedAt": "2026-10-13"
         }
       ]
     }
