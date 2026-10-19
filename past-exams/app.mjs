@@ -1,8 +1,9 @@
-import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.5.0';
-import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,validateHistory,previewMerge} from './core.mjs?v=1.5.0';
+import {mountFullPaper} from './full-paper.mjs?v=1.6.0';
+import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.6.0';
+import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,validateHistory,previewMerge} from './core.mjs?v=1.6.0';
 
 let symbolModulePromise=null;
-function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.5.0').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
+function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.6.0').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
 function enhanceSymbolTargets(container,targets){
   let notice=null;
   const run=()=>{if(notice)notice.remove();notice=null;loadSymbolModule().then(module=>{if(container.isConnected)module.enhanceTargets(container,targets);}).catch(()=>{
@@ -15,7 +16,7 @@ const $ = id=>document.getElementById(id);
 const el=(tag,cls,text)=>{const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;};
 let data,questions,store,queue=[],position=0,current=null,context=null,answered=false,selected=null,screen='learn',pendingImport=null,importReadId=0;
 const sessionId=uid();
-let loadKnowledge;
+let loadKnowledge,fullPaper;
 const knowledgeSection=()=>createKnowledgeSection({document,question:current,loadKnowledge});
 const safeUrl=url=>{try{const u=new URL(url,location.href);return ['https:','http:'].includes(u.protocol)?u.href:null;}catch{return null;}};
 const sourceLink=(title,url)=>{const a=el('a','',title);const safe=safeUrl(url);if(safe){a.href=safe;a.target='_blank';a.rel='noopener noreferrer';}return a;};
@@ -24,7 +25,7 @@ function download(name,text,type='application/json'){const blob=new Blob([text],
 function name(ext){return `progress-denki-${new Date().toISOString().slice(0,10)}.${ext}`;}
 function refreshStatus(){const n=$('storage-status');n.replaceChildren();n.classList.toggle('warning',store.status!=='ok');n.append(el('span','',store.status==='ok'?`● ${store.message}`:`⚠ ${store.message}`));if(store.status!=='ok'){n.append(el('div','small','記録はpiyoに自動送信されません。新しい記録も「piyoに共有」からJSON保存できます。'));const retry=el('button','secondary',store.status==='protected'?'元データを保護して保存を復旧':'保存をもう一度試す');retry.onclick=()=>{if(store.status==='protected')$('recovery-dialog').showModal();else{store.recover();refreshStatus();}};n.append(retry);if(store.raw!==null){const b=el('button','secondary','元データを変更せず救出する');b.onclick=()=>download(`progress-denki-recovery-${Date.now()}.txt`,store.raw,'text/plain;charset=utf-8');n.append(b);}}}
 function append(type,extra={}){store.append(makeEvent(type,current,context,extra));refreshStatus();}
-function showScreen(next){screen=next;for(const id of ['learn','progress','share','sources'])$(id+'-screen').hidden=id!==next;document.querySelectorAll('[data-screen]').forEach(b=>{const active=b.dataset.screen===next;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});if(next==='progress')renderProgress();if(next==='share')renderShare();window.scrollTo({top:0,behavior:'instant'});}
+function showScreen(next){screen=next;for(const id of ['learn','paper','progress','share','sources'])$(id+'-screen').hidden=id!==next;document.querySelectorAll('[data-screen]').forEach(b=>{const active=b.dataset.screen===next;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});if(next==='learn')renderQuestionList();if(next==='paper')fullPaper.render();if(next==='progress')renderProgress();if(next==='share')renderShare();window.scrollTo({top:0,behavior:'instant'});}
 function refreshFilterCount(){const n=filteredQuestions(questions,store.history,filters()).length;$('filter-count').textContent=`${n}問`;$('start').disabled=n===0;}
 function imageButton(path,label){const b=el('button','image-button');b.type='button';b.setAttribute('aria-label',`${label}を拡大`);const img=el('img');img.src=path;img.alt=label;img.loading='lazy';const caption=el('span','image-caption','拡大する ↗');b.append(img,caption);b.onclick=()=>openImage(path,label);img.onerror=()=>{caption.textContent='画像を読み込めませんでした。再読み込み、または出典の原本を確認してください。';};return b;}
 function openImage(path,label){$('zoom-title').textContent=label;$('zoom-image').src=path;$('zoom-image').alt=label;$('zoom-level').value='1';$('zoom-image').style.width='100%';$('original-image-link').href=path;$('image-dialog').showModal();$('zoom-viewport').scrollTo(0,0);}
@@ -55,8 +56,8 @@ function renderQuestion(){
   $('question-title').focus({preventScroll:true});$('session-area').scrollIntoView({behavior:'instant',block:'start'});
 }
 function startQueue(list){if(current&&!answered&&position===0&&!$('session-area').hidden&&list.length===queue.length&&list.every((q,i)=>q.id===queue[i].id)){$('session-area').scrollIntoView({behavior:'instant',block:'start'});return;}queue=list;position=0;if(!list.length){$('session-area').hidden=true;$('empty-session').hidden=false;$('empty-session').textContent='この条件の問題はありません。条件を変えて選び直せます。';return;}renderQuestion();}
-function displayExplanation(result){
-  const ex=current.explanation;const box=el('div','explanation');const symbolTargets=[];const questionId=current.id;
+function displayExplanation(result,question=current){
+  const ex=question.explanation;const box=el('div','explanation');const symbolTargets=[];const questionId=question.id;
   const explained=(tag,cls,text,path)=>{const node=el(tag,cls,text);symbolTargets.push({node,text,kind:'question',id:questionId,path});return node;};
   box.append(el('h3','','解き方と、選択肢の読み方'),el('p','author-note','piyoによる学習用解説。試験センターの公式解説ではありません。'));
   if(!ex){box.append(el('p','','この問題の詳しい解説は準備中です。公式正答は上に表示しています。'));return box;}
@@ -64,12 +65,12 @@ function displayExplanation(result){
   if(ex.reasoning){box.append(el('h4','','どう考える？'),explained('p','',Array.isArray(ex.reasoning)?ex.reasoning.join('\n'):ex.reasoning,['explanation','reasoning']));}
   if(ex.prerequisites?.length){box.append(el('h4','','先に押さえておくこと'));const ul=el('ul');for(const [i,item] of ex.prerequisites.entries())ul.append(explained('li','',item,['explanation','prerequisites',i]));box.append(ul);}
   box.append(el('h4','','4つの選択肢を確認'));
-  for(const c of CHOICES){const row=el('div','option-explanation');row.append(el('strong','',`${c}${c===current.answer?' · 当時の公式正答':''}${c===result.selectedAnswer?' · あなたの選択':''}`));const content=ex.options?.[c];row.append(explained('p','',typeof content==='string'?content:content?Object.values(content).filter(v=>typeof v==='string').join('\n'):'この選択肢の解説は確認中です。',['explanation','options',c]));box.append(row);}
-  if(current.lawAudit?.note){box.append(el('h4','','現在の法令・基準との関係'),explained('p','',current.lawAudit.note,['lawAudit','note']));}
-  if(current.lawAudit?.checkedAt){const kind=current.lawAudit.status==='not_rule_dependent'?'原理・器具等の確認':'現行の法令・基準との関係の確認';box.append(el('p','audit-note',`${kind}：${current.lawAudit.checkedAt}。${current.lawAudit.status==='not_rule_dependent'?'':'その後の改正は反映されていない場合があります。'}`));}
-  const corrections=(data.editorialCorrections||[]).filter(c=>c.questionIds?.includes(current.id));
+  for(const c of CHOICES){const row=el('div','option-explanation');row.append(el('strong','',`${c}${c===question.answer?' · 当時の公式正答':''}${c===result.selectedAnswer?' · あなたの選択':''}`));const content=ex.options?.[c];row.append(explained('p','',typeof content==='string'?content:content?Object.values(content).filter(v=>typeof v==='string').join('\n'):'この選択肢の解説は確認中です。',['explanation','options',c]));box.append(row);}
+  if(question.lawAudit?.note){box.append(el('h4','','現在の法令・基準との関係'),explained('p','',question.lawAudit.note,['lawAudit','note']));}
+  if(question.lawAudit?.checkedAt){const kind=question.lawAudit.status==='not_rule_dependent'?'原理・器具等の確認':'現行の法令・基準との関係の確認';box.append(el('p','audit-note',`${kind}：${question.lawAudit.checkedAt}。${question.lawAudit.status==='not_rule_dependent'?'':'その後の改正は反映されていない場合があります。'}`));}
+  const corrections=(data.editorialCorrections||[]).filter(c=>c.questionIds?.includes(question.id));
   for(const correction of corrections){box.append(el('h4','','解説の訂正'),el('p','',correction.summary),el('p','small quiet',`${correction.checkedAt}確認。${correction.scope}`));}
-  const sources=[...(ex.sources||[]),...(current.lawAudit?.sources||[]),...corrections.flatMap(c=>c.sources||[])];if(sources.length){const d=el('details');d.append(el('summary','','解説・現行基準の確認資料'));const ul=el('ul');for(const s of sources){const li=el('li');li.append(sourceLink(s.title||s.url,s.url));ul.append(li);}d.append(ul);box.append(d);}
+  const sources=[...(ex.sources||[]),...(question.lawAudit?.sources||[]),...corrections.flatMap(c=>c.sources||[])];if(sources.length){const d=el('details');d.append(el('summary','','解説・現行基準の確認資料'));const ul=el('ul');for(const s of sources){const li=el('li');li.append(sourceLink(s.title||s.url,s.url));ul.append(li);}d.append(ul);box.append(d);}
   enhanceSymbolTargets(box,symbolTargets);return box;
 }
 function submit(answer,{reveal=false}={}){
@@ -116,6 +117,7 @@ async function load(){
     for(const exam of data.exams){const o=el('option','',labelExam(exam));o.value=exam.id;$('exam-filter').append(o);}const topics=new Map(questions.map(q=>[q.topic,q.topicLabel||q.topic]));for(const [id,title] of topics){const o=el('option','',title);o.value=id;$('topic-filter').append(o);}
     $('intro-paper-years').textContent=`${paperYears()}年の公式問題・写真・図を見て、1問ずつ解く。`;
     $('loading').hidden=true;$('learn-screen').hidden=false;renderQuestionList();refreshFilterCount();renderSources();
+    fullPaper=mountFullPaper({root:$('paper-screen'),data,questions,store,storage:local,imageButton,explanation:(q,a)=>displayExplanation(a,q),knowledge:q=>createKnowledgeSection({document,question:q,loadKnowledge}),onHistory:()=>{refreshStatus();refreshFilterCount();}});
     wire();
   }catch(error){$('loading').textContent=`問題データを読み込めませんでした。接続を確認して再読み込みしてください。学習記録の上書きはしていません。(${error.message})`;}
 }

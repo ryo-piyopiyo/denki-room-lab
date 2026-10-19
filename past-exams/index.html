@@ -6,8 +6,8 @@
 <meta name="color-scheme" content="light">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' blob:; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>過去問の勉強室 | 第二種電気工事士</title>
-<link rel="stylesheet" href="styles.css?v=1.5.0">
-<script type="module" src="app.mjs?v=1.5.0"></script>
+<link rel="stylesheet" href="styles.css?v=1.6.0">
+<script type="module" src="app.mjs?v=1.6.0"></script>
 </head>
 <body>
 <a href="#main" class="skip-link">本文へ</a>
@@ -18,6 +18,7 @@
 </header>
 <nav class="nav" aria-label="メインメニュー">
 <button class="nav-button active" data-screen="learn" aria-current="page">問題を解く</button>
+<button class="nav-button" data-screen="paper">1回分を通して解く</button>
 <button class="nav-button" data-screen="progress">学習記録</button>
 <button class="nav-button" data-screen="share">piyoに共有</button>
 <button class="nav-button" data-screen="sources">出典・使い方</button>
@@ -53,6 +54,7 @@
 <div id="empty-session" class="panel" hidden></div>
 <details class="panel question-browser"><summary>全問題から番号で選ぶ <span id="total-label"></span></summary><div id="question-list"></div></details>
 </section>
+<section id="paper-screen" hidden></section>
 <section id="progress-screen" hidden><div class="section-head"><span class="eyebrow">YOUR LEARNING</span><h1>積み重ねを、見える形に。</h1><p>初見の自力回答と、見直しながらの学習は分けて振り返ります。</p></div><div id="progress-content"></div></section>
 <section id="share-screen" hidden><div class="section-head"><span class="eyebrow">SHARE WITH PIYO</span><h1>今日の記録を、piyoへ。</h1><p>piyoは、この端末の記録を自動では読めません。<br>文章をコピーしてチャットに貼るか、JSONを保存して私信で添付してください。</p></div>
 <div class="panel"><h2>学習記録を持ち出す</h2><p>記録はこのブラウザ内に保存されます。サーバーへの自動送信・アカウント・アクセス解析はありません。ブラウザのデータ削除や端末変更に備えて、JSONのバックアップをおすすめします。</p><div class="button-row"><button id="copy-summary" class="primary">piyo用の文章をコピー</button><button id="download-text" class="secondary">文章をTXTで保存</button><button id="download-json" class="secondary">全履歴をJSONで保存</button></div><p id="export-status" role="status"></p><details><summary>共有する文章を確認する</summary><textarea id="summary-text" readonly rows="16" aria-label="piyoに共有する学習記録"></textarea></details><p class="small quiet">JSONは解答・表示・ヒントなどの記録を含みます。解答試行（スキップを含む）には公式正答を含みます。表示しただけの問題には含みません。公開リポジトリや公開フォームにはアップロードしないでください。</p></div>
