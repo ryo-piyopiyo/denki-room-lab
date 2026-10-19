@@ -28,3 +28,11 @@
 .paper-score{font-size:clamp(1.8rem,5vw,3rem);font-weight:700}
 .paper-result-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #ddd}
 @media(max-width:600px){.paper-result-row{align-items:flex-start;flex-direction:column}.nav{flex-wrap:wrap}#paper-screen .button-row{flex-wrap:wrap}}
+
+/* Direct navigation stays above the question on narrow screens too. */
+.paper-shortcuts{padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:16px 0}
+.paper-jump{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0 0 12px}
+.paper-jump label{font-weight:600}
+.paper-jump input{width:5.5rem;min-height:44px;font:inherit;font-size:16px;padding:8px;border:1px solid #759684;border-radius:6px}
+.paper-shortcuts button{min-height:44px;white-space:normal}
+.paper-shortcuts p{margin-bottom:0}

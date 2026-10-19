@@ -1,7 +1,9 @@
-import {CHOICES,uid,makeEvent,makeAttempt,freshHistory,validateHistory,conditions,questionStats} from './core.mjs?v=1.6.0';
+import {CHOICES,uid,makeEvent,makeAttempt,freshHistory,validateHistory,conditions,questionStats} from './core.mjs?v=1.6.1';
 export const PAPER_PREFIX='denki.official-pastpapers.paper.v1.';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
 export function paperSummary(run,questions){const eligible=questions.filter(q=>!q.excluded);const answered=eligible.filter(q=>CHOICES.includes(run.answers[q.id]));return {total:questions.length,eligible:eligible.length,excluded:questions.length-eligible.length,answered:answered.length,unanswered:eligible.length-answered.length,correct:answered.filter(q=>run.answers[q.id]===q.answer).length,incorrect:answered.filter(q=>run.answers[q.id]!==q.answer).length};}
+export function firstUnansweredIndex(run,questions){return questions.findIndex(q=>!q.excluded&&!CHOICES.includes(run.answers[q.id]));}
+export function questionNumberIndex(questions,value){const number=Number(value);return String(value).trim()&&Number.isInteger(number)?questions.findIndex(q=>q.number===number):-1;}
 export function createPaperRun(exam,questions,dataVersion){return {version:1,id:uid(),examId:exam.id,dataVersion,startedAt:new Date().toISOString(),revision:0,position:0,answers:{},visits:{},flags:{},submittedAt:null,events:null,questionIds:questions.map(q=>q.id)};}
 export function validatePaperRun(value,questions,dataVersion){
   if(!value||value.version!==1||typeof value.id!=='string'||!/^[-\w]+$/.test(value.id)||!Number.isInteger(value.revision)||value.revision<0||value.dataVersion!==dataVersion||!Number.isInteger(value.position)||value.position<0||value.position>=questions.length||JSON.stringify(value.questionIds)!==JSON.stringify(questions.map(q=>q.id)))throw Error('問題データまたは保存形式が一致しません。');
@@ -35,7 +37,7 @@ export function mountFullPaper({root,data,questions,store,storage,imageButton,ex
   function focusResult(){const title=root.querySelector('#paper-result-title');title?.focus({preventScroll:true});title?.scrollIntoView({block:'start',behavior:'instant'});}
   function open(id){try{const text=storage.getItem(PAPER_PREFIX+id);const value=JSON.parse(text);run=validatePaperRun(value,paperQuestions(value.examId),data.dataVersion);raw=text;notice='';saveFailed=false;reviewId=null;confirmSubmit=false;render();if(run.submittedAt)focusResult();}catch{run=null;notice='保存済みの回を安全に読み込めませんでした。元データは変更していません。';render();}}
   function persistSubmission(){if(!run?.submittedAt)return;store.commit({...freshHistory(),events:run.events});onHistory();}
-  function navigate(index){confirmSubmit=false;if(save({...run,position:index})){render();const heading=root.querySelector('h2');heading?.focus({preventScroll:true});heading?.scrollIntoView({block:'start',behavior:'instant'});}else render();}
+  function navigate(index){if(!run||run.submittedAt||!Number.isInteger(index)||index<0||index>=paperQuestions(run.examId).length)return;confirmSubmit=false;if(save({...run,position:index})){render();const heading=root.querySelector('h2');heading?.focus({preventScroll:true});heading?.scrollIntoView({block:'start',behavior:'instant'});}else render();}
   function render(){
     root.replaceChildren();const head=el('div','section-head');head.append(el('span','eyebrow','ONE COMPLETE PAPER'),el('h1','','1回分を、通して解く。'),el('p','','実施回を選んで問1から順番に。解答は最後の「まとめて採点」まで変更できます。途中では正答・解説を表示しません。'));root.append(head);
     const status=el('p','storage-status',notice||'途中経過はこのブラウザに自動保存します。別のタブで同じ回を同時に操作しないでください。');status.setAttribute('role','status');root.append(status);
@@ -47,6 +49,16 @@ export function mountFullPaper({root,data,questions,store,storage,imageButton,ex
     const qs=paperQuestions(run.examId);if(run.submittedAt){persistSubmission();renderResult(qs);return;}
     const q=qs[run.position];recordVisit(q);status.textContent=notice||(saveFailed?'途中経過はこの画面内のみです。':'途中経過をこのブラウザに保存しています。');const counts=paperSummary(run,qs);
     const panel=el('article','panel question-card');const title=el('h2','',`${examTitle(run.examId)} · 問${q.number} / ${qs.length}`);title.tabIndex=-1;panel.append(title,el('p','',`解答済み ${counts.answered} / ${counts.eligible}問 · 未解答 ${counts.unanswered}問 · 採点対象外 ${counts.excluded}問`));root.append(panel);
+    const shortcuts=el('div','paper-shortcuts');
+    const jump=el('form','paper-jump');const jumpLabel=el('label','','問題番号');jumpLabel.htmlFor='paper-jump-number';
+    const numberInput=el('input');numberInput.id='paper-jump-number';numberInput.type='number';numberInput.inputMode='numeric';numberInput.min=String(qs[0].number);numberInput.max=String(qs.at(-1).number);numberInput.step='1';numberInput.required=true;numberInput.value=String(q.number);
+    const jumpButton=button('指定した問題へ',()=>{});jumpButton.type='submit';
+    jump.onsubmit=event=>{event.preventDefault();const index=questionNumberIndex(qs,numberInput.value);if(index<0){numberInput.setCustomValidity('1〜50の問題番号を入力してください。');numberInput.reportValidity();return;}navigate(index);};
+    numberInput.oninput=()=>numberInput.setCustomValidity('');
+    jump.append(jumpLabel,numberInput,jumpButton);shortcuts.append(jump);
+    const first=firstUnansweredIndex(run,qs);const unanswered=button(first<0?'未解答はありません':`最初の未解答へ（問${qs[first].number}）`,()=>navigate(first));unanswered.id='paper-first-unanswered';unanswered.disabled=first<0;shortcuts.append(unanswered);
+    shortcuts.append(el('p','small quiet','この回で未解答のうち、番号が最も小さい問題へ移動します。採点対象外は飛ばします。'));
+    panel.append(shortcuts);
     if(q.excluded){panel.append(el('div','validity-warning','⚠ この問題は、法令変更・現行基準の確認状況により解答・採点の対象外です。全体の正答率にも含めません。通常の「問題を解く」から注意表示付きで確認できます。'));}
     else{
       const stats=questionStats(store.history,q.id), learning=conditions(store.history,q.id,run.visits[q.id]);
