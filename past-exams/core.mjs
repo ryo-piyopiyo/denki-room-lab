@@ -1,15 +1,16 @@
-export const APP_VERSION = '1.6.1';
-export const SCHEMA_VERSION = 2;
+export const APP_VERSION = '1.7.0';
+export const SCHEMA_VERSION = 3;
+// Keep the existing key so every prior history is loaded and protected before migration.
 export const STORAGE_KEY = 'denki.official-pastpapers.history.v2';
 export const LEGACY_KEY = 'denki.official-pastpapers.history.v1';
 export const CHOICES = ['イ', 'ロ', 'ハ', 'ニ'];
 let lastClock = 0;
 const eventTime = () => { lastClock = Math.max(Date.now(),lastClock+1); return new Date(lastClock).toISOString(); };
-const TYPES = new Set(['view', 'help', 'prior-exposure', 'reveal', 'attempt']);
+const TYPES = new Set(['view', 'help', 'prior-exposure', 'reveal', 'attempt', 'review-flag']);
 const LIMIT = 100000;
 export const freshHistory = () => ({ format: 'denki-pastpaper-history', schemaVersion: SCHEMA_VERSION, appVersion: APP_VERSION, events: [] });
 export const uid = () => globalThis.crypto?.randomUUID?.() || `e-${Date.now()}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
-export const ordered = events => [...events].sort((a,b) => a.occurredAt.localeCompare(b.occurredAt) || a.id.localeCompare(b.id));
+export const ordered = events => [...events].sort((a,b) => Date.parse(a.occurredAt)-Date.parse(b.occurredAt) || a.id.localeCompare(b.id));
 function stable(value) { const canonical=v=>Array.isArray(v)?v.map(canonical):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])])):v;return JSON.stringify(canonical(value)); }
 function assert(ok, message) { if (!ok) throw new Error(message); }
 const text = (s, max=200) => typeof s === 'string' && s.length > 0 && s.length <= max;
@@ -17,7 +18,7 @@ export function validateHistory(value, questions=null) {
   const catalog=questions?new Map(questions.map(q=>[q.id,q])):null;
   assert(value && !Array.isArray(value) && typeof value === 'object', '履歴の形式が正しくありません。');
   assert(value.format === 'denki-pastpaper-history', 'このアプリの履歴ファイルではありません。');
-  assert([1, SCHEMA_VERSION].includes(value.schemaVersion), '未対応の履歴バージョンです。元ファイルはそのまま保管してください。');
+  assert([1, 2, SCHEMA_VERSION].includes(value.schemaVersion), '未対応の履歴バージョンです。元ファイルはそのまま保管してください。');
   assert(Array.isArray(value.events) && value.events.length <= LIMIT, '履歴の件数または形式を確認してください。');
   const seen = new Map();
   for (const e of value.events) {
@@ -38,10 +39,11 @@ export function validateHistory(value, questions=null) {
     } else {
       assert(!('officialCorrectAnswer' in e) && !('selectedAnswer' in e), '未解答の記録に解答が含まれています。');
     }
+    if (e.type === 'review-flag') assert(typeof e.reviewRequired === 'boolean', '要復習の設定が不正です。');
     if (seen.has(e.id)) assert(stable(seen.get(e.id)) === stable(e), '同じ記録IDに異なる内容があります。取り込みを中止しました。');
     seen.set(e.id,e);
   }
-  return { ...freshHistory(), events: ordered([...seen.values()]), migratedFrom: value.schemaVersion === 1 ? 1 : undefined };
+  return { ...freshHistory(), events: ordered([...seen.values()]), migratedFrom: value.schemaVersion !== SCHEMA_VERSION ? value.schemaVersion : undefined };
 }
 export function previewMerge(current, incoming) {
   const a = validateHistory(current), b = validateHistory(incoming);
@@ -70,27 +72,34 @@ export function makeAttempt(history, q, context, answer) {
   assert(answer === null || CHOICES.includes(answer),'解答を選んでください。');
   return makeEvent('attempt',q,context,{scoringBasis:'historical_official',lawStatus:q.lawAudit?.status||'needs_review',lawAuditVersion:q.lawAudit?.version||null,currentCorrectAnswer:q.lawAudit?.currentCorrect||null,excludedFromCurrentPractice:!!q.excluded,selectedAnswer:answer,officialCorrectAnswer:q.answer,result:answer===null?'skip':answer===q.answer?'correct':'incorrect',...conditions(history,q.id,context.visitId)});
 }
+function lastReviewEvent(events){
+  const flags=events.filter(e=>e.type==='review-flag');
+  // An old per-run bookmark must never override an explicit setting, including a clear.
+  return flags.filter(e=>e.reviewFlagSource!=='legacy-paper-v1').at(-1)||flags.at(-1);
+}
 export function questionStats(history, id) {
   const es=eventsFor(history,id), attempts=es.filter(e=>e.type==='attempt');
   const first=attempts[0]||null, last=attempts.at(-1)||null;
   // Recompute from event sequence. Never trust imported first-attempt claims.
   let clean=false;
   if(first){
-    const before=es.filter(e=>e.occurredAt<first.occurredAt || (e.occurredAt===first.occurredAt && e.type!=='attempt'));
+    const before=es.filter(e=>Date.parse(e.occurredAt)<Date.parse(first.occurredAt) || (Date.parse(e.occurredAt)===Date.parse(first.occurredAt) && e.type!=='attempt'));
     clean=first.firstEncounterUnaided && !first.helpUsed && !first.answerRevealed && !first.priorExposure && !before.some(e=>['help','prior-exposure','reveal'].includes(e.type)||(e.type==='view'&&e.visitId!==first.visitId));
   }
-  return {firstAnswer:attempts.find(e=>e.result!=='skip')||null,seen:es.some(e=>e.type==='view')||attempts.length>0,attempts,first,last,cleanFirst:clean,answered:attempts.some(e=>e.result!=='skip'),needsReview:!!last&&(last.result!=='correct'||(last.currentVisitHelpUsed??last.helpUsed)||(last.currentVisitAnswerRevealed??last.answerRevealed)||(attempts.length===1&&!clean)),previousHelp:es.some(e=>e.type==='help'),previousReveal:es.some(e=>e.type==='reveal')};
+  const manualReview=lastReviewEvent(es)?.reviewRequired===true;
+  const automaticReview=!!last&&(last.result!=='correct'||(last.currentVisitHelpUsed??last.helpUsed)||(last.currentVisitAnswerRevealed??last.answerRevealed)||(attempts.length===1&&!clean));
+  return {manualReview,automaticReview,firstAnswer:attempts.find(e=>e.result!=='skip')||null,seen:es.some(e=>e.type==='view')||attempts.length>0,attempts,first,last,cleanFirst:clean,answered:attempts.some(e=>e.result!=='skip'),needsReview:manualReview||automaticReview,previousHelp:es.some(e=>e.type==='help'),previousReveal:es.some(e=>e.type==='reveal')};
 }
 export function summarize(history, questions) {
   const knownIds=new Set(questions.map(q=>q.id));
-  const out={unavailableEvents:history.events.filter(e=>!knownIds.has(e.questionId)).length,total:questions.length,seen:0,answered:0,unanswered:0,attempts:0,skips:0,cleanAnswered:0,cleanCorrect:0,firstAnsweredCorrect:0,assistedFirst:0,retryAttempts:0,needsReview:0,skippedOnly:0,revealedOnly:0,helpOnly:0,unseen:0,excluded:0,topics:{}};
+  const out={unavailableEvents:history.events.filter(e=>!knownIds.has(e.questionId)).length,total:questions.length,seen:0,answered:0,unanswered:0,attempts:0,skips:0,cleanAnswered:0,cleanCorrect:0,firstAnsweredCorrect:0,assistedFirst:0,retryAttempts:0,needsReview:0,manualReview:0,skippedOnly:0,revealedOnly:0,helpOnly:0,unseen:0,excluded:0,topics:{}};
   for(const q of questions){
     const s=questionStats(history,q.id);
     if(q.excluded)out.excluded++;if(!s.seen)out.unseen++;if(s.attempts.length&&!s.answered)out.skippedOnly++;if(s.previousReveal&&!s.answered)out.revealedOnly++;if(s.previousHelp&&!s.attempts.length)out.helpOnly++;
     if(s.firstAnswer?.result==='correct')out.firstAnsweredCorrect++; if(s.seen)out.seen++; if(s.answered)out.answered++; else out.unanswered++;
     out.attempts+=s.attempts.length;out.skips+=s.attempts.filter(e=>e.result==='skip').length;out.retryAttempts+=Math.max(0,s.attempts.length-1);
     if(s.first&&s.first.result!=='skip'&&!q.excluded){if(s.cleanFirst){out.cleanAnswered++;if(s.first.result==='correct')out.cleanCorrect++;}else out.assistedFirst++;}
-    if(s.needsReview&&!q.excluded)out.needsReview++;
+    if(s.needsReview&&!q.excluded)out.needsReview++;if(s.manualReview)out.manualReview++;
     const t=out.topics[q.topic] ||= {label:q.topicLabel||q.topic,total:0,cleanAnswered:0,cleanCorrect:0,needsReview:0,unanswered:0};
     t.total++;if(!s.answered)t.unanswered++;if(s.needsReview&&!q.excluded)t.needsReview++;if(s.cleanFirst&&!q.excluded&&s.first?.result!=='skip'){t.cleanAnswered++;if(s.first.result==='correct')t.cleanCorrect++;}
   }
@@ -118,15 +127,15 @@ export function exportHistory(history,dataVersion,questions=null) {
 }
 export function summaryText(history,questions,dataVersion){
   const s=summarize(history,questions);
-  const lines=['第二種電気工事士 公式過去問｜piyoへ共有する学習記録',`作成日時: ${new Date().toISOString()}`,`アプリ: ${APP_VERSION} / 問題データ: ${dataVersion}`,`全${s.total}問 / 表示済み${s.seen}問 / 解答済み${s.answered}問 / 未解答${s.unanswered}問`,`各問題の最初の選択回答: ${s.firstAnsweredCorrect}/${s.answered}問正解（既見・ヒントありを含む）`,`初見・自力の初回答: ${s.cleanCorrect}/${s.cleanAnswered}問正解${s.cleanAnswered?` (${Math.round(100*s.cleanCorrect/s.cleanAnswered)}%)`:'（まだ判定なし）'}`,`現在の問題集にない履歴:${s.unavailableEvents}件（保管のみ・成績対象外）`,`未表示:${s.unseen}問 / スキップのみ:${s.skippedOnly}問 / 正答表示・未解答:${s.revealedOnly}問 / ヒントのみ:${s.helpOnly}問 / 現行基準での通常練習対象外:${s.excluded}問`,`初回でも既見・ヒントあり: ${s.assistedFirst}問 / 再挑戦: ${s.retryAttempts}回 / スキップ: ${s.skips}回`,'※ 未解答を正解・不正解に含めません。再挑戦の正解を初見成績に混ぜません。','※ 端末の記録だけです。別端末・学習前の経験は申告された分だけを含みます。','※ ヒント・既見・正答表示は、この問題の過去の記録も含みます。初見成績は現在の通常練習対象のみです。','※ 経過時間は計測していません。','', '分野別（初見・自力の初回答）'];
+  const lines=['第二種電気工事士 公式過去問｜piyoへ共有する学習記録',`作成日時: ${new Date().toISOString()}`,`アプリ: ${APP_VERSION} / 問題データ: ${dataVersion}`,`全${s.total}問 / 表示済み${s.seen}問 / 解答済み${s.answered}問 / 未解答${s.unanswered}問`,`各問題の最初の選択回答: ${s.firstAnsweredCorrect}/${s.answered}問正解（既見・ヒントありを含む）`,`初見・自力の初回答: ${s.cleanCorrect}/${s.cleanAnswered}問正解${s.cleanAnswered?` (${Math.round(100*s.cleanCorrect/s.cleanAnswered)}%)`:'（まだ判定なし）'}`,`現在の問題集にない履歴:${s.unavailableEvents}件（保管のみ・成績対象外）`,`未表示:${s.unseen}問 / スキップのみ:${s.skippedOnly}問 / 正答表示・未解答:${s.revealedOnly}問 / ヒントのみ:${s.helpOnly}問 / 現行基準での通常練習対象外:${s.excluded}問`,`初回でも既見・ヒントあり: ${s.assistedFirst}問 / 再挑戦: ${s.retryAttempts}回 / スキップ: ${s.skips}回`,`手動の要復習: ${s.manualReview}問（要注意問題を含む）。正解しても自動では解除しません。`,'※ 未解答を正解・不正解に含めません。再挑戦の正解を初見成績に混ぜません。','※ 端末の記録だけです。別端末・学習前の経験は申告された分だけを含みます。','※ ヒント・既見・正答表示は、この問題の過去の記録も含みます。初見成績は現在の通常練習対象のみです。','※ 経過時間は計測していません。','', '分野別（初見・自力の初回答）'];
   for(const t of Object.values(s.topics))lines.push(`${t.label}: ${t.cleanCorrect}/${t.cleanAnswered}問正解 / 全${t.total}問 / 未解答${t.unanswered}問 / 復習候補${t.needsReview}問`);
   lines.push('','解答記録（全試行）');
   const qmap=new Map(questions.map(q=>[q.id,q]));
   const count=new Map(), chosen=new Set(), statCache=new Map();
   const stat=id=>{if(!statCache.has(id))statCache.set(id,questionStats(history,id));return statCache.get(id);};
   for(const e of ordered(history.events)){if(e.type!=='attempt')continue;count.set(e.questionId,(count.get(e.questionId)||0)+1);const q=qmap.get(e.questionId);const firstChoice=e.result!=='skip'&&!chosen.has(e.questionId);if(e.result!=='skip')chosen.add(e.questionId);const effectiveClean=count.get(e.questionId)===1&&stat(e.questionId).cleanFirst;lines.push(`${e.occurredAt} | ${q?.examTitle||e.examId} 問${e.number} | ${e.questionId} | ${q?.topicLabel||e.topic} | ${count.get(e.questionId)===1?'初回試行':'再挑戦'} | 選択:${e.selectedAnswer||'なし'} / 公式正答:${e.officialCorrectAnswer} | ${e.result==='correct'?'正解':e.result==='incorrect'?'不正解':'スキップ'} | 初見自力:${effectiveClean?'はい':'いいえ'} / 既見:${e.priorExposure?'あり':'なし'} / ヒント:${e.helpUsed?'あり':'なし'} / 正答表示:${e.answerRevealed?'あり':'なし'} / 最初の選択回答:${firstChoice?'はい':'いいえ'} / 採点基準:当時の公式解答 / 現行確認:${e.lawStatus||'未記録'}`);}
-  lines.push('','表示・補助の記録（表示・補助のみの記録には正答を含みません）');
-  for(const e of ordered(history.events))if(e.type!=='attempt')lines.push(`${e.occurredAt} | ${e.questionId} | ${e.type}`);
+  lines.push('','表示・補助・要復習の記録（解答試行以外には正答を含みません）');
+  for(const e of ordered(history.events))if(e.type!=='attempt')lines.push(`${e.occurredAt} | ${e.questionId} | ${e.type==='review-flag'?`要復習:${e.reviewRequired?'設定':'解除'}`:e.type}`);
   lines.push('','piyoへ: 初見と再挑戦を分けて、間違えた問題・未解答の分野と次に取り組む問題を整理してください。');
   return lines.join('\n');
 }
@@ -155,6 +164,14 @@ export class HistoryStore {
       }catch(error){this.fail('blocked','保存できませんでした。今の学習はこの画面内だけです。閉じる前にJSONを保存してください。');}
     }
     this.history=merged;return false;
+  }
+  toggleReview(question,context){
+    this.refresh();
+    const previous=lastReviewEvent(eventsFor(this.history,question.id));
+    const event=makeEvent('review-flag',question,context,{reviewRequired:previous?.reviewRequired!==true});
+    // A later local choice wins even after importing a backup from a clock ahead of this one.
+    if(previous&&Date.parse(event.occurredAt)<=Date.parse(previous.occurredAt))event.occurredAt=new Date(Date.parse(previous.occurredAt)+1).toISOString();
+    return this.append(event);
   }
   append(event){return this.commit({...freshHistory(),events:[event]});}
   merge(incoming){const preview=previewMerge(this.history,validateHistory(incoming,this.questions));this.commit(preview.history);return preview;}

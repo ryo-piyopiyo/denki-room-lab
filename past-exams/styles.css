@@ -36,3 +36,11 @@
 .paper-jump input{width:5.5rem;min-height:44px;font:inherit;font-size:16px;padding:8px;border:1px solid #759684;border-radius:6px}
 .paper-shortcuts button{min-height:44px;white-space:normal}
 .paper-shortcuts p{margin-bottom:0}
+
+
+/* Manual review stays independent of correctness and can be changed after grading. */
+.review-actions{margin:1rem 0}.review-actions p{margin:.45rem 0 0}
+.review-toggle{min-height:44px;white-space:normal}
+.review-toggle[aria-pressed="true"]{background:#fff1d8;border-color:#ab6e23;color:#70440f}
+.review-toggle:focus-visible{outline:3px solid #277865;outline-offset:3px}
+.result>.review-toggle{margin:0 0 1rem}
