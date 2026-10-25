@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createPaperRun,validatePaperRun,preparePaperSubmission} from '../past-exams/full-paper.mjs';
+import {freshHistory,makeEvent,validateHistory,previewMerge} from '../past-exams/core.mjs';
+const q={id:'d2-20260524-01',examId:'d2-20260524',number:1,topic:'test',answer:'イ',excluded:false};
+const ctx={visitId:'visit',sessionId:'session',dataVersion:'v'};
+const run=()=>createPaperRun({id:q.examId},[q],'v');
+test('old paper runs without notes remain readable and unchanged',()=>{const r=run();delete r.notes;const normalized=validatePaperRun(r,[q],'v');assert.deepEqual(normalized.notes,{});assert(!('notes' in r));});
+test('paper notes validate own question IDs and Unicode codepoint limit',()=>{for(const note of ['', 'あ'.repeat(200), '😀'.repeat(200)]){const r=run();r.notes[q.id]=note;assert.equal(validatePaperRun(r,[q],'v').notes[q.id],note);}for(const notes of [null,[],{[q.id]:'x'.repeat(201)},{unknown:'text'},{[q.id]:false}]){const r=run();r.notes=notes;assert.throws(()=>validatePaperRun(r,[q],'v'));}});
+test('submission freezes uncertainty on correct answers and review status',()=>{const r=run();r.answers[q.id]='イ';r.notes[q.id]='たまたま当たったかもしれない';const h={...freshHistory(),events:[makeEvent('review-flag',q,ctx,{reviewRequired:true})]};const submitted=preparePaperSubmission(r,[q],h);const a=submitted.events.find(e=>e.type==='attempt');assert.equal(a.note,r.notes[q.id]);assert.equal(a.result,'correct');assert.equal(a.reviewRequiredAtSubmission,true);assert.equal(a.paperId,r.id);assert.equal(a.paperStartedAt,r.startedAt);assert.equal(a.paperSubmittedAt,submitted.submittedAt);r.notes[q.id]='later';assert.equal(a.note,'たまたま当たったかもしれない');assert.equal(preparePaperSubmission(submitted,[q],freshHistory()),submitted);assert.equal(previewMerge({...freshHistory(),events:submitted.events},{...freshHistory(),events:submitted.events}).added,0);validateHistory({...freshHistory(),events:submitted.events},[q]);});

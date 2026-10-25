@@ -70,3 +70,18 @@ assert.equal(resultButton().getAttribute('aria-pressed'),'false');resultButton()
 assert.equal(questionStats(history(),q.id).manualReview,true);
 assert($('result').all().some(n=>n.tag==='button'&&n.textContent==='この問題の正答・解説を見る'));
 console.log('PASS real-app DOM: pre/post-answer flag, correct/first score unchanged, synced toggles, retry filter, JSON import, normal/full-paper shared state, pre/post-paper grading, cross-tab refresh');
+// Share scope controls use actual app wiring and keep correct-but-uncertain notes.
+const currentHistory=history(),template=currentHistory.events.find(e=>e.type==='attempt');
+const noted={...template,id:'share-note-attempt',sessionId:'share-run',visitId:'share-visit',paperId:'share-run',practiceMode:'full-paper',selectedAnswer:template.officialCorrectAnswer,result:'correct',firstAttempt:false,firstEncounterUnaided:false,note:'正解したけれど、条件の意味が分からない',reviewRequiredAtSubmission:true,occurredAt:'2026-10-25T10:00:00.000Z',paperStartedAt:'2026-10-25T09:00:00.000Z',paperSubmittedAt:'2026-10-25T10:00:00.000Z'};
+noted.occurredAt=new Date(Math.max(...currentHistory.events.map(e=>Date.parse(e.occurredAt)))+1000).toISOString();
+currentHistory.events.push(noted);storage.setItem(STORAGE_KEY,JSON.stringify(currentHistory));listeners.storage();nav('share');
+$('share-exam').value=q.examId;$('share-exam').onchange();assert($('share-run').all().some(n=>n.value==='share-run'));
+$('share-run').value='share-run';$('share-run').onchange();$('share-notes-only').checked=true;$('share-notes-only').onchange();
+assert($('summary-text').value.includes(noted.note));assert($('summary-text').value.includes('再挑戦'));assert($('summary-text').value.includes('対象の解答試行: 1件 / 正解 1'));
+assert($('summary-text').value.includes('正解した問題も必ず読み'));assert.equal(history().events.length,currentHistory.events.length);
+let savedBlob;URL.createObjectURL=blob=>{savedBlob=blob;return 'blob:test'};URL.revokeObjectURL=()=>{};globalThis.setTimeout=()=>0;
+click('download-json');const subset=JSON.parse(await savedBlob.text());assert.equal(subset.events.length,1);assert.equal(subset.events[0].note,noted.note);assert(subset.attemptIndex[0].attemptNumber>1);
+click('download-all-json');const allBackup=JSON.parse(await savedBlob.text());assert.equal(allBackup.events.length,currentHistory.events.length);assert(!allBackup.exportScope);
+$('share-exam').value='';$('share-exam').onchange();assert.equal($('share-run').value,'');assert.equal($('share-notes-only').checked,true);
+$('share-notes-only').checked=false;$('share-notes-only').onchange();assert($('summary-text').value.includes('解答記録（全試行）'));
+console.log('PASS real-app share: exam/run/notes-only selection, correct uncertain note text, selected importable JSON, complete backup, non-destructive filtering');

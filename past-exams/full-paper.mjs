@@ -1,24 +1,29 @@
-import {CHOICES,uid,makeEvent,makeAttempt,freshHistory,validateHistory,conditions,questionStats} from './core.mjs?v=1.7.0';
+import {CHOICES,uid,makeEvent,makeAttempt,freshHistory,validateHistory,conditions,questionStats} from './core.mjs?v=1.8.0';
 export const PAPER_PREFIX='denki.official-pastpapers.paper.v1.';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
 export function paperSummary(run,questions){const eligible=questions.filter(q=>!q.excluded);const answered=eligible.filter(q=>CHOICES.includes(run.answers[q.id]));return {total:questions.length,eligible:eligible.length,excluded:questions.length-eligible.length,answered:answered.length,unanswered:eligible.length-answered.length,correct:answered.filter(q=>run.answers[q.id]===q.answer).length,incorrect:answered.filter(q=>run.answers[q.id]!==q.answer).length};}
 export function firstUnansweredIndex(run,questions){return questions.findIndex(q=>!q.excluded&&!CHOICES.includes(run.answers[q.id]));}
 export function questionNumberIndex(questions,value){const number=Number(value);return String(value).trim()&&Number.isInteger(number)?questions.findIndex(q=>q.number===number):-1;}
-export function createPaperRun(exam,questions,dataVersion){return {version:1,id:uid(),examId:exam.id,dataVersion,startedAt:new Date().toISOString(),revision:0,position:0,answers:{},visits:{},flags:{},submittedAt:null,events:null,questionIds:questions.map(q=>q.id)};}
+export function createPaperRun(exam,questions,dataVersion){return {version:1,id:uid(),examId:exam.id,dataVersion,startedAt:new Date().toISOString(),revision:0,position:0,answers:{},visits:{},flags:{},notes:{},submittedAt:null,events:null,questionIds:questions.map(q=>q.id)};}
 export function validatePaperRun(value,questions,dataVersion){
   if(!value||value.version!==1||typeof value.id!=='string'||!/^[-\w]+$/.test(value.id)||!Number.isInteger(value.revision)||value.revision<0||value.dataVersion!==dataVersion||!Number.isInteger(value.position)||value.position<0||value.position>=questions.length||JSON.stringify(value.questionIds)!==JSON.stringify(questions.map(q=>q.id)))throw Error('問題データまたは保存形式が一致しません。');
   for(const field of ['answers','visits','flags'])if(!value[field]||typeof value[field]!=='object'||Array.isArray(value[field]))throw Error('保存形式が不正です。');
   const ids=new Set(questions.map(q=>q.id));
   for(const [id,answer] of Object.entries(value.answers))if(!ids.has(id)||!CHOICES.includes(answer))throw Error('解答データが不正です。');
   for(const [id,visit] of Object.entries(value.visits))if(!ids.has(id)||typeof visit!=='string'||!visit)throw Error('表示記録が不正です。');
+  if(value.notes!==undefined){
+    if(!value.notes||typeof value.notes!=='object'||Array.isArray(value.notes))throw Error('メモの保存形式が不正です。');
+    for(const [id,note] of Object.entries(value.notes))if(!ids.has(id)||typeof note!=='string'||[...note].length>200)throw Error('メモは各問200字以内で保存してください。');
+  }
   if(value.submittedAt){if(!Array.isArray(value.events))throw Error('採点記録がありません。');validateHistory({...freshHistory(),events:value.events},questions);}
-  return value;
+  return {...value,notes:value.notes||{}};
 }
 export function preparePaperSubmission(run,questions,history){
   if(run.submittedAt)return run;
-  const events=questions.filter(q=>!q.excluded).map(q=>{const ctx={visitId:run.visits[q.id]||uid(),sessionId:run.id,dataVersion:run.dataVersion};const attempt=makeAttempt(history,q,ctx,run.answers[q.id]||null);return {...attempt,id:`paper-${run.id}-${q.number}`,practiceMode:'full-paper',paperId:run.id};});
+  const submittedAt=new Date().toISOString();
+  const events=questions.filter(q=>!q.excluded).map(q=>{const ctx={visitId:run.visits[q.id]||uid(),sessionId:run.id,dataVersion:run.dataVersion};const attempt=makeAttempt(history,q,ctx,run.answers[q.id]||null);return {...attempt,id:`paper-${run.id}-${q.number}`,practiceMode:'full-paper',paperId:run.id,paperStartedAt:run.startedAt,paperSubmittedAt:submittedAt,note:run.notes?.[q.id]||'',reviewRequiredAtSubmission:questionStats(history,q.id).manualReview};});
   const reveals=events.map(attempt=>({...makeEvent('reveal',questions.find(q=>q.id===attempt.questionId),{visitId:attempt.visitId,sessionId:run.id,dataVersion:run.dataVersion}),id:`paper-reveal-${run.id}-${attempt.number}`,practiceMode:'full-paper',paperId:run.id}));
-  return {...run,submittedAt:new Date().toISOString(),events:[...events,...reveals]};
+  return {...run,submittedAt,events:[...events,...reveals]};
 }
 export function legacyPaperReviewEvents(run,questions,history){
   const explicit=new Set(history.events.filter(e=>e.type==='review-flag').map(e=>e.questionId));
@@ -28,7 +33,7 @@ export function legacyPaperReviewEvents(run,questions,history){
     occurredAt:Number.isFinite(Date.parse(run.startedAt))?new Date(run.startedAt).toISOString():'1970-01-01T00:00:00.000Z'
   }));
 }
-export function mountFullPaper({root,data,questions,store,storage,imageButton,explanation,knowledge,onHistory}){
+export function mountFullPaper({root,data,questions,store,storage,imageButton,explanation,knowledge,onHistory,onShare}){
   let run=null,raw=null,notice='',reviewId=null,confirmSubmit=false,saveFailed=false;
   const paperQuestions=id=>questions.filter(q=>q.examId===id).sort((a,b)=>a.number-b.number);
   const examTitle=id=>{const exam=data.exams.find(e=>e.id===id);return exam?.title||exam?.label||id;};
@@ -63,6 +68,28 @@ export function mountFullPaper({root,data,questions,store,storage,imageButton,ex
     },'secondary review-toggle');
     b.setAttribute('data-paper-review',q.id);b.setAttribute('aria-pressed',String(questionStats(store.history,q.id).manualReview));return b;
   }
+  function noteEditor(q){
+    const wrap=el('div','paper-note');const label=el('label','','解くときのメモ（200字まで）');label.htmlFor='paper-note-input';
+    const input=el('textarea');input.id='paper-note-input';input.rows=3;input.value=run.notes?.[q.id]||'';input.placeholder='迷った理由・知らないことなど。正解した問題も、採点後の記録に残ります。';
+    input.setAttribute('aria-describedby','paper-note-count');
+    const count=el('p','small quiet',`${[...input.value].length} / 200字`);count.id='paper-note-count';
+    let composing=false;
+    const persist=()=>{
+      if(composing)return;
+      input.value=[...input.value].slice(0,200).join('');
+      const ok=save({...run,notes:{...run.notes,[q.id]:input.value}});
+      count.textContent=`${[...input.value].length} / 200字 · ${!ok?'未保存：別のタブと競合しています':saveFailed?'この画面内のみ（ブラウザ保存失敗）':'保存済み'}`;
+      const status=root.querySelector('.storage-status');if(status)status.textContent=notice||'メモをこのブラウザに保存しました。';
+      if(!ok){input.disabled=true;count.setAttribute('role','alert');}
+    };
+    input.oncompositionstart=()=>{composing=true;};input.oncompositionend=()=>{composing=false;persist();};input.oninput=persist;input.onchange=persist;
+    wrap.append(label,input,count);return wrap;
+  }
+  function noteDisplay(q){
+    const attempt=run.events?.find(e=>e.type==='attempt'&&e.questionId===q.id);
+    const note=attempt?.note??run.notes?.[q.id]??'';
+    return el('p','paper-note-text',`解答時のメモ：${note||'なし'}`);
+  }
   function render(){
     root.replaceChildren();const head=el('div','section-head');head.append(el('span','eyebrow','ONE COMPLETE PAPER'),el('h1','','1回分を、通して解く。'),el('p','','実施回を選んで問1から順番に。解答は最後の「まとめて採点」まで変更できます。途中では正答・解説を表示しません。'));root.append(head);
     const status=el('p','storage-status',notice||'途中経過はこのブラウザに自動保存します。別のタブで同じ回を同時に操作しないでください。');status.setAttribute('role','status');root.append(status);
@@ -92,6 +119,7 @@ export function mountFullPaper({root,data,questions,store,storage,imageButton,ex
       for(const id of q.contextIds||[]){const context=q.contexts.find(c=>c.id===id);if(context){const d=el('details','context-group');d.append(el('summary','',context.title));for(const path of context.images)d.append(imageButton(path,context.title));panel.append(d);}}
       for(const [i,path] of q.images.entries())panel.append(imageButton(path,`${examTitle(run.examId)} 問${q.number} 問題・選択肢 ${i+1}`));
       const field=el('fieldset');field.append(el('legend','','解答をひとつ選ぶ（採点前なら変更できます）'));const choices=el('div','answer-choices');for(const choice of CHOICES){const label=el('label','answer-option');const input=el('input');input.type='radio';input.name='paper-answer';input.value=choice;input.checked=run.answers[q.id]===choice;input.onchange=()=>{save({...run,answers:{...run.answers,[q.id]:choice}});render();root.querySelector(`input[name="paper-answer"][value="${choice}"]`)?.focus({preventScroll:true});};label.append(input,el('span','',choice));choices.append(label);}field.append(choices);panel.append(field);
+      panel.append(noteEditor(q));
       panel.append(button('この解答を取り消す',()=>{const answers={...run.answers};delete answers[q.id];save({...run,answers});render();}));
       const flags=el('details','study-conditions');flags.append(el('summary','','以前に見た・ヒントを使った場合'));for(const [type,text] of [['prior-exposure','この端末以外でも、以前にこの問題を見た'],['help','ヒント・解説・他の人の助けを使った']]){const label=el('label','check-label');const input=el('input');input.type='checkbox';input.checked=!!run.flags[`${q.id}:${type}`];input.disabled=input.checked;input.onchange=()=>{if(save({...run,flags:{...run.flags,[`${q.id}:${type}`]:true}})){store.append(makeEvent(type,q,{visitId:run.visits[q.id],sessionId:run.id,dataVersion:run.dataVersion}));onHistory();}render();};label.append(input,el('span','',text));flags.append(label);}panel.append(flags);
       panel.append(el('p','small quiet','選択は途中経過として保存します。学習記録への解答確定は、最後のまとめて採点時です。'));
@@ -105,8 +133,10 @@ export function mountFullPaper({root,data,questions,store,storage,imageButton,ex
     const selected=run.events.filter(e=>e.type==='attempt'&&e.selectedAnswer!==null), clean=selected.filter(e=>e.firstEncounterUnaided), repeat=selected.filter(e=>!e.firstAttempt);
     panel.append(el('p','progress-context',`今回の選択回答：初見・自力 ${clean.filter(e=>e.result==='correct').length}/${clean.length}問正解 · 再挑戦 ${repeat.length}問 · 初回でも既見・補助あり ${selected.length-clean.length-repeat.length}問。採点時点の区分です。履歴統合後の最新区分は「学習記録」で確認できます。`));
     if(store.status!=='ok')panel.append(el('p','validity-warning','学習履歴をブラウザに保存できていません。「piyoに共有」からJSONを保存してください。'));
-    const list=el('div','paper-result-list');for(const q of qs){const answer=run.answers[q.id];const row=el('div','paper-result-row');row.append(el('span','',`問${q.number} · ${q.excluded?'採点対象外':!answer?'未解答':answer===q.answer?'正解':'不正解'}${!q.excluded?` · 選択 ${answer||'―'} / 正答 ${q.answer}`:''}`));if(!q.excluded)row.append(button('問題・解説を見る',()=>{reviewId=q.id;render();root.querySelector('#paper-review')?.scrollIntoView({block:'start'});}));list.append(row);}panel.append(list);root.append(panel);
-    if(reviewId){const q=qs.find(q=>q.id===reviewId);const attempt=run.events.find(e=>e.questionId===reviewId);if(q&&attempt){if(!store.history.events.some(e=>e.id===`paper-reveal-${run.id}-${q.number}`)){store.append({...makeEvent('reveal',q,{visitId:attempt.visitId,sessionId:run.id,dataVersion:run.dataVersion}),id:`paper-reveal-${run.id}-${q.number}`});onHistory();}const review=el('article','panel');review.id='paper-review';review.append(el('h2','',`問${q.number}の振り返り`),reviewButton(q));for(const path of q.images)review.append(imageButton(path,`問${q.number}`));for(const id of q.contextIds||[]){const c=q.contexts.find(c=>c.id===id);if(c)for(const path of c.images)review.append(imageButton(path,c.title));}review.append(explanation(q,attempt),knowledge(q));root.append(review);}}
+    if(onShare)panel.append(button('この通し練習の記録を共有する',()=>onShare({examId:run.examId,paperId:run.id}),'primary'));
+    panel.append(el('p','small quiet','メモは解答時の内容です。採点時の要復習マークと現在の設定を区別して残します。'));
+    const list=el('div','paper-result-list');for(const q of qs){const answer=run.answers[q.id];const row=el('div','paper-result-row');row.append(el('span','',`問${q.number} · ${q.excluded?'採点対象外':!answer?'未解答':answer===q.answer?'正解':'不正解'}${!q.excluded?` · 選択 ${answer||'―'} / 正答 ${q.answer}`:''}`));if(!q.excluded){const attempt=run.events.find(e=>e.type==='attempt'&&e.questionId===q.id);row.append(noteDisplay(q),el('p','small quiet',`採点時の要復習：${attempt?.reviewRequiredAtSubmission===undefined?'旧記録のため不明':attempt.reviewRequiredAtSubmission?'あり':'なし'}`),reviewButton(q));}if(!q.excluded)row.append(button('問題・解説を見る',()=>{reviewId=q.id;render();root.querySelector('#paper-review')?.scrollIntoView({block:'start'});}));list.append(row);}panel.append(list);root.append(panel);
+    if(reviewId){const q=qs.find(q=>q.id===reviewId);const attempt=run.events.find(e=>e.questionId===reviewId);if(q&&attempt){if(!store.history.events.some(e=>e.id===`paper-reveal-${run.id}-${q.number}`)){store.append({...makeEvent('reveal',q,{visitId:attempt.visitId,sessionId:run.id,dataVersion:run.dataVersion}),id:`paper-reveal-${run.id}-${q.number}`});onHistory();}const review=el('article','panel');review.id='paper-review';review.append(el('h2','',`問${q.number}の振り返り`),noteDisplay(q),reviewButton(q));for(const path of q.images)review.append(imageButton(path,`問${q.number}`));for(const id of q.contextIds||[]){const c=q.contexts.find(c=>c.id===id);if(c)for(const path of c.images)review.append(imageButton(path,c.title));}review.append(explanation(q,attempt),knowledge(q));root.append(review);}}
   }
   return {render};
 }

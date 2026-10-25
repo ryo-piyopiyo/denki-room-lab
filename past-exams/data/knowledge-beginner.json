@@ -410,7 +410,7 @@
       "id": "construction-earth-conduit-lengths",
       "domain": "construction",
       "title": "金属管の接地省略は、管全体の長さで判断",
-      "firstPrinciple": "金属管の接地を省略できる条件には、電圧・場所・管の長さがある。ここでいう長さは、1本の製品長だけでなく、電気的につながった管全体の長さ。機器外箱の省略条件や、他の金属製配線方法へそのまま移せない。",
+      "firstPrinciple": "金属管のD種接地を省略できる条件は、経済産業省「電気設備の技術基準の解釈」第159条第3項第四号に定められており、電圧・場所・管の長さで判断する。ここでいう長さは、1本の製品長だけでなく、接続して使用する管全体の長さ。機器外箱の省略条件や、他の金属製配線方法へそのまま移せない。",
       "examUse": "金属管が4 mか5 mか、乾燥場所か、対地電圧が150 V以下かを順に確認する。「短いからどの工法でも接地不要」と考えると、フロアダクトなどの問題を誤る。",
       "essentialConditions": [
         "表は金属管工事の交流回路。使用電圧は300 V以下で、管の長さは接続された全長。",
@@ -503,7 +503,7 @@
       "id": "construction-earth-decisions",
       "domain": "construction",
       "title": "接地を省略できるかは、場所と保護条件で決める",
-      "firstPrinciple": "機器の金属製外箱を接地すると、故障で外箱へ電気が漏れたときの危険を抑える助けになる。接地が原則必要な機器でも、規定された場所や保護条件を満たす場合に省略できる。乾いた木床と、コンクリート床を同じ条件で扱わない。",
+      "firstPrinciple": "機器の金属製外箱を接地すると、故障で外箱へ電気が漏れたときの危険を抑える助けになる。接地が原則必要な機器でも、経済産業省「電気設備の技術基準の解釈」第29条第2項に定める場所や保護条件を満たす場合に省略できる。乾いた木床と、コンクリート床を同じ条件で扱わない。",
       "examUse": "接地省略の正誤では、設置場所と漏電遮断器の感度・時間まで読む。30 mA・0.1秒というだけでは、下表の15 mA以下の条件を満たさない。",
       "essentialConditions": [
         "下表は低圧機器の接地省略が認められる代表例で、すべての例外の一覧ではない。"
@@ -605,7 +605,7 @@
       "details": [
         {
           "title": "抵抗値の緩和とは別",
-          "body": "地絡時0.5秒以内に自動遮断する条件でD種接地抵抗の限度を500 Ωにできる規定は、接地をなくす許可ではない。接地省略とは別々に判断する。"
+          "body": "「電気設備の技術基準の解釈」第17条第4項第一号は、地絡時0.5秒以内に自動遮断する条件でD種接地抵抗の限度を500 Ωにできるとしている。これは接地をなくす許可ではない。接地省略とは別々に判断する。"
         }
       ]
     },
@@ -3074,7 +3074,7 @@
       "id": "design-tap-distance",
       "domain": "design",
       "title": "分岐点から遮断器まで、何m離せる？",
-      "firstPrinciple": "分岐遮断器までの電線も、上流の遮断器で守れるようにする条件。見る区間は「幹線から分かれる点→分岐遮断器」。分岐線の許容電流を、上流の幹線遮断器の定格電流で割り、下の表から長さを選ぶ。",
+      "firstPrinciple": "分岐遮断器までの電線も、上流の遮断器で守れるようにするため、経済産業省「電気設備の技術基準の解釈」第149条第1項第一号が長さと許容電流の条件を定めている。見る区間は「幹線から分かれる点→分岐遮断器」。分岐線の許容電流を、上流の幹線遮断器の定格電流で割り、下の表から長さを選ぶ。",
       "examUse": "比率から最大長を選ぶ問題と、長さから必要な許容電流を求める問題に使う。分岐遮断器自身の定格や、電線のmm²で割らない。",
       "essentialConditions": [
         "一般的な屋内分岐回路で、幹線から分かれて最初の分岐遮断器までの区間。定格電流は遮断器に表示された基準の電流値。"
@@ -3178,7 +3178,7 @@
       "details": [
         {
           "title": "守らないと何が困る？",
-          "body": "この区間で短絡が起き、上流の遮断器による保護が不十分だと、遮断までの発熱で絶縁が傷み、火災につながるおそれがある。35%・55%は規定の条件で、単純な発熱式や一律の遮断時間から決める数値ではない。"
+          "body": "この区間で短絡が起き、上流の遮断器による保護が不十分だと、遮断までの発熱で絶縁が傷み、火災につながるおそれがある。35%・55%は「電気設備の技術基準の解釈」第149条第1項第一号の条件で、単純な発熱式や一律の遮断時間から決める数値ではない。"
         },
         {
           "title": "どの電線の間が短絡する例？",
@@ -4833,7 +4833,7 @@
       "id": "diagram-small-power-core",
       "domain": "diagram",
       "title": "チャイムの小勢力回路は60 V以下",
-      "firstPrinciple": "小勢力回路は、チャイム・呼鈴・警報ベルや電磁開閉器の操作などに使う回路で、最大使用電圧は60 V以下。普通の100 V照明回路とは区別する。壁などへ取り付ける電線の太さは、下の適用条件を付けて覚える。",
+      "firstPrinciple": "経済産業省「電気設備の技術基準の解釈」第181条で扱う小勢力回路は、チャイム・呼鈴・警報ベルや電磁開閉器の操作などに使う回路で、最大使用電圧は60 V以下。普通の100 V照明回路とは区別する。壁などへ取り付ける電線の太さは、下の適用条件を付けて覚える。",
       "examUse": "使用電圧の上限と、電線の最小太さが問われる。60 Vは電圧、0.8 mmは導体の直径なので、問われた単位を先に確かめる。",
       "essentialConditions": [
         "0.8 mmは、建物の壁・柱などに取り付ける、ケーブル（通信用ケーブルを含む）以外の電線の場合。"
@@ -4908,7 +4908,7 @@
       "details": [
         {
           "title": "低い電圧だけでは十分ではない",
-          "body": "電源には所定の絶縁変圧器を用い、電流や短絡時の保護にも条件がある。60 V以下なら任意の電源・電線でよいという意味ではない。"
+          "body": "電源には「電気設備の技術基準の解釈」第181条第1項第二号の条件を満たす絶縁変圧器を用い、一次側の対地電圧や二次短絡電流・過電流保護にも条件がある。60 V以下なら任意の電源・電線でよいという意味ではない。"
         }
       ]
     },
@@ -7496,10 +7496,10 @@
       "id": "equipment-overcurrent-time-grid",
       "domain": "equipment",
       "title": "大きな過電流ほど、短い時間で遮断する",
-      "firstPrinciple": "配線用遮断器は、定格電流を少し超えたら必ず即座に切れるわけではない。流れる電流が定格の何倍かと、遮断器の定格電流の範囲で、規定の動作時間が変わる。まず倍率を計算してから表を見る。",
+      "firstPrinciple": "配線用遮断器は、定格電流を少し超えたら必ず即座に切れるわけではない。流れる電流が定格の何倍かと、遮断器の定格電流の範囲で、動作時間の上限が変わる。下表は、経済産業省「電気用品の技術上の基準を定める省令の解釈について」別表第4を基にNITEが整理した値。まず倍率を計算してから表を見る。",
       "examUse": "20 A品に25 Aなら1.25倍なので最大60分、40 Aなら2倍なので最大2分。「以内」は上限であり、必ずその時刻に切れる意味ではない。",
       "essentialConditions": [
-        "この表は本問で扱う住宅等の配線用遮断器の規定。定格電流の1倍では自動動作しない。"
+        "この表はNITEが一般家庭の配線用遮断器について整理した動作時間。定格電流の1倍では自動動作しない。"
       ],
       "examEvidenceIds": [
         "d2-20180603-11",
@@ -18976,6 +18976,168 @@
               "title": "ホーザン P-738 圧着工具 取扱説明書",
               "url": "https://www.hozan.co.jp/download/manual/P-738.pdf",
               "locator": "1.6 mm単線3～4本：リングスリーブ小、圧着ダイス小"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "status": "verified",
+      "checkedAt": "2026-10-23",
+      "scope": "金属管・機械器具の接地省略、分岐回路、小勢力回路、遮断器の動作時間の説明に、対応する法令・基準や資料名を明記しました。条件・数値・問題との対応は変更していません。",
+      "beforeKnowledgeSha256": "c376789613c2d64c3c2e9d490dff3daad8fed815cf89c04ad0dbafeaa5806aa2",
+      "contentSha256": "dc8a624d08eb026843711294e3ea7d7beacd3fa9e1b1c321818dbd1dccdff8d0",
+      "reportSha256": "5613028a14cdc8e411d3bb5752b0cefe5a0bbdb88bb8ab48632f45e61ca92695",
+      "reviewerFingerprintSha256": "56d7b0ce67d26bf66349f82b47d9e3350a3d4b82908d4ce107cfcec30200f170",
+      "changes": [
+        {
+          "kind": "card",
+          "id": "construction-earth-conduit-lengths",
+          "path": [
+            "firstPrinciple"
+          ],
+          "beforeSha256": "5128053c16e81a02f3911ec1499caf80a2d1bf94de1a173e570bd627a4ba575a",
+          "afterSha256": "a6af024ba4f5a92506d5e80e13bca96a2a25062b97684dc40014eea656577528",
+          "sources": [
+            {
+              "title": "経済産業省 電気設備の技術基準の解釈",
+              "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/law/files/dengikaishaku.pdf",
+              "locator": "第159条第3項第四号ただし書イ・ロ"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "construction-earth-decisions",
+          "path": [
+            "firstPrinciple"
+          ],
+          "beforeSha256": "c15b56c6a62f4061ca784dbe30688ad6c8bcf1af2401ae6ba984adc9b31c2c68",
+          "afterSha256": "de4034f4a6f146e6f5a5181437b1656763964b43f0af8a110b2754111513d77c",
+          "sources": [
+            {
+              "title": "経済産業省 電気設備の技術基準の解釈",
+              "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/law/files/dengikaishaku.pdf",
+              "locator": "第29条第2項第二号・第五号"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "construction-earth-decisions",
+          "path": [
+            "details",
+            0,
+            "body"
+          ],
+          "beforeSha256": "15f9cf495325208bce79ef5ed86f38126a7dbc72141c0c46bb65d5e470cb752a",
+          "afterSha256": "11b0c511c3a7a6c10fb93865c7a71b1f222f03c80deed180471de2961a36e452",
+          "sources": [
+            {
+              "title": "経済産業省 電気設備の技術基準の解釈",
+              "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/law/files/dengikaishaku.pdf",
+              "locator": "第17条第4項第一号"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "design-tap-distance",
+          "path": [
+            "firstPrinciple"
+          ],
+          "beforeSha256": "99b5c54298684cc16c69325038e2eed37dacac817a2586aaf1295de98d73430d",
+          "afterSha256": "352927ac9f7bbb15d4442dff172bc0d959f7d8629c609320944fa45f1bf0e7e8",
+          "sources": [
+            {
+              "title": "経済産業省 電気設備の技術基準の解釈の解説（2020年8月12日）",
+              "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/oshirase/2020/08/20200812-4.pdf",
+              "locator": "第149条第1項第一号・解説149.1図"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "design-tap-distance",
+          "path": [
+            "details",
+            0,
+            "body"
+          ],
+          "beforeSha256": "8c1898ceb37df8fc2274e29805249bc2631a477fab3bb644d3a8e0d3934f6ab6",
+          "afterSha256": "882709f6566a5e2b2e3808f98d4f7b4fa07195e9039814b1684d92420df1ee13",
+          "sources": [
+            {
+              "title": "経済産業省 電気設備の技術基準の解釈の解説（2020年8月12日）",
+              "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/oshirase/2020/08/20200812-4.pdf",
+              "locator": "第149条第1項第一号・解説149.1図"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "diagram-small-power-core",
+          "path": [
+            "firstPrinciple"
+          ],
+          "beforeSha256": "dc9db45929acfbc56f1eac83cada7ed9af09a99f880e6ffbd84b0cde06015fb5",
+          "afterSha256": "5b594b076962ee923085760df2721903b3dcd5b17c9faa26f46151f808e107b6",
+          "sources": [
+            {
+              "title": "経済産業省 電気設備の技術基準の解釈",
+              "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/law/files/dengikaishaku.pdf",
+              "locator": "第181条第1項本文・第三号イ"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "diagram-small-power-core",
+          "path": [
+            "details",
+            0,
+            "body"
+          ],
+          "beforeSha256": "e15470e5a72cb27b0a18dc242a66d7588a47db569552fae8e39b7d947ffd18b8",
+          "afterSha256": "98f588599ec251b795617b6e88bcb21e3ad74113b43c11995c93ede6571f15f4",
+          "sources": [
+            {
+              "title": "経済産業省 電気設備の技術基準の解釈",
+              "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/law/files/dengikaishaku.pdf",
+              "locator": "第181条第1項第一号・第二号"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "equipment-overcurrent-time-grid",
+          "path": [
+            "firstPrinciple"
+          ],
+          "beforeSha256": "cfee6552bb5cb803de8439fd5ce8a18d41fdc7bec3be61fd41f45ef9d7d959b9",
+          "afterSha256": "13a69f1b498f56ee88172624cb664d8b904dabf8c45bb54dbb40c106bff21620",
+          "sources": [
+            {
+              "title": "NITE 配線用遮断器（ブレーカー）の動作時間について",
+              "url": "https://www.nite.go.jp/data/000152833.pdf",
+              "locator": "別紙2「配線用遮断器（ブレーカー）の動作時間について」（PDF9ページ）。表の出典は経済産業省の省令解釈・別表第4。"
+            }
+          ]
+        },
+        {
+          "kind": "card",
+          "id": "equipment-overcurrent-time-grid",
+          "path": [
+            "essentialConditions",
+            0
+          ],
+          "beforeSha256": "8b8c93ef7615297d775a4b03af33bd8129dc834f81761ab56ba57649fb5600d6",
+          "afterSha256": "b5be4e270a18d13c7325c79337fbe2b347db0d7357e5cde52cb80661b83184ca",
+          "sources": [
+            {
+              "title": "NITE 配線用遮断器（ブレーカー）の動作時間について",
+              "url": "https://www.nite.go.jp/data/000152833.pdf",
+              "locator": "別紙2「配線用遮断器（ブレーカー）の動作時間について」（PDF9ページ）。"
             }
           ]
         }

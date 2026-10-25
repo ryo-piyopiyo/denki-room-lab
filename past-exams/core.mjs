@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.0';
+export const APP_VERSION = '1.8.0';
 export const SCHEMA_VERSION = 3;
 // Keep the existing key so every prior history is loaded and protected before migration.
 export const STORAGE_KEY = 'denki.official-pastpapers.history.v2';
@@ -39,6 +39,10 @@ export function validateHistory(value, questions=null) {
     } else {
       assert(!('officialCorrectAnswer' in e) && !('selectedAnswer' in e), '未解答の記録に解答が含まれています。');
     }
+    if ('note' in e) assert(typeof e.note === 'string' && [...e.note].length <= 200, 'メモは200字以内の文字列にしてください。');
+    if ('reviewRequiredAtSubmission' in e) assert(typeof e.reviewRequiredAtSubmission === 'boolean', '採点時の要復習情報が不正です。');
+    if ('paperId' in e) assert(text(e.paperId,160), '通し練習の識別情報が不正です。');
+    for(const key of ['paperStartedAt','paperSubmittedAt']) if(key in e) assert(typeof e[key] === 'string' && Number.isFinite(Date.parse(e[key])), '通し練習の日時が不正です。');
     if (e.type === 'review-flag') assert(typeof e.reviewRequired === 'boolean', '要復習の設定が不正です。');
     if (seen.has(e.id)) assert(stable(seen.get(e.id)) === stable(e), '同じ記録IDに異なる内容があります。取り込みを中止しました。');
     seen.set(e.id,e);
@@ -119,13 +123,51 @@ export function filteredQuestions(questions,history,filters) {
     return true;
   });
 }
-export function exportHistory(history,dataVersion,questions=null) {
+export function historyPaperRuns(history,examId='') {
+  const runs=new Map();
+  for(const e of ordered(history.events)) if(e.type==='attempt'&&e.paperId&&(!examId||e.examId===examId)) {
+    const key=e.paperId;if(!runs.has(key))runs.set(key,{paperId:key,examId:e.examId,startedAt:e.paperStartedAt||e.occurredAt,submittedAt:e.paperSubmittedAt||e.occurredAt,attempts:0,correct:0});
+    const r=runs.get(key);r.attempts++;if(e.result==='correct')r.correct++;
+  }
+  return [...runs.values()].sort((a,b)=>String(b.startedAt).localeCompare(String(a.startedAt))||a.paperId.localeCompare(b.paperId));
+}
+export function exportScope(history,scope={}) {
+  const examId=scope.examId||'',paperId=scope.paperId||'';
+  // Old full-paper view/help/review events can lack paperId; their sessionId is the run ID.
+  const notesOnly=scope.notesOnly===true;
+  const base=history.events.filter(e=>(!examId||e.examId===examId)&&(!paperId||e.paperId===paperId||e.sessionId===paperId));
+  const noted=base.filter(e=>e.type==='attempt'&&typeof e.note==='string'&&e.note.trim());
+  const attempts=new Set(noted.map(e=>e.id)),contexts=new Set(noted.map(e=>JSON.stringify([e.questionId,e.sessionId])));
+  const events=ordered(notesOnly?base.filter(e=>e.type==='attempt'?attempts.has(e.id):contexts.has(JSON.stringify([e.questionId,e.sessionId]))):base);
+  return {examId,paperId,notesOnly,events,isFiltered:!!(examId||paperId||notesOnly)};
+}
+export function exportHistory(history,dataVersion,questions=null,scope={}) {
   const events=ordered(history.events), counts=new Map(), answered=new Set(), statsCache=new Map();
   const stat=id=>{if(!statsCache.has(id))statsCache.set(id,questionStats(history,id));return statsCache.get(id);};
-  const attemptIndex=events.filter(e=>e.type==='attempt').map(e=>{const n=(counts.get(e.questionId)||0)+1;counts.set(e.questionId,n);const firstSelectedAnswer=e.result!=='skip'&&!answered.has(e.questionId);if(e.result!=='skip')answered.add(e.questionId);return {eventId:e.id,questionId:e.questionId,attemptNumber:n,firstSelectedAnswer,cleanFirstEncounter:n===1&&stat(e.questionId).cleanFirst};});
+  const attemptIndex=events.filter(e=>e.type==='attempt').map(e=>{const n=(counts.get(e.questionId)||0)+1;counts.set(e.questionId,n);const firstSelectedAnswer=e.result!=='skip'&&!answered.has(e.questionId);if(e.result!=='skip')answered.add(e.questionId);return {eventId:e.id,questionId:e.questionId,attemptNumber:n,firstSelectedAnswer,cleanFirstEncounter:n===1&&stat(e.questionId).cleanFirst,manualReviewCurrent:stat(e.questionId).manualReview};});
+  const selected=exportScope(history,scope), selectedIds=new Set(selected.events.map(e=>e.id));
+  const selectionIndex=attemptIndex.filter(e=>selectedIds.has(e.eventId));
+  const selectionSummary={attempts:selectionIndex.length,correct:selected.events.filter(e=>e.type==='attempt'&&e.result==='correct').length,incorrect:selected.events.filter(e=>e.type==='attempt'&&e.result==='incorrect').length,skipped:selected.events.filter(e=>e.type==='attempt'&&e.result==='skip').length,cleanFirstEncounter:selectionIndex.filter(e=>e.cleanFirstEncounter).length,retryAttempts:selectionIndex.filter(e=>e.attemptNumber>1).length};
+  if(selected.isFiltered)return {...freshHistory(),dataVersion,exportedAt:new Date().toISOString(),exportScope:{examId:selected.examId||null,paperId:selected.paperId||null,notesOnly:selected.notesOnly,partial:true},classificationNote:'抽出された部分履歴です。attemptIndexの試行番号と初見区分は抽出前の全履歴から計算しています。抽出外の記録は含みません。全履歴バックアップの代わりにはなりません。',attemptIndex:selectionIndex,selectionSummary,events:selected.events};
   return {...freshHistory(),dataVersion,exportedAt:new Date().toISOString(),classificationNote:'各イベントの初回フラグは記録時点の状態です。統合後の試行順はattemptIndex、成績はsummaryを参照してください。',attemptIndex,...(questions?{summary:summarize(history,questions)}:{}),events};
 }
-export function summaryText(history,questions,dataVersion){
+export function scopedSummaryText(history,questions,dataVersion,scope){
+  const out=exportHistory(history,dataVersion,questions,scope),qmap=new Map(questions.map(q=>[q.id,q]));
+  const index=new Map(out.attemptIndex.map(a=>[a.eventId,a])),s=out.selectionSummary;
+  const statCache=new Map();const stat=id=>{if(!statCache.has(id))statCache.set(id,questionStats(history,id));return statCache.get(id);};
+  const title=questions.find(q=>q.examId===scope.examId)?.examTitle||scope.examId||'すべての実施回';
+  const lines=['第二種電気工事士 公式過去問｜piyoへ共有する学習記録（抽出）',`作成日時: ${out.exportedAt}`,`アプリ: ${APP_VERSION} / 問題データ: ${dataVersion}`,`実施回: ${title}`,`通し練習: ${scope.paperId||'すべての練習・試行'}`,`メモありの解答のみ: ${scope.notesOnly?'はい（正解・不正解を問わず）':'いいえ'}`,`対象の解答試行: ${s.attempts}件 / 正解 ${s.correct} / 不正解 ${s.incorrect} / 未解答・スキップ ${s.skipped}`,`初見・自力 ${s.cleanFirstEncounter}件 / 再挑戦 ${s.retryAttempts}件`,out.classificationNote,'※ 採点時の要復習は当時の状態、現在の要復習は抽出前の全履歴での状態です。旧記録にない情報は未記録と表示します。','','解答記録'];
+  for(const e of out.events){if(e.type!=='attempt')continue;const q=qmap.get(e.questionId),a=index.get(e.id);lines.push(`${e.occurredAt} | ${q?.examTitle||e.examId} 問${e.number} | ${e.questionId} | 全履歴の第${a.attemptNumber}試行（${a.attemptNumber===1?'初回試行':'再挑戦'}） | 選択:${e.selectedAnswer||'なし'} / 公式正答:${e.officialCorrectAnswer} | ${e.result==='correct'?'正解':e.result==='incorrect'?'不正解':'未解答・スキップ'} | 初見自力:${a.cleanFirstEncounter?'はい':'いいえ'} / 既見:${e.priorExposure?'あり':'なし'} / ヒント:${e.helpUsed?'あり':'なし'} / 正答表示:${e.answerRevealed?'あり':'なし'}`, ...attemptNoteLines(e,stat(e.questionId).manualReview));}
+  lines.push('','表示・補助・要復習の記録');
+  for(const e of out.events)if(e.type!=='attempt')lines.push(`${e.occurredAt} | ${e.questionId} | ${e.type==='review-flag'?`要復習:${e.reviewRequired?'設定':'解除'}`:e.type}`);
+  lines.push('','piyoへ: メモは解答時の本人の考えです。正解した問題も必ず読み、迷った点・知らなかったこと・正解していても残る知識不足を優先して整理してください。正答だけで理解済みと判断せず、初見と再挑戦、知識不足と読み落としを区別し、次に確認すべき点を助言してください。');
+  return lines.join('\n');
+}
+function attemptNoteLines(e,manualReview){
+  return [`  通し練習ID: ${e.paperId||'なし'} / 採点時の要復習: ${typeof e.reviewRequiredAtSubmission==='boolean'?(e.reviewRequiredAtSubmission?'あり':'なし'):'未記録'} / 現在の要復習: ${manualReview?'あり':'なし'}`,`  解答時メモ: ${'note' in e?(e.note?JSON.stringify(e.note):'なし'):'未記録'}`];
+}
+export function summaryText(history,questions,dataVersion,scope={}){
+  if(scope.examId||scope.paperId||scope.notesOnly)return scopedSummaryText(history,questions,dataVersion,scope);
   const s=summarize(history,questions);
   const lines=['第二種電気工事士 公式過去問｜piyoへ共有する学習記録',`作成日時: ${new Date().toISOString()}`,`アプリ: ${APP_VERSION} / 問題データ: ${dataVersion}`,`全${s.total}問 / 表示済み${s.seen}問 / 解答済み${s.answered}問 / 未解答${s.unanswered}問`,`各問題の最初の選択回答: ${s.firstAnsweredCorrect}/${s.answered}問正解（既見・ヒントありを含む）`,`初見・自力の初回答: ${s.cleanCorrect}/${s.cleanAnswered}問正解${s.cleanAnswered?` (${Math.round(100*s.cleanCorrect/s.cleanAnswered)}%)`:'（まだ判定なし）'}`,`現在の問題集にない履歴:${s.unavailableEvents}件（保管のみ・成績対象外）`,`未表示:${s.unseen}問 / スキップのみ:${s.skippedOnly}問 / 正答表示・未解答:${s.revealedOnly}問 / ヒントのみ:${s.helpOnly}問 / 現行基準での通常練習対象外:${s.excluded}問`,`初回でも既見・ヒントあり: ${s.assistedFirst}問 / 再挑戦: ${s.retryAttempts}回 / スキップ: ${s.skips}回`,`手動の要復習: ${s.manualReview}問（要注意問題を含む）。正解しても自動では解除しません。`,'※ 未解答を正解・不正解に含めません。再挑戦の正解を初見成績に混ぜません。','※ 端末の記録だけです。別端末・学習前の経験は申告された分だけを含みます。','※ ヒント・既見・正答表示は、この問題の過去の記録も含みます。初見成績は現在の通常練習対象のみです。','※ 経過時間は計測していません。','', '分野別（初見・自力の初回答）'];
   for(const t of Object.values(s.topics))lines.push(`${t.label}: ${t.cleanCorrect}/${t.cleanAnswered}問正解 / 全${t.total}問 / 未解答${t.unanswered}問 / 復習候補${t.needsReview}問`);
@@ -133,10 +175,10 @@ export function summaryText(history,questions,dataVersion){
   const qmap=new Map(questions.map(q=>[q.id,q]));
   const count=new Map(), chosen=new Set(), statCache=new Map();
   const stat=id=>{if(!statCache.has(id))statCache.set(id,questionStats(history,id));return statCache.get(id);};
-  for(const e of ordered(history.events)){if(e.type!=='attempt')continue;count.set(e.questionId,(count.get(e.questionId)||0)+1);const q=qmap.get(e.questionId);const firstChoice=e.result!=='skip'&&!chosen.has(e.questionId);if(e.result!=='skip')chosen.add(e.questionId);const effectiveClean=count.get(e.questionId)===1&&stat(e.questionId).cleanFirst;lines.push(`${e.occurredAt} | ${q?.examTitle||e.examId} 問${e.number} | ${e.questionId} | ${q?.topicLabel||e.topic} | ${count.get(e.questionId)===1?'初回試行':'再挑戦'} | 選択:${e.selectedAnswer||'なし'} / 公式正答:${e.officialCorrectAnswer} | ${e.result==='correct'?'正解':e.result==='incorrect'?'不正解':'スキップ'} | 初見自力:${effectiveClean?'はい':'いいえ'} / 既見:${e.priorExposure?'あり':'なし'} / ヒント:${e.helpUsed?'あり':'なし'} / 正答表示:${e.answerRevealed?'あり':'なし'} / 最初の選択回答:${firstChoice?'はい':'いいえ'} / 採点基準:当時の公式解答 / 現行確認:${e.lawStatus||'未記録'}`);}
+  for(const e of ordered(history.events)){if(e.type!=='attempt')continue;count.set(e.questionId,(count.get(e.questionId)||0)+1);const q=qmap.get(e.questionId);const firstChoice=e.result!=='skip'&&!chosen.has(e.questionId);if(e.result!=='skip')chosen.add(e.questionId);const effectiveClean=count.get(e.questionId)===1&&stat(e.questionId).cleanFirst;lines.push(`${e.occurredAt} | ${q?.examTitle||e.examId} 問${e.number} | ${e.questionId} | ${q?.topicLabel||e.topic} | ${count.get(e.questionId)===1?'初回試行':'再挑戦'} | 選択:${e.selectedAnswer||'なし'} / 公式正答:${e.officialCorrectAnswer} | ${e.result==='correct'?'正解':e.result==='incorrect'?'不正解':'スキップ'} | 初見自力:${effectiveClean?'はい':'いいえ'} / 既見:${e.priorExposure?'あり':'なし'} / ヒント:${e.helpUsed?'あり':'なし'} / 正答表示:${e.answerRevealed?'あり':'なし'} / 最初の選択回答:${firstChoice?'はい':'いいえ'} / 採点基準:当時の公式解答 / 現行確認:${e.lawStatus||'未記録'}`, ...attemptNoteLines(e,stat(e.questionId).manualReview));}
   lines.push('','表示・補助・要復習の記録（解答試行以外には正答を含みません）');
   for(const e of ordered(history.events))if(e.type!=='attempt')lines.push(`${e.occurredAt} | ${e.questionId} | ${e.type==='review-flag'?`要復習:${e.reviewRequired?'設定':'解除'}`:e.type}`);
-  lines.push('','piyoへ: 初見と再挑戦を分けて、間違えた問題・未解答の分野と次に取り組む問題を整理してください。');
+  lines.push('','piyoへ: 正解した問題のメモも必ず読み、迷った点・知らなかったこと・正解していても残る知識不足を優先してください。正答だけで理解済みと判断せず、初見と再挑戦を分けて、次に確認すべき点を整理してください。');
   return lines.join('\n');
 }
 export class HistoryStore {

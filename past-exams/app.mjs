@@ -1,6 +1,6 @@
-import {mountFullPaper} from './full-paper.mjs?v=1.7.0';
+import {mountFullPaper} from './full-paper.mjs?v=1.8.0';
 import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.6.1';
-import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,validateHistory,previewMerge} from './core.mjs?v=1.7.0';
+import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,historyPaperRuns,validateHistory,previewMerge} from './core.mjs?v=1.8.0';
 
 let symbolModulePromise=null;
 function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.6.1').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
@@ -17,6 +17,7 @@ const el=(tag,cls,text)=>{const node=document.createElement(tag);if(cls)node.cla
 let data,questions,store,queue=[],position=0,current=null,context=null,answered=false,selected=null,screen='learn',pendingImport=null,importReadId=0;
 const sessionId=uid();
 let loadKnowledge,fullPaper;
+let shareScope={examId:'',paperId:''};
 const knowledgeSection=()=>createKnowledgeSection({document,question:current,loadKnowledge});
 const safeUrl=url=>{try{const u=new URL(url,location.href);return ['https:','http:'].includes(u.protocol)?u.href:null;}catch{return null;}};
 const sourceLink=(title,url)=>{const a=el('a','',title);const safe=safeUrl(url);if(safe){a.href=safe;a.target='_blank';a.rel='noopener noreferrer';}return a;};
@@ -111,7 +112,19 @@ function renderProgress(){
   const topics=el('div','panel');topics.append(el('h2','','分野ごとに振り返る'));for(const [id,t] of Object.entries(s.topics)){const row=el('div','progress-row');const top=el('div','progress-row-top');top.append(el('strong','',t.label),el('span','',`初見・自力 ${t.cleanCorrect}/${t.cleanAnswered}問正解`));row.append(top,el('p','quiet',`全${t.total}問 / 未解答${t.unanswered}問 / 復習候補${t.needsReview}問`));if(t.needsReview){const b=el('button','secondary','この分野の復習候補を解く');b.onclick=()=>{$('topic-filter').value=id;$('exam-filter').value='';$('year-filter').value='';$('mode-filter').value='retry';$('non-calculation').checked=false;$('validity-filter').value='current';showScreen('learn');startQueue(filteredQuestions(questions,store.history,filters()));};row.append(b);}topics.append(row);}box.append(topics);
   const b=el('button','primary','この記録をpiyoに共有する');b.onclick=()=>showScreen('share');box.append(b);
 }
-function renderShare(){$('summary-text').value=summaryText(store.history,questions,data.dataVersion);if(store.recoveryRaw&&!$('saved-recovery')){const b=el('button','secondary','復旧時に保護した元データを保存');b.id='saved-recovery';b.onclick=()=>download(`progress-denki-protected-${Date.now()}.txt`,store.recoveryRaw,'text/plain;charset=utf-8');$('export-status').after(b);}}
+function renderShare(){
+  store.refresh();
+  const examSelect=$('share-exam'),runSelect=$('share-run');examSelect.replaceChildren();
+  const all=el('option','','すべての実施回');all.value='';examSelect.append(all);
+  const exams=new Map(data.exams.map(e=>[e.id,labelExam(e)]));for(const e of store.history.events)if(!exams.has(e.examId))exams.set(e.examId,e.examId+'（現在未収録）');
+  for(const [id,title] of exams){const option=el('option','',title);option.value=id;examSelect.append(option);}
+  if(shareScope.examId&&!exams.has(shareScope.examId))shareScope={examId:'',paperId:''};examSelect.value=shareScope.examId;
+  const runs=historyPaperRuns(store.history,shareScope.examId);runSelect.replaceChildren();const allRuns=el('option','','すべての練習・試行');allRuns.value='';runSelect.append(allRuns);
+  for(const run of runs){const option=el('option','',`${exams.get(run.examId)||run.examId} · ${new Date(run.startedAt).toLocaleString('ja-JP')} · ${run.correct}/${run.attempts}問正解 · ${run.paperId.slice(-8)}`);option.value=run.paperId;runSelect.append(option);}
+  if(shareScope.paperId&&!runs.some(r=>r.paperId===shareScope.paperId))shareScope.paperId='';runSelect.value=shareScope.paperId;
+  $('share-notes-only').checked=shareScope.notesOnly===true;
+  $('share-scope-status').textContent=shareScope.examId||shareScope.paperId||shareScope.notesOnly?'選んだ範囲だけを文章・JSONに抽出します。全履歴は削除・変更しません。':'すべての学習記録を共有します。実施回と通し練習を選ぶと、必要な分だけ抽出できます。';
+  $('summary-text').value=summaryText(store.history,questions,data.dataVersion,shareScope);if(store.recoveryRaw&&!$('saved-recovery')){const b=el('button','secondary','復旧時に保護した元データを保存');b.id='saved-recovery';b.onclick=()=>download(`progress-denki-protected-${Date.now()}.txt`,store.recoveryRaw,'text/plain;charset=utf-8');$('export-status').after(b);}}
 function renderSources(){const list=$('source-list');list.replaceChildren();for(const exam of data.exams){const item=el('div','source-item');item.append(el('h3','',labelExam(exam)));const links=el('div','source-links');links.append(sourceLink('問題の公式原本PDF ↗',exam.sourceUrl),sourceLink('公式解答PDF ↗（正答が表示されます）',exam.answerSourceUrl));item.append(links,el('p','small quiet',exam.attribution||'一般財団法人 電気技術者試験センター。原本から問題・選択肢・必要な共通図を切り出して収録。'));list.append(item);}list.append(el('p','small quiet',`アプリ ${APP_VERSION} / 問題データ ${data.dataVersion}`));}
 async function load(){
   try{const response=await fetch('./data/exams.json',{cache:'no-cache'});if(!response.ok)throw new Error(`HTTP ${response.status}`);data=await response.json();if(!data.exams?.length)throw new Error('問題データが空です');questions=data.exams.flatMap(exam=>exam.questions.map(q=>({...q,examId:exam.id,year:exam.year,examTitle:labelExam(exam),contexts:exam.contexts||[],excluded:q.excluded===true||!['unchanged_verified','not_rule_dependent'].includes(q.lawAudit?.status)})));
@@ -123,7 +136,7 @@ async function load(){
     for(const exam of data.exams){const o=el('option','',labelExam(exam));o.value=exam.id;$('exam-filter').append(o);}const topics=new Map(questions.map(q=>[q.topic,q.topicLabel||q.topic]));for(const [id,title] of topics){const o=el('option','',title);o.value=id;$('topic-filter').append(o);}
     $('intro-paper-years').textContent=`${paperYears()}年の公式問題・写真・図を見て、1問ずつ解く。`;
     $('loading').hidden=true;$('learn-screen').hidden=false;renderQuestionList();refreshFilterCount();renderSources();
-    fullPaper=mountFullPaper({root:$('paper-screen'),data,questions,store,storage:local,imageButton,explanation:(q,a)=>displayExplanation(a,q),knowledge:q=>createKnowledgeSection({document,question:q,loadKnowledge}),onHistory:()=>{refreshStatus();refreshFilterCount();}});
+    fullPaper=mountFullPaper({root:$('paper-screen'),data,questions,store,storage:local,imageButton,explanation:(q,a)=>displayExplanation(a,q),knowledge:q=>createKnowledgeSection({document,question:q,loadKnowledge}),onHistory:()=>{refreshStatus();refreshFilterCount();},onShare:scope=>{shareScope={examId:scope.examId||'',paperId:scope.paperId||''};showScreen('share');}});
     wire();
   }catch(error){$('loading').textContent=`問題データを読み込めませんでした。接続を確認して再読み込みしてください。学習記録の上書きはしていません。(${error.message})`;}
 }
@@ -139,7 +152,11 @@ function wire(){
   $('stop-session').onclick=()=>{$('session-area').hidden=true;current=null;refreshFilterCount();$('start').focus();};
   $('cancel-recovery').onclick=()=>$('recovery-dialog').close();$('confirm-recovery').onclick=()=>{$('recovery-dialog').close();store.recover(true);refreshStatus();if(screen==='share')renderShare();};
   $('close-image').onclick=()=>$('image-dialog').close();$('zoom-level').onchange=()=>{$('zoom-image').style.width=$('zoom-level').value==='native'?`${$('zoom-image').naturalWidth||1600}px`:`${Number($('zoom-level').value)*100}%`;};
-  $('download-json').onclick=()=>download(name('json'),JSON.stringify(exportHistory(store.history,data.dataVersion,questions),null,2));
+  $('share-exam').onchange=()=>{shareScope={examId:$('share-exam').value,paperId:'',notesOnly:shareScope.notesOnly};renderShare();};
+  $('share-notes-only').onchange=()=>{shareScope.notesOnly=$('share-notes-only').checked;renderShare();};
+  $('share-run').onchange=()=>{shareScope.paperId=$('share-run').value;renderShare();};
+  $('download-json').onclick=()=>{renderShare();download(name('json'),JSON.stringify(exportHistory(store.history,data.dataVersion,questions,shareScope),null,2));};
+  $('download-all-json').onclick=()=>{store.refresh();download(name('json'),JSON.stringify(exportHistory(store.history,data.dataVersion,questions),null,2));};
   $('download-text').onclick=()=>{renderShare();download(name('txt'),$('summary-text').value,'text/plain;charset=utf-8');};
   $('copy-summary').onclick=async()=>{renderShare();try{await navigator.clipboard.writeText($('summary-text').value);$('export-status').textContent='コピーしました。piyoとの私信チャットに貼り付けてください。';}catch{$('summary-text').closest('details').open=true;$('summary-text').focus();$('summary-text').select();$('export-status').textContent='自動コピーが使えませんでした。表示された文章を選択してコピーするか、TXTで保存してください。';}};
   $('import-file').onchange=async()=>{const readId=++importReadId;pendingImport=null;const file=$('import-file').files[0];const box=$('import-preview');box.replaceChildren();box.className='';if(!file)return;try{if(file.size>20*1024*1024)throw new Error('20MBを超えるファイルは取り込めません。');const fileText=await file.text();if(readId!==importReadId)return;const value=JSON.parse(fileText);const valid=validateHistory(value,questions);const p=previewMerge(store.history,valid);pendingImport=valid;box.append(el('h3','','取り込む前の確認'),el('p','',`新しく追加する記録：${p.added}件 / すでにある記録：${p.duplicates}件 / ファイル内の解答試行：${p.incomingAttempts}回`),el('p','small','今の履歴は消しません。同じIDの記録を重複させず、日時順に統合します。取り込み後も、初見・再挑戦は全記録をもとに判定します。'));if(!p.added){box.append(el('p','','新しい記録はありません。変更は不要です。'));return;}const buttons=el('div','button-row');const backup=el('button','secondary','取り込み前のJSONを保存');backup.onclick=()=>download(name('json'),JSON.stringify(exportHistory(store.history,data.dataVersion,questions),null,2));const confirm=el('button','primary',`${p.added}件を統合する`);confirm.onclick=()=>{if(!pendingImport)return;try{const result=store.merge(pendingImport);pendingImport=null;refreshStatus();refreshExposureLabel();refreshReviewButtons();renderShare();renderQuestionList();refreshFilterCount();box.replaceChildren(el('p','',`${result.added}件の記録を統合しました。${store.status!=='ok'?'ブラウザ保存は使えないため、閉じる前にJSONを保存してください。':''}`));$('import-file').value='';}catch(error){box.className='error';box.replaceChildren(el('p','',`取り込みを中止しました。${error.message} 元の履歴とファイルは変更していません。`));}};const cancel=el('button','secondary','取り込まない');cancel.onclick=()=>{pendingImport=null;box.replaceChildren();$('import-file').value='';};buttons.append(backup,confirm,cancel);box.append(buttons);}catch(error){if(readId!==importReadId)return;box.className='error';box.append(el('p','',`取り込みを中止しました。${error.message} 元の履歴とファイルは変更していません。`));}};

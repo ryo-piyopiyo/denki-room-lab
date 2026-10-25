@@ -44,3 +44,10 @@
 .review-toggle[aria-pressed="true"]{background:#fff1d8;border-color:#ab6e23;color:#70440f}
 .review-toggle:focus-visible{outline:3px solid #277865;outline-offset:3px}
 .result>.review-toggle{margin:0 0 1rem}
+
+/* Per-sitting notes: wrap long text and preserve keyboard-entered line breaks. */
+.paper-note { margin: 1rem 0; }
+.paper-note label { display:block; font-weight:700; margin-bottom:.4rem; }
+.paper-note textarea { display:block; width:100%; box-sizing:border-box; min-height:6rem; font:inherit; padding:.75rem; border:1px solid #b8c7c2; border-radius:.6rem; resize:vertical; }
+.paper-note-text { white-space:pre-wrap; overflow-wrap:anywhere; flex-basis:100%; margin:.25rem 0; }
+.paper-result-row { flex-wrap:wrap; }
