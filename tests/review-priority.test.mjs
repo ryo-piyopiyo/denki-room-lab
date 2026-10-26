@@ -1,0 +1,46 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {freshHistory,makeEvent,questionStats,conditions,validateHistory,filteredQuestions,previewMerge,exportHistory,HistoryStore,summaryText} from '../past-exams/core.mjs';
+const qs=[1,2,3,4,5].map(number=>({id:`d2-20260524-0${number}`,examId:'d2-20260524',number,year:2026,topic:'tools',answer:'イ',excluded:number===5}));
+const ctx={visitId:'synthetic',sessionId:'synthetic',dataVersion:'test'};
+const priority=(q,n,rank)=>makeEvent('review-priority',q,ctx,{reviewPriority:n,reviewPriorityReason:'迷った条件を確認',...(rank?{reviewPriorityRank:rank}:{})});
+const history=(...events)=>({...freshHistory(),events});
+const filters={validity:'current',mode:'manual',order:'priority'};
+test('priority only preserves unseen, conditions, current marks; toggles retain score; duplicate/roundtrip safe',()=>{
+ const storage={value:null,getItem(){return this.value},setItem(k,v){this.value=v},removeItem(){this.value=null}};
+ const store=new HistoryStore(storage,qs);
+ const before=conditions(store.history,qs[0].id,'later');
+ const incoming=history(priority(qs[0],99,1));
+ store.merge(incoming);assert.equal(questionStats(store.history,qs[0].id).manualReview,false);
+ assert.deepEqual(conditions(store.history,qs[0].id,'later'),before);
+ assert.equal(questionStats(store.history,qs[0].id).seen,false);
+ store.toggleReview(qs[0],ctx);store.toggleReview(qs[0],ctx);
+ assert.equal(questionStats(store.history,qs[0].id).manualReview,false);
+ assert.equal(questionStats(store.history,qs[0].id).reviewPriority,99);
+ assert.equal(store.merge(incoming).added,0);
+ assert.equal(questionStats(store.history,qs[0].id).manualReview,false);
+ const restored=validateHistory(exportHistory(store.history,'test',qs),qs);
+ assert.deepEqual(restored.events,store.history.events);
+ assert.match(summaryText(restored,qs,'test'),/復習優先度:99\/100/);
+});
+test('validation accepts old history and rejects malformed scores, reasons, rank and mark injection',()=>{
+ assert.equal(questionStats(validateHistory(history()),qs[0].id).reviewPriority,null);
+ const event=priority(qs[0],60,1);
+ for(const score of [-1,101,2.5,'80',null,NaN])assert.throws(()=>validateHistory(history({...event,reviewPriority:score})));
+ for(const reason of [null,3,'x'.repeat(201)])assert.throws(()=>validateHistory(history({...event,reviewPriorityReason:reason})));
+ for(const rank of [0,1251,1.2,'2'])assert.throws(()=>validateHistory(history({...event,reviewPriorityRank:rank})));
+ assert.throws(()=>validateHistory(history({...event,reviewRequired:true})));
+ assert.throws(()=>validateHistory(history({...event,type:'review-flag',reviewRequired:true})));
+});
+test('descending score, imported rank then ID; missing scores last; filters and exclusions preserved',()=>{
+ const flags=qs.map(q=>makeEvent('review-flag',q,ctx,{reviewRequired:true}));
+ const h=history(...flags,priority(qs[0],30),priority(qs[1],90,2),priority(qs[2],90,1),priority(qs[4],100));
+ assert.deepEqual(filteredQuestions(qs,h,filters).map(q=>q.number),[3,2,1,4]);
+ assert.deepEqual(filteredQuestions(qs,h,{...filters,order:'original'}).map(q=>q.number),[1,2,3,4]);
+ assert.deepEqual(filteredQuestions(qs,history(...flags),filters).map(q=>q.number),[1,2,3,4]);
+ assert.equal(filteredQuestions(qs,h,{...filters,year:2025}).length,0);
+ const cleared=previewMerge(h,history(makeEvent('review-flag',qs[2],ctx,{reviewRequired:false}))).history;
+ assert.deepEqual(filteredQuestions(qs,cleared,filters).map(q=>q.number),[2,1,4]);
+ const tied=history(...flags,priority(qs[0],50),priority(qs[1],50));
+ assert.deepEqual(filteredQuestions([...qs].reverse(),tied,filters).slice(0,2).map(q=>q.number),[1,2]);
+});

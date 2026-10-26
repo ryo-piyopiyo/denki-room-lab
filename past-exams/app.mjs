@@ -1,9 +1,9 @@
-import {mountFullPaper} from './full-paper.mjs?v=1.8.7';
-import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.8.7';
-import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,historyPaperRuns,validateHistory,previewMerge} from './core.mjs?v=1.8.7';
+import {mountFullPaper} from './full-paper.mjs?v=1.8.8';
+import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.8.8';
+import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,historyPaperRuns,validateHistory,previewMerge} from './core.mjs?v=1.8.8';
 
 let symbolModulePromise=null;
-function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.8.7').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
+function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.8.8').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
 function enhanceSymbolTargets(container,targets){
   let notice=null;
   const run=()=>{if(notice)notice.remove();notice=null;loadSymbolModule().then(module=>{if(container.isConnected)module.enhanceTargets(container,targets);}).catch(()=>{
@@ -21,7 +21,7 @@ let shareScope={examId:'',paperId:''};
 const knowledgeSection=()=>createKnowledgeSection({document,question:current,loadKnowledge});
 const safeUrl=url=>{try{const u=new URL(url,location.href);return ['https:','http:'].includes(u.protocol)?u.href:null;}catch{return null;}};
 const sourceLink=(title,url)=>{const a=el('a','',title);const safe=safeUrl(url);if(safe){a.href=safe;a.target='_blank';a.rel='noopener noreferrer';}return a;};
-const filters=()=>({year:$('year-filter').value,exam:$('exam-filter').value,topic:$('topic-filter').value,mode:$('mode-filter').value,nonCalculation:$('non-calculation').checked,validity:$('validity-filter').value});
+const filters=()=>({year:$('year-filter').value,exam:$('exam-filter').value,topic:$('topic-filter').value,mode:$('mode-filter').value,order:$('order-filter').value,nonCalculation:$('non-calculation').checked,validity:$('validity-filter').value});
 function download(name,text,type='application/json'){const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=el('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);}
 function name(ext){return `progress-denki-${new Date().toISOString().slice(0,10)}.${ext}`;}
 function refreshStatus(){const n=$('storage-status');n.replaceChildren();n.classList.toggle('warning',store.status!=='ok');n.append(el('span','',store.status==='ok'?`● ${store.message}`:`⚠ ${store.message}`));if(store.status!=='ok'){n.append(el('div','small','記録はpiyoに自動送信されません。新しい記録も「piyoに共有」からJSON保存できます。'));const retry=el('button','secondary',store.status==='protected'?'元データを保護して保存を復旧':'保存をもう一度試す');retry.onclick=()=>{if(store.status==='protected')$('recovery-dialog').showModal();else{store.recover();refreshStatus();}};n.append(retry);if(store.raw!==null){const b=el('button','secondary','元データを変更せず救出する');b.onclick=()=>download(`progress-denki-recovery-${Date.now()}.txt`,store.raw,'text/plain;charset=utf-8');n.append(b);}}}
@@ -33,8 +33,16 @@ function openImage(path,label){$('zoom-title').textContent=label;$('zoom-image')
 function paperYears(){const years=[...new Set(data.exams.map(e=>e.year))].sort();return years.length===1?String(years[0]):`${years[0]}〜${years.at(-1)}`;}
 function labelExam(exam){return exam.title||exam.label||exam.id;}
 function refreshExposureLabel(){if(!current||!context||answered)return;const state=questionStats(store.history,current.id), c=conditions(store.history,current.id,context.visitId);$('exposure-label').textContent=state.attempts.length?`この端末で${state.attempts.length}回取り組んだ問題です。今回は再挑戦として残します。`:c.priorExposure?'表示履歴または既見の申告がある問題です。選択回答はまだありません。':'この端末では、はじめて表示する問題です。';}
+function refreshPriority(){
+  if(!current)return;
+  const s=questionStats(store.history,current.id),box=$('question-priority');
+  box.hidden=s.reviewPriority===null;
+  box.replaceChildren();
+  if(s.reviewPriority!==null)box.append(el('strong','',`取り込んだ復習優先度 ${s.reviewPriority} / 100`),el('p','',s.reviewPriorityReason),el('small','','取込時点の学習用の目安です。出題確率・不正解確率ではなく、解答後も自動変更しません。'));
+}
 function refreshReviewButtons(){
   if(!current)return;
+  refreshPriority();
   const marked=questionStats(store.history,current.id).manualReview;
   document.querySelectorAll('[data-review-toggle]').forEach(b=>{b.textContent=marked?'★ 要復習中（解除する）':'☆ 要復習にする';b.setAttribute('aria-pressed',String(marked));b.onclick=()=>{store.toggleReview(current,context);refreshStatus();refreshReviewButtons();renderQuestionList();refreshFilterCount();};});
 }
@@ -99,7 +107,7 @@ function renderQuestionList(){
   $('total-label').textContent=`全${questions.length}問（要注意問題を含む）`;
   const list=$('question-list');list.replaceChildren();
   list.append(el('p','small quiet','番号から直接開くと表示済みとして記録します。※ は現行基準の通常練習から除外している問題です。'));
-  for(const exam of data.exams){const wrap=el('div','exam-list');wrap.append(el('h3','',labelExam(exam)));const grid=el('div','question-numbers');for(const q of questions.filter(q=>q.examId===exam.id)){const s=questionStats(store.history,q.id);const b=el('button',`question-number ${s.needsReview?'review':s.answered?'answered':s.seen?'seen':''} ${q.excluded?'excluded-number':''}`,`${q.number}${q.excluded?'※':''}`);const status=s.answered?'解答済み':s.attempts.length?'スキップのみ':s.seen?'表示済み・未解答':'未表示';b.setAttribute('aria-label',`${labelExam(exam)} 問${q.number}、${status}${s.manualReview?'、要復習':s.needsReview?'、復習候補':''}${q.excluded?'、現行基準の通常練習対象外':''}`);b.onclick=()=>{showScreen('learn');startQueue([q]);};grid.append(b);}wrap.append(grid);list.append(wrap);}
+  for(const exam of data.exams){const wrap=el('div','exam-list');wrap.append(el('h3','',labelExam(exam)));const grid=el('div','question-numbers');for(const q of questions.filter(q=>q.examId===exam.id)){const s=questionStats(store.history,q.id);const b=el('button',`question-number ${s.needsReview?'review':s.answered?'answered':s.seen?'seen':''} ${q.excluded?'excluded-number':''}`,`${q.number}${q.excluded?'※':''}`);const status=s.answered?'解答済み':s.attempts.length?'スキップのみ':s.seen?'表示済み・未解答':'未表示';b.setAttribute('aria-label',`${labelExam(exam)} 問${q.number}、${status}${s.manualReview?'、要復習':s.needsReview?'、復習候補':''}${q.excluded?'、現行基準の通常練習対象外':''}`);if(s.reviewPriority!==null){b.append(el('small','priority-number',`優先 ${s.reviewPriority}`));b.title=`復習優先度 ${s.reviewPriority}/100：${s.reviewPriorityReason}`;b.setAttribute('aria-label',b.getAttribute('aria-label')+'、'+b.title);}b.onclick=()=>{showScreen('learn');startQueue([q]);};grid.append(b);}wrap.append(grid);list.append(wrap);}
   list.append(el('p','legend-key','白：未表示　灰：表示済み　緑：解答済み　薄橙：復習候補　※：要注意'));
 }
 function metric(label,value,note){const n=el('div','metric');n.append(el('div','metric-label',label),el('div','metric-value',value),el('p','',note));return n;}
@@ -142,7 +150,7 @@ async function load(){
 }
 function wire(){
   document.querySelectorAll('[data-screen]').forEach(b=>b.onclick=()=>showScreen(b.dataset.screen));
-  for(const id of ['year-filter','exam-filter','topic-filter','mode-filter','non-calculation','validity-filter'])$(id).onchange=refreshFilterCount;
+  for(const id of ['year-filter','exam-filter','topic-filter','mode-filter','order-filter','non-calculation','validity-filter'])$(id).onchange=refreshFilterCount;
   $('start').onclick=()=>startQueue(filteredQuestions(questions,store.history,filters()));
   $('grade').onclick=()=>{if(selected!==null)submit(selected);};$('skip').onclick=()=>submit(null);
   $('reveal').onclick=()=>{if(!answered)$('confirm-dialog').showModal();};$('cancel-reveal').onclick=()=>$('confirm-dialog').close();$('confirm-reveal').onclick=()=>{$('confirm-dialog').close();submit(null,{reveal:true});};

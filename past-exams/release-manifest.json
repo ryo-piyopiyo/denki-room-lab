@@ -1,6 +1,6 @@
 {
-  "createdAt": "2026-10-26T06:16:23.097186Z",
-  "appVersion": "1.8.7",
+  "createdAt": "2026-10-26T06:34:21.767420Z",
+  "appVersion": "1.8.8",
   "exams": [
     "d2-20170604",
     "d2-20170930",
@@ -37,14 +37,14 @@
   "files": {
     "additional-symbol-annotations.mjs": "fcaee80c768f6e354b114284980f880e3287651a63ca755f60d1e4b031c81077",
     "additional-symbols.mjs": "26e1c2da1b261ad54c86b6ded160c932b59f934833720e0a51e2f63fa6d13e0c",
-    "app.mjs": "fa6597d814af053ec9a6bfa1cc6b3ebf3ea56a0941b5e947c6a8a737e2b9651a",
-    "core.mjs": "e1df4de2be9896f747ff7068f57340168d4e6172855e65019466540011f31269",
+    "app.mjs": "f27b4f21b75ac69aa583c0f5c05b06010d72814ad65ec0fb0d4343567f120504",
+    "core.mjs": "9e1749f6134b2b4d9b921cf70671df73bb439e167f66f2a2896c6a3e97c49aab",
     "data/exams.json": "68427c5b3c129d241f26c5c6d17bcfe7dce8d2cca1083d2e9fcd0fec4852fcab",
     "data/knowledge-beginner.json": "dba99d4aec4cc3981a148e059453964de989bb936bd62e2b05413b3c3561e1b8",
     "data/knowledge.json": "e6b1e8cc075ad406f2a5c90d0f12974a522c86386105c2d0512da7a3c5d2c72d",
     "data/symbol-coverage-audit.json": "aa43e0f03c533d1d5fb5bc4ba05fd5fd4662f25ead70e12e0840e172d03ceb52",
     "existing-symbol-annotations.mjs": "a59ce4f3c9e9c2aa9a12cf39463caa9ee6461d803560fe7ec5e23e435928047d",
-    "full-paper.mjs": "e0e332cc01c24d34628352ab55f52699742828c56489c680b77fb3d8b1f14ae8",
+    "full-paper.mjs": "0e4be4556e9d96875af184aba9e1cf2d6a940e9035da78863804b5d450612727",
     "images/20170604/diagram-notes.webp": "73871a9a60a96744e22ea18274ffcf8f01d48cf65a6501b76b6e8fefc7742590",
     "images/20170604/general.webp": "5fc4494e8a78070f3abbf5119bb727bde00bbe7c724c529ae5836b5ae55e82f0",
     "images/20170604/q01.webp": "0112418083a117f8c04e3fe997cc135a4473d3b97373bc8c24db5613bf203598",
@@ -1370,13 +1370,13 @@
     "images/20260524/q49.webp": "94d9eed500c3777ddc59017b70b23e551ac4ce456d47f27e1e395cf1578676f9",
     "images/20260524/q50.webp": "88adea450cf516d0cf8fb367cc8b7f9992aeb58c86972db5f598142b7dca93b0",
     "images/20260524/wiring.webp": "fe685e323c92010ddcfe269b4486e8c8f16c66d1f982647a87ebc8e7e53ea2f3",
-    "index.html": "14073f5a41939a99700db01c86d6ef4adeba99114a44fc3963e9721be6ee518e",
-    "inline-symbols.mjs": "14aef9773810a340ed3d10782e21212be538c2d0d018777ee5ec9b4f1dfb143e",
-    "knowledge-beginner.mjs": "7de05479e541cc7f19de50d05399585d11a53cb1c6f602ef09af0e3c3bee702e",
-    "knowledge-router.mjs": "9e1ecb28890c3c05c99432ac73223e8ff89311ab318d089d252fc4e0297b2a3b",
+    "index.html": "bc73be1d2d750f958892dc9e0682282e00040d1cf18a7dcc8bddd8bdfe8acaa1",
+    "inline-symbols.mjs": "496a896e67449bb7c466fdf9a9b89770758408e1a71bcc3131b72f7f698ad26d",
+    "knowledge-beginner.mjs": "47b127adda200057243aa9f8e10d79a0cbd453e4927cc736265c78f0f1160c5d",
+    "knowledge-router.mjs": "cfd14997463b6448ed65c8b3889ae07e729c4ce15bcc309a8f51d3b9f0abeef1",
     "knowledge.mjs": "3b2f51343b62d16e70fe265c01f88ebdef82b76fa35d9ec58151247fdad1490a",
     "pilot-scope.mjs": "764b437335d77ec301dd4b205347e7a7bbb065ca08238f1e30ea00cdc03b8caf",
-    "styles.css": "ef49899fb1a51387f4d8d7abdb1b0dcece0d8d6567ca877804289c14d0c58096",
+    "styles.css": "f0e0c9eb8f5c1bbb1237916c01ed989138ea2523f9627d4db843136fadbf27f0",
     "symbol-annotations.mjs": "a0b26a86bb9c86cc9e9a4b076b6b541ff23f0721689ef77f4403d599801849e8"
   }
 }

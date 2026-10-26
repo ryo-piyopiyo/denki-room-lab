@@ -104,3 +104,21 @@ $('mode-filter').value='manual';$('mode-filter').onchange();
 click('review-toggle');assert.equal($('filter-count').textContent,'1問');assert.equal($('start').disabled,false);
 assert.equal(history().events.filter(e=>e.type==='attempt').length,attemptsBefore);
 console.log('PASS manual-only DOM: option, accessible live count, current mark toggles, automatic-only exclusion, retry retained, no attempt mutation');
+
+// Imported priorities are metadata only, displayed as text, and govern the actual queue.
+const priorityFixture=history(),pq=data.exams[0].questions[1],lastTime=Math.max(...priorityFixture.events.map(e=>Date.parse(e.occurredAt)));
+const base={examId:data.exams[0].id,number:pq.number,questionId:pq.id,topic:pq.topic,visitId:'priority-dom',sessionId:'priority-dom',appVersion:'1.8.8',dataVersion:data.dataVersion,occurredAt:new Date(lastTime+1000).toISOString()};
+priorityFixture.events.push({...base,id:'priority-dom-score',type:'review-priority',reviewPriority:99,reviewPriorityReason:'<img src=x onerror=alert(1)> 条件を確認',reviewPriorityRank:1},{...base,id:'priority-dom-flag',type:'review-flag',reviewRequired:true});
+storage.setItem(STORAGE_KEY,JSON.stringify(priorityFixture));listeners.storage();
+$('mode-filter').value='manual';$('mode-filter').onchange();
+assert.equal($('order-filter').value,'priority');click('start');
+assert.equal($('question-title').textContent,'問 02');
+assert.match($('question-priority').textContent,/99 \/ 100/);
+assert.match($('question-priority').textContent,/<img src=x/);
+assert.equal($('question-priority').querySelectorAll('img').length,0);
+click('review-toggle');
+assert.equal(questionStats(history(),pq.id).manualReview,false);
+assert.equal(questionStats(history(),pq.id).reviewPriority,99);
+$('order-filter').value='original';$('order-filter').onchange();click('start');
+assert.equal($('question-title').textContent,'問 01');
+console.log('PASS priority DOM: default numeric queue order, safe reason text, mark clearing retains priority, original sort available');

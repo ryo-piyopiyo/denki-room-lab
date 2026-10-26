@@ -59,7 +59,7 @@ test('functional and form differences are not silently treated as equivalent',()
 });
 test('question and learning-card loaders use the same fresh symbol module version',()=>{
  const read=p=>fs.readFileSync(new URL('../past-exams/'+p,import.meta.url),'utf8');
- assert.match(read('app.mjs'),/knowledge-router\.mjs\?v=1\.8\.7/);
- assert.match(read('knowledge-router.mjs'),/knowledge-beginner\.mjs\?v=1\.8\.7/);
- for(const file of ['app.mjs','knowledge-beginner.mjs'])assert.match(read(file),/inline-symbols\.mjs\?v=1\.8\.7/);
+ assert.match(read('app.mjs'),/knowledge-router\.mjs\?v=1\.8\.8/);
+ assert.match(read('knowledge-router.mjs'),/knowledge-beginner\.mjs\?v=1\.8\.8/);
+ for(const file of ['app.mjs','knowledge-beginner.mjs'])assert.match(read(file),/inline-symbols\.mjs\?v=1\.8\.8/);
 });
