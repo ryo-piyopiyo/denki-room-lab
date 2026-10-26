@@ -1,7 +1,15 @@
-import {CHOICES,uid,makeEvent,makeAttempt,freshHistory,validateHistory,conditions,questionStats} from './core.mjs?v=1.8.1';
+import {CHOICES,uid,makeEvent,makeAttempt,freshHistory,validateHistory,conditions,questionStats} from './core.mjs?v=1.8.2';
 export const PAPER_PREFIX='denki.official-pastpapers.paper.v1.';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
 export function paperSummary(run,questions){const eligible=questions.filter(q=>!q.excluded);const answered=eligible.filter(q=>CHOICES.includes(run.answers[q.id]));return {total:questions.length,eligible:eligible.length,excluded:questions.length-eligible.length,answered:answered.length,unanswered:eligible.length-answered.length,correct:answered.filter(q=>run.answers[q.id]===q.answer).length,incorrect:answered.filter(q=>run.answers[q.id]!==q.answer).length};}
+// Count distinct eligible questions, not attempts or mere exposure. Saved answers
+// remain useful even before grading (and after a history-only reset).
+export function examAnswerStatus(questions,history,runs=[]){
+  const eligible=new Set(questions.filter(q=>!q.excluded).map(q=>q.id)),answered=new Set();
+  for(const event of history.events)if(event.type==='attempt'&&eligible.has(event.questionId)&&CHOICES.includes(event.selectedAnswer))answered.add(event.questionId);
+  for(const run of runs)for(const [id,answer] of Object.entries(run.answers||{}))if(eligible.has(id)&&CHOICES.includes(answer))answered.add(id);
+  return {answered:answered.size,eligible:eligible.size};
+}
 export function firstUnansweredIndex(run,questions){return questions.findIndex(q=>!q.excluded&&!CHOICES.includes(run.answers[q.id]));}
 export function questionNumberIndex(questions,value){const number=Number(value);return String(value).trim()&&Number.isInteger(number)?questions.findIndex(q=>q.number===number):-1;}
 export function excludedQuestionNumbers(questions){return questions.filter(q=>q.excluded).map(q=>q.number);}
@@ -93,13 +101,19 @@ export function mountFullPaper({root,data,questions,store,storage,imageButton,ex
     return el('p','paper-note-text',`解答時のメモ：${note||'なし'}`);
   }
   function render(){
+    store.refresh();
+    const savedRuns=[];let savedReadable=true;
+    try{for(let i=0;i<storage.length;i++){const key=storage.key(i);if(key?.startsWith(PAPER_PREFIX)){try{const value=JSON.parse(storage.getItem(key));savedRuns.push(validatePaperRun(value,paperQuestions(value.examId),data.dataVersion));}catch{savedReadable=false;}}}}catch{savedReadable=false;}
+    const progressRuns=savedRuns.filter(value=>value.id!==run?.id);if(run)progressRuns.push(run);
+    const progressLabel=id=>{const summary=examAnswerStatus(paperQuestions(id),store.history,progressRuns.filter(value=>value.examId===id));const complete=savedReadable&&store.status==='ok';const base=summary.answered?`解答済み ${summary.answered}/${summary.eligible}問`:complete?'未着手':'解答状況を確認できません';const pending=savedRuns.some(value=>value.examId===id&&!value.submittedAt);return `${base}${pending?' · 途中保存あり':''}${saveFailed&&run?.examId===id&&!run.submittedAt?' · この画面のみ・未保存':''}${!complete&&summary.answered?' · 確認できた記録のみ':''}`;};
     root.replaceChildren();const head=el('div','section-head');head.append(el('span','eyebrow','ONE COMPLETE PAPER'),el('h1','','1回分を、通して解く。'),el('p','','実施回を選んで問1から順番に。解答は最後の「まとめて採点」まで変更できます。途中では正答・解説を表示しません。'));root.append(head);
     const status=el('p','storage-status',notice||'途中経過はこのブラウザに自動保存します。別のタブで同じ回を同時に操作しないでください。');status.setAttribute('role','status');root.append(status);
-    const setup=el('div','panel');const label=el('label','','実施回');const select=el('select');select.id='paper-exam';for(const exam of data.exams){const opt=el('option','',examTitle(exam.id));opt.value=exam.id;select.append(opt);}if(run)select.value=run.examId;label.append(select);setup.append(label,el('p','small quiet','計算問題も含めて収録順に取り組みます。法令変更などの要注意問題は番号を残し、解答・採点から除外します。時間制限はありません。'));
-    const exclusions=el('p','paper-exclusions',exclusionSummary(paperQuestions(select.value)));exclusions.id='paper-setup-exclusions';exclusions.setAttribute('role','status');select.setAttribute('aria-describedby',exclusions.id);select.onchange=()=>{exclusions.textContent=exclusionSummary(paperQuestions(select.value));};setup.append(exclusions);
+    const setup=el('div','panel');const label=el('label','','実施回');const select=el('select');select.id='paper-exam';for(const exam of data.exams){const opt=el('option','',`${progressLabel(exam.id)} ｜ ${examTitle(exam.id)}`);opt.value=exam.id;select.append(opt);}if(run)select.value=run.examId;label.append(select);setup.append(label,el('p','small quiet','計算問題も含めて収録順に取り組みます。法令変更などの要注意問題は番号を残し、解答・採点から除外します。時間制限はありません。'));
+    const progress=el('p','paper-progress',progressLabel(select.value));progress.id='paper-setup-progress';progress.setAttribute('role','status');setup.append(progress,el('p','small quiet','解答済みは、通常演習の学習履歴と保存済みの通し練習を合わせた問題数です。同じ問題は1問として数えます。表示しただけ・未解答・採点対象外は数えません。「未着手」は未表示・初見を意味しません。'));
+    const exclusions=el('p','paper-exclusions',exclusionSummary(paperQuestions(select.value)));exclusions.id='paper-setup-exclusions';exclusions.setAttribute('role','status');select.setAttribute('aria-describedby',`${progress.id} ${exclusions.id}`);select.onchange=()=>{progress.textContent=progressLabel(select.value);exclusions.textContent=exclusionSummary(paperQuestions(select.value));};setup.append(exclusions);
     const startButton=button('新しく1回分をはじめる',()=>{const qs=paperQuestions(select.value);const next=createPaperRun(data.exams.find(e=>e.id===select.value),qs,data.dataVersion);raw=null;if(save(next)){reviewId=null;confirmSubmit=false;render();}else render();},'primary');startButton.disabled=!!(saveFailed&&run&&!run.submittedAt);setup.append(startButton);
     setup.append(el('p','small quiet',saveFailed?'途中経過を保存できないため、新しく始める前にこの回を採点し、学習履歴JSONを保存してください。':'新しく始めても、前の回の途中経過・結果は下の一覧に残ります。途中経過は学習履歴JSONには含まれません。採点済みの解答は従来の履歴にも記録します。'));
-    const saved=el('details');saved.append(el('summary','','保存済みの回・途中から再開'));try{const values=[];for(let i=0;i<storage.length;i++){const key=storage.key(i);if(key?.startsWith(PAPER_PREFIX)){try{const v=JSON.parse(storage.getItem(key));if(v?.id&&v.examId)values.push(v);}catch{}}}values.sort((a,b)=>String(b.startedAt).localeCompare(String(a.startedAt)));for(const v of values){const row=el('div','paper-saved-row');row.append(button(`${examTitle(v.examId)} · ${v.submittedAt?'採点済み':'途中'} · ${new Date(v.startedAt).toLocaleString('ja-JP')}`,()=>open(v.id)));saved.append(row);}if(!values.length)saved.append(el('p','','保存済みの回はありません。'));}catch{saved.append(el('p','','ブラウザ保存が使えません。'));}setup.append(saved);root.append(setup);
+    const saved=el('details');saved.append(el('summary','','保存済みの回・途中から再開'));try{const values=[...savedRuns];if(!savedReadable)saved.append(el('p','','一部の保存記録を確認できません。元データは変更していません。'));values.sort((a,b)=>String(b.startedAt).localeCompare(String(a.startedAt)));for(const v of values){const row=el('div','paper-saved-row');row.append(button(`${examTitle(v.examId)} · ${v.submittedAt?'採点済み':'途中'} · ${new Date(v.startedAt).toLocaleString('ja-JP')}`,()=>open(v.id)));saved.append(row);}if(!values.length)saved.append(el('p','','保存済みの回はありません。'));}catch{saved.append(el('p','','ブラウザ保存が使えません。'));}setup.append(saved);root.append(setup);
     if(!run)return;
     const qs=paperQuestions(run.examId);store.refresh();const legacy=legacyPaperReviewEvents(run,qs,store.history);if(legacy.length){store.commit({...freshHistory(),events:legacy});onHistory();}if(run.submittedAt){persistSubmission();renderResult(qs);return;}
     const q=qs[run.position];recordVisit(q);status.textContent=notice||(saveFailed?'途中経過はこの画面内のみです。':'途中経過をこのブラウザに保存しています。');const counts=paperSummary(run,qs);
