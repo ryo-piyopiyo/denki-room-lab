@@ -247,3 +247,20 @@ test('stale legacy migration cannot resurrect a flag explicitly cleared in anoth
   assert.equal(questionStats(stale.history,q.id).manualReview,false);
   assert.equal(stale.status,'ok');
 });
+
+
+test('manual-only filter excludes automatic candidates and preserves other filters and history',()=>{
+  const {store}=setup();
+  store.append(makeEvent('view',other,ctx));
+  store.append(makeAttempt(store.history,other,ctx,'ロ'));
+  store.toggleReview(q,ctx);store.toggleReview(excluded,ctx);
+  const before=JSON.stringify(store.history), filters={mode:'manual',validity:'current'};
+  assert.deepEqual(filteredQuestions(questions,store.history,filters).map(q=>q.id),[q.id]);
+  assert.deepEqual(filteredQuestions(questions,store.history,{...filters,mode:'retry'}).map(q=>q.id),[q.id,other.id]);
+  assert.deepEqual(filteredQuestions(questions,store.history,{...filters,validity:'all'}).map(q=>q.id),[q.id,excluded.id]);
+  for(const extra of [{year:1999},{exam:'other-exam'},{topic:'other-topic'}]) assert.equal(filteredQuestions(questions,store.history,{...filters,...extra}).length,0);
+  assert.equal(JSON.stringify(store.history),before);
+  store.toggleReview(q,ctx);
+  assert.equal(filteredQuestions(questions,store.history,filters).length,0);
+  assert.equal(questionStats(store.history,other.id).automaticReview,true);
+});

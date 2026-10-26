@@ -1,10 +1,10 @@
 import {ANNOTATIONS as ORIGINAL_ANNOTATIONS} from './symbol-annotations.mjs?v=1.5.0';
-import {ADDITIONAL_SYMBOLS,SYMBOL_VARIANTS} from './additional-symbols.mjs?v=1.8.6';
-import {EXISTING_SYMBOL_ANNOTATIONS} from './existing-symbol-annotations.mjs?v=1.8.6';
-import {ADDITIONAL_SYMBOL_ANNOTATIONS} from './additional-symbol-annotations.mjs?v=1.8.6';
+import {ADDITIONAL_SYMBOLS,SYMBOL_VARIANTS} from './additional-symbols.mjs?v=1.8.7';
+import {EXISTING_SYMBOL_ANNOTATIONS} from './existing-symbol-annotations.mjs?v=1.8.7';
+import {ADDITIONAL_SYMBOL_ANNOTATIONS} from './additional-symbol-annotations.mjs?v=1.8.7';
 const ANNOTATIONS={...ORIGINAL_ANNOTATIONS,question:{...ORIGINAL_ANNOTATIONS.question}};
 for(const extra of [EXISTING_SYMBOL_ANNOTATIONS,ADDITIONAL_SYMBOL_ANNOTATIONS])for(const [id,fields] of Object.entries(extra.question))ANNOTATIONS.question[id]={...ANNOTATIONS.question[id],...fields};
-export const ANNOTATION_VERSION='symbols-1.8.6';
+export const ANNOTATION_VERSION='symbols-1.8.7';
 
 const NS='http://www.w3.org/2000/svg';
 // Closed, hand-authored geometry only. No HTML, remote image, URL, or data-defined SVG.

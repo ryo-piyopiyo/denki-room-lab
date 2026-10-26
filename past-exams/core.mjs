@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.6';
+export const APP_VERSION = '1.8.7';
 export const SCHEMA_VERSION = 3;
 // Keep the existing key so every prior history is loaded and protected before migration.
 export const STORAGE_KEY = 'denki.official-pastpapers.history.v2';
@@ -119,6 +119,7 @@ export function filteredQuestions(questions,history,filters) {
     const s=questionStats(history,q.id);
     if(filters.mode==='unseen'&&s.seen)return false;
     if(filters.mode==='retry'&&!s.needsReview)return false;
+    if(filters.mode==='manual'&&!s.manualReview)return false;
     if(filters.mode==='unanswered'&&s.answered)return false;
     return true;
   });

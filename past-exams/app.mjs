@@ -1,9 +1,9 @@
-import {mountFullPaper} from './full-paper.mjs?v=1.8.6';
-import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.8.6';
-import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,historyPaperRuns,validateHistory,previewMerge} from './core.mjs?v=1.8.6';
+import {mountFullPaper} from './full-paper.mjs?v=1.8.7';
+import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.8.7';
+import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,historyPaperRuns,validateHistory,previewMerge} from './core.mjs?v=1.8.7';
 
 let symbolModulePromise=null;
-function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.8.6').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
+function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.8.7').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
 function enhanceSymbolTargets(container,targets){
   let notice=null;
   const run=()=>{if(notice)notice.remove();notice=null;loadSymbolModule().then(module=>{if(container.isConnected)module.enhanceTargets(container,targets);}).catch(()=>{
@@ -27,7 +27,7 @@ function name(ext){return `progress-denki-${new Date().toISOString().slice(0,10)
 function refreshStatus(){const n=$('storage-status');n.replaceChildren();n.classList.toggle('warning',store.status!=='ok');n.append(el('span','',store.status==='ok'?`● ${store.message}`:`⚠ ${store.message}`));if(store.status!=='ok'){n.append(el('div','small','記録はpiyoに自動送信されません。新しい記録も「piyoに共有」からJSON保存できます。'));const retry=el('button','secondary',store.status==='protected'?'元データを保護して保存を復旧':'保存をもう一度試す');retry.onclick=()=>{if(store.status==='protected')$('recovery-dialog').showModal();else{store.recover();refreshStatus();}};n.append(retry);if(store.raw!==null){const b=el('button','secondary','元データを変更せず救出する');b.onclick=()=>download(`progress-denki-recovery-${Date.now()}.txt`,store.raw,'text/plain;charset=utf-8');n.append(b);}}}
 function append(type,extra={}){store.append(makeEvent(type,current,context,extra));refreshStatus();}
 function showScreen(next){screen=next;for(const id of ['learn','paper','progress','share','sources'])$(id+'-screen').hidden=id!==next;document.querySelectorAll('[data-screen]').forEach(b=>{const active=b.dataset.screen===next;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});if(next==='learn'){refreshReviewButtons();renderQuestionList();}if(next==='paper')fullPaper.render();if(next==='progress')renderProgress();if(next==='share')renderShare();window.scrollTo({top:0,behavior:'instant'});}
-function refreshFilterCount(){const n=filteredQuestions(questions,store.history,filters()).length;$('filter-count').textContent=`${n}問`;$('start').disabled=n===0;}
+function refreshFilterCount(){const n=filteredQuestions(questions,store.history,filters()).length;$('filter-count').textContent=`${n}問`;$('filter-count').setAttribute('aria-label',`${$('mode-filter').value==='manual'?'要復習マークを付けた問題':'選択した条件の問題'}：${n}問`);$('start').disabled=n===0;}
 function imageButton(path,label){const b=el('button','image-button');b.type='button';b.setAttribute('aria-label',`${label}を拡大`);const img=el('img');img.src=path;img.alt=label;img.loading='lazy';const caption=el('span','image-caption','拡大する ↗');b.append(img,caption);b.onclick=()=>openImage(path,label);img.onerror=()=>{caption.textContent='画像を読み込めませんでした。再読み込み、または出典の原本を確認してください。';};return b;}
 function openImage(path,label){$('zoom-title').textContent=label;$('zoom-image').src=path;$('zoom-image').alt=label;$('zoom-level').value='1';$('zoom-image').style.width='100%';$('original-image-link').href=path;$('image-dialog').showModal();$('zoom-viewport').scrollTo(0,0);}
 function paperYears(){const years=[...new Set(data.exams.map(e=>e.year))].sort();return years.length===1?String(years[0]):`${years[0]}〜${years.at(-1)}`;}

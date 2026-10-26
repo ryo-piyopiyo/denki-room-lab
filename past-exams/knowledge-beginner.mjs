@@ -89,7 +89,7 @@ export function createKnowledgeLoader({fetcher,questions,dataVersion,evidenceQue
 
 
 let symbolModulePromise=null;
-function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.8.6').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
+function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.8.7').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
 function enhanceSymbolTargets(document,container,targets,importSymbols=loadSymbolModule){
   let notice=null;
   const run=()=>{if(notice)notice.remove();notice=null;importSymbols().then(module=>{if(container.isConnected)module.enhanceTargets(container,targets);}).catch(()=>{

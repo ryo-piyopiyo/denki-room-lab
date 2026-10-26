@@ -85,3 +85,22 @@ click('download-all-json');const allBackup=JSON.parse(await savedBlob.text());as
 $('share-exam').value='';$('share-exam').onchange();assert.equal($('share-run').value,'');assert.equal($('share-notes-only').checked,true);
 $('share-notes-only').checked=false;$('share-notes-only').onchange();assert($('summary-text').value.includes('解答記録（全試行）'));
 console.log('PASS real-app share: exam/run/notes-only selection, correct uncertain note text, selected importable JSON, complete backup, non-destructive filtering');
+
+// Manual-only selection remains separate from automatic retry candidates.
+const automaticFixture=history();automaticFixture.events.push({...noted,id:'manual-mode-automatic-fixture',result:'incorrect',selectedAnswer:noted.officialCorrectAnswer==='イ'?'ロ':'イ',occurredAt:new Date(Date.parse(noted.occurredAt)+1000).toISOString()});storage.setItem(STORAGE_KEY,JSON.stringify(automaticFixture));listeners.storage();
+nav('learn');
+assert($('mode-filter').all().some(n=>n.value==='manual'&&n.textContent==='要復習マークを付けた問題'));
+$('mode-filter').value='manual';$('mode-filter').onchange();
+assert.equal($('filter-count').getAttribute('role'),'status');
+assert.equal($('filter-count').getAttribute('aria-live'),'polite');
+assert.equal($('filter-count').textContent,'1問');
+assert.equal($('filter-count').getAttribute('aria-label'),'要復習マークを付けた問題：1問');
+const attemptsBefore=history().events.filter(e=>e.type==='attempt').length;
+click('review-toggle');
+assert.equal(questionStats(history(),q.id).automaticReview,true);
+assert.equal($('filter-count').textContent,'0問');assert.equal($('start').disabled,true);
+$('mode-filter').value='retry';$('mode-filter').onchange();assert.equal($('filter-count').textContent,'50問');
+$('mode-filter').value='manual';$('mode-filter').onchange();
+click('review-toggle');assert.equal($('filter-count').textContent,'1問');assert.equal($('start').disabled,false);
+assert.equal(history().events.filter(e=>e.type==='attempt').length,attemptsBefore);
+console.log('PASS manual-only DOM: option, accessible live count, current mark toggles, automatic-only exclusion, retry retained, no attempt mutation');

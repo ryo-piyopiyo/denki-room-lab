@@ -6,8 +6,8 @@
 <meta name="color-scheme" content="light">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' blob:; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>過去問の勉強室 | 第二種電気工事士</title>
-<link rel="stylesheet" href="styles.css?v=1.8.6">
-<script type="module" src="app.mjs?v=1.8.6"></script>
+<link rel="stylesheet" href="styles.css?v=1.8.7">
+<script type="module" src="app.mjs?v=1.8.7"></script>
 </head>
 <body>
 <a href="#main" class="skip-link">本文へ</a>
@@ -28,11 +28,11 @@
 <div id="loading" class="panel">公式問題を読み込んでいます…</div>
 <section id="learn-screen" hidden>
 <div class="intro"><div><span class="eyebrow">OFFICIAL PAST PAPERS</span><h1>ゆっくり、確かな一歩に。</h1><p><span id="intro-paper-years">公式の問題・写真・図を見て、1問ずつ解く。</span><br>計算も図も、各回50問。法令変更などの要注意問題は分けて扱います。</p></div><div class="intro-mark" aria-hidden="true"><span>1</span><small>QUESTION<br>AT A TIME</small></div></div>
-<details class="panel filters" open><summary>取り組む問題を選ぶ <span id="filter-count"></span></summary><div class="filter-grid">
+<details class="panel filters" open><summary>取り組む問題を選ぶ <span id="filter-count" role="status" aria-live="polite" aria-atomic="true"></span></summary><div class="filter-grid">
 <label>年度<select id="year-filter"><option value="">すべての年度</option></select></label><label>実施回<select id="exam-filter"><option value="">すべての実施回</option></select></label>
 <label>分野<select id="topic-filter"><option value="">すべての分野</option></select></label>
-<label>出題する問題<select id="mode-filter"><option value="all">すべて</option><option value="unseen">まだ表示していない問題</option><option value="unanswered">未解答（スキップを含む）</option><option value="retry">復習候補</option></select></label>
-<label>問題の扱い<select id="validity-filter"><option value="current">現在の学習用（要注意を除く）</option><option value="historical">要確認・変更あり（歴史資料）</option><option value="all">全問題（注意表示あり）</option></select></label></div><div class="filter-bottom"><label class="check-label"><input id="non-calculation" type="checkbox">計算問題をいったん除く</label><button id="start" class="primary">この条件ではじめる <span aria-hidden="true">→</span></button></div><p class="quiet small">分野分け・計算問題の判定は学習用の編集情報です。「復習候補」は手動で「要復習」にした問題、直近の不正解・スキップ・補助利用、または初回が既見だった問題。手動の要復習は正解しても残り、もう一度押すと解除できます。自動の候補は補助なしで再正解すると外れます。初見の成績は変わりません。</p></details>
+<label>出題する問題<select id="mode-filter"><option value="all">すべて</option><option value="unseen">まだ表示していない問題</option><option value="unanswered">未解答（スキップを含む）</option><option value="manual">要復習マークを付けた問題</option><option value="retry">復習候補</option></select></label>
+<label>問題の扱い<select id="validity-filter"><option value="current">現在の学習用（要注意を除く）</option><option value="historical">要確認・変更あり（歴史資料）</option><option value="all">全問題（注意表示あり）</option></select></label></div><div class="filter-bottom"><label class="check-label"><input id="non-calculation" type="checkbox">計算問題をいったん除く</label><button id="start" class="primary">この条件ではじめる <span aria-hidden="true">→</span></button></div><p class="quiet small">分野分け・計算問題の判定は学習用の編集情報です。「要復習マークを付けた問題」はマークがある問題だけに絞ります。「復習候補」は手動で「要復習」にした問題、直近の不正解・スキップ・補助利用、または初回が既見だった問題。手動の要復習は正解しても残り、もう一度押すと解除できます。自動の候補は補助なしで再正解すると外れます。初見の成績は変わりません。</p></details>
 <div id="session-area" hidden>
 <div class="question-nav"><span id="queue-label"></span><button id="stop-session" class="text-button">問題選択へ戻る</button></div>
 <div class="study-grid">
