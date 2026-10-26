@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.3';
+export const APP_VERSION = '1.8.4';
 export const SCHEMA_VERSION = 3;
 // Keep the existing key so every prior history is loaded and protected before migration.
 export const STORAGE_KEY = 'denki.official-pastpapers.history.v2';

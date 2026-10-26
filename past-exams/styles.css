@@ -30,12 +30,6 @@
 @media(max-width:600px){.paper-result-row{align-items:flex-start;flex-direction:column}.nav{flex-wrap:wrap}#paper-screen .button-row{flex-wrap:wrap}}
 
 /* Direct navigation stays above the question on narrow screens too. */
-.paper-shortcuts{padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:16px 0}
-.paper-jump{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0 0 12px}
-.paper-jump label{font-weight:600}
-.paper-jump input{width:5.5rem;min-height:44px;font:inherit;font-size:16px;padding:8px;border:1px solid #759684;border-radius:6px}
-.paper-shortcuts button{min-height:44px;white-space:normal}
-.paper-shortcuts p{margin-bottom:0}
 
 
 /* Manual review stays independent of correctness and can be changed after grading. */
@@ -54,3 +48,15 @@
 
 .paper-exclusions { padding:.75rem; border:1px solid #b8c7c2; border-radius:.5rem; background:#f4f6f4; overflow-wrap:anywhere; }
 #paper-screen .question-number.excluded { white-space:normal; font-size:.85rem; border-style:dashed; background:#f4f6f4; color:#37443e; }
+.paper-result-row[hidden],.paper-result-empty[hidden]{display:none}
+.paper-result-row{padding:16px;border:1px solid var(--line);border-radius:8px;margin:12px 0}
+.paper-result-row.needs-attention{background:#fff8e6;border-left:5px solid #9a6a13}
+.paper-result-row.has-incorrect{border-left-color:#ae382e}
+.paper-result-badges{display:flex;flex-wrap:wrap;gap:6px}
+.paper-result-badge{font-size:.85rem;font-weight:700;padding:4px 8px;border-radius:4px;background:#e6edf7;color:#23476d}
+.paper-result-badge.badge-incorrect{background:#ffe6e1;color:#8e2a22}
+.paper-result-badge.badge-review{background:#f5e7b9;color:#684b0e}
+.paper-result-filters{margin:20px 0;padding:16px;border:1px solid var(--line);border-radius:8px}
+.paper-result-filters .check-label{display:inline-flex;gap:8px;align-items:center;min-height:44px;margin:0 18px 8px 0}
+.paper-result-filters input{width:20px;height:20px}
+.paper-result-filters legend{font-weight:700}

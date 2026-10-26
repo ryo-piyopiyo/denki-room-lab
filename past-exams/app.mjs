@@ -1,6 +1,6 @@
-import {mountFullPaper} from './full-paper.mjs?v=1.8.3';
+import {mountFullPaper} from './full-paper.mjs?v=1.8.4';
 import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.6.1';
-import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,historyPaperRuns,validateHistory,previewMerge} from './core.mjs?v=1.8.3';
+import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,historyPaperRuns,validateHistory,previewMerge} from './core.mjs?v=1.8.4';
 
 let symbolModulePromise=null;
 function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.6.1').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
