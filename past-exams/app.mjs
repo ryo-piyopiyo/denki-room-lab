@@ -1,9 +1,9 @@
-import {mountFullPaper} from './full-paper.mjs?v=1.8.4';
+import {mountFullPaper} from './full-paper.mjs?v=1.8.5';
 import {createKnowledgeLoader,createKnowledgeSection} from './knowledge-router.mjs?v=1.6.1';
-import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,historyPaperRuns,validateHistory,previewMerge} from './core.mjs?v=1.8.4';
+import {APP_VERSION,CHOICES,HistoryStore,uid,makeEvent,makeAttempt,conditions,questionStats,summarize,filteredQuestions,summaryText,exportHistory,historyPaperRuns,validateHistory,previewMerge} from './core.mjs?v=1.8.5';
 
 let symbolModulePromise=null;
-function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.6.1').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
+function loadSymbolModule(){if(!symbolModulePromise)symbolModulePromise=import('./inline-symbols.mjs?v=1.8.5').catch(error=>{symbolModulePromise=null;throw error;});return symbolModulePromise;}
 function enhanceSymbolTargets(container,targets){
   let notice=null;
   const run=()=>{if(notice)notice.remove();notice=null;loadSymbolModule().then(module=>{if(container.isConnected)module.enhanceTargets(container,targets);}).catch(()=>{

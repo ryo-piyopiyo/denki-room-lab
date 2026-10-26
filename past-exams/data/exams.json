@@ -131919,7 +131919,7 @@
           },
           "explanation": {
             "summary": "正解はイ。電動機保護用のモータブレーカに対応するBの図記号。",
-            "reasoning": "⑩は3.7 kW電動機の手前に設けるモータブレーカの位置。電動機に合わせた過負荷・短絡保護を行う遮断器で、イのBを用いたモータブレーカの図記号を選ぶ。漏電遮断器BE、電磁開閉器、一般の開閉器Sとは、保護・制御機能と図記号が異なる。",
+            "reasoning": "⑩は3.7 kW電動機の手前に設けるモータブレーカの位置。電動機に合わせた過負荷・短絡保護を行う遮断器で、イのBを用いたモータブレーカの図記号を選ぶ。漏電遮断器BE、電流計付き開閉器、一般の開閉器Sとは、保護・制御機能と図記号が異なる。",
             "prerequisites": [
               "モータブレーカは電動機の保護特性を持つ配線用遮断器。",
               "電動機の開閉器には保護機能の有無や種類の違いがある。"
@@ -131927,7 +131927,7 @@
             "options": {
               "イ": "モータブレーカの図記号：Bに電動機保護用の表示を加えた記号で、指定に対応して正しい。",
               "ロ": "BEの図記号：過負荷保護付き漏電遮断器を示し、指定のモータブレーカの記号ではない。",
-              "ハ": "丸で囲まれたSの図記号：電磁開閉器を示し、指定のモータブレーカとは異なる。",
+              "ハ": "四角内の丸で囲まれたSの図記号：電流計付き開閉器を示す。丸囲みは電流計付きの表示であり、電磁開閉器を意味しない。指定のモータブレーカとは異なる。",
               "ニ": "Sの図記号：開閉器を示す。モータブレーカのBの記号とは区別する。"
             },
             "topic": "配線図記号／モータブレーカ",
@@ -131944,21 +131944,25 @@
               {
                 "title": "日本規格協会 JIS C 0303:2000（2025-06-20確認・有効）：規格の状態・確認履歴",
                 "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+C+0303%3A2000"
+              },
+              {
+                "title": "JIS C 0303:2000 4.3 点滅器（開閉器の摘要c：電流計付）",
+                "url": "https://kikakurui.com/c0/C0303-2000-01.html",
+                "section": "印刷ページ10（開閉器）"
               }
             ],
             "author": "piyoによる学習用解説",
-            "reviewStatus": "pending_independent_review",
+            "reviewStatus": "verified",
             "authorReview": "source_read_and_self_checked",
-            "independentReview": "pending"
+            "independentReview": "passed"
           },
           "explanationReview": {
             "status": "verified",
-            "method": "independent_content_review",
-            "paper": "2024-lower",
-            "reviewerFingerprintSha256": "55768883a95e13b6ff85fe1f1c139f46bc1bd3008f1c2fa4820a90868e163035",
-            "contentSha256": "115c88ccbaa5fe4a0c9a18d756520f99f4e787654f6b6088484b076d31fe7fe4",
-            "lawAuditSha256": "f5f98a8124137018739b8ce7f5f6715e1dd689152c2fdc6e8f08b06c2705906a",
-            "reportSha256": "2d78dadf43a29e30c082edcb7271ea04d7aa9bd06d0adf6c6984e5d1abeeb6d7"
+            "method": "scoped_symbol_identification_correction",
+            "checkedAt": "2026-10-26",
+            "contentSha256": "6d6b9223a7c950278c2c6022d2dab246db1dcc948a126ca49106ea7a0e506376",
+            "lawAuditSha256": "cedcc7ad11ebd4710d4c129ffcc8ff3f9c6737c81b2491edda71e2f56ab3635c",
+            "scope": "選択肢ハとreasoningの丸囲みSのみ。公式原問とJIS C 0303:2000 p10画像を実見し、独立レビューで確認。正答変更なし。"
           },
           "excluded": false
         },
@@ -156685,6 +156689,13 @@
           "url": "https://www.meti.go.jp/policy/safety_security/industrial_safety/sangyo/electric/files/1-3keibi.pdf"
         }
       ]
+    },
+    {
+      "date": "2026-10-26",
+      "questionIds": [
+        "d2-20241027-40"
+      ],
+      "note": "問40ハの四角内の丸囲みSは電磁開閉器ではなく電流計付き開閉器。関連する比較説明も訂正。正答イは変更なし。"
     }
   ]
 }

@@ -60,3 +60,10 @@
 .paper-result-filters .check-label{display:inline-flex;gap:8px;align-items:center;min-height:44px;margin:0 18px 8px 0}
 .paper-result-filters input{width:20px;height:20px}
 .paper-result-filters legend{font-weight:700}
+
+/* Optional alternate notation stays separate from the question's primary example. */
+.inline-symbol-toggle{font:inherit;font-size:10px;line-height:1.3;max-width:100px;min-height:44px;padding:4px;border:1px solid #759684;border-radius:4px;background:#f4f8f5;color:#173c2a;white-space:normal;cursor:pointer}
+.inline-symbol-toggle:focus-visible{outline:3px solid #276cba;outline-offset:2px}
+.inline-symbol-alternatives{display:inline-flex;flex-direction:column;align-items:center;gap:6px;width:190px;max-width:100%;padding:6px;background:#f4f8f5;border-top:1px solid #b8c7c2}
+.inline-symbol-alternatives[hidden]{display:none}
+.inline-symbol-variant-note{font-size:11px;line-height:1.5;max-width:180px;white-space:normal;text-align:left}

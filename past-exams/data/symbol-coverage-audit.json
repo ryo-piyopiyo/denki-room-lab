@@ -1,0 +1,271 @@
+{
+  "version": "1.8.5",
+  "reviewedAt": "2026-10-26",
+  "scope": {
+    "screenedQuestions": 1250,
+    "screening": "All question explanation text fields scanned; semantic review of every added exact-text pin. Not a full independent re-solution or photograph re-identification of all 1,250 questions.",
+    "existingReuse": {
+      "questions": 69,
+      "fields": 144,
+      "references": 159
+    },
+    "newDefinitions": 39,
+    "newDefinitionFields": {
+      "questions": 66,
+      "fields": 126,
+      "references": 126
+    },
+    "totalAddedQuestions": 113,
+    "totalAddedFields": 270,
+    "totalAddedReferences": 285,
+    "totalQuestionAnnotations": {
+      "questions": 113,
+      "fields": 307,
+      "references": 325
+    },
+    "totalSymbols": 61,
+    "primaryNewDefinitions": 30
+  },
+  "sources": [
+    {
+      "title": "Official examination diagrams (question and wiring images already distributed with this app)",
+      "questionIds": [
+        "d2-20170604-31",
+        "d2-20170604-34",
+        "d2-20180603-35",
+        "d2-20181007-37",
+        "d2-20221030-am-32",
+        "d2-20240526-32",
+        "d2-20240526-34",
+        "d2-20240526-37",
+        "d2-20260524-35",
+        "d2-20211024-pm-40",
+        "d2-20241027-40"
+      ]
+    },
+    {
+      "title": "Panasonic lighting symbols (primary manufacturer guidance)",
+      "url": "https://www2.panasonic.biz/jp/basics/electric/electricity/symbols/lighting-fixtures/"
+    },
+    {
+      "title": "HOZAN wiring symbols 3 (primary educational material)",
+      "url": "https://www.hozan.co.jp/corp/denko2/pg/1kigou3/"
+    },
+    {
+      "title": "JIS C 0303:2000, original standard pages 7, 8, 9, 10, 11 (rendered facsimile)",
+      "url": "https://kikakurui.com/c0/C0303-2000-01.html",
+      "sections": [
+        "4.1 lighting",
+        "4.3 switches, remote control, breakers",
+        "4.2 equivalent socket notation"
+      ]
+    }
+  ],
+  "method": "Original vector geometry; no third-party artwork copied into app. Definitions checked against source pixels. Existing 22 definitions reused only with semantically reviewed current text. General examples retain form/count caveats. Exact question ID/field path/text pins fail closed after text changes. No live keyword replacement.",
+  "correctedExplanation": {
+    "id": "d2-20241027-40",
+    "option": "ハ",
+    "from": "electromagnetic switch",
+    "to": "switch with ammeter",
+    "answerChanged": false,
+    "independentReview": true
+  },
+  "preserved": [
+    "dataVersion",
+    "question IDs",
+    "answers",
+    "exclusions",
+    "history schema/storage keys",
+    "memo snapshots",
+    "saved full-paper runs",
+    "result filters"
+  ],
+  "affectedQuestionIds": [
+    "d2-20170604-31",
+    "d2-20170604-34",
+    "d2-20170604-35",
+    "d2-20170604-44",
+    "d2-20170604-45",
+    "d2-20170604-49",
+    "d2-20170604-50",
+    "d2-20170930-33",
+    "d2-20170930-38",
+    "d2-20170930-50",
+    "d2-20180603-27",
+    "d2-20180603-32",
+    "d2-20180603-33",
+    "d2-20180603-35",
+    "d2-20180603-45",
+    "d2-20180603-50",
+    "d2-20181007-32",
+    "d2-20181007-33",
+    "d2-20181007-37",
+    "d2-20190602-31",
+    "d2-20190602-34",
+    "d2-20190602-41",
+    "d2-20190602-49",
+    "d2-20191006-33",
+    "d2-20191006-35",
+    "d2-20191006-40",
+    "d2-20191006-46",
+    "d2-20191006-48",
+    "d2-20191006-50",
+    "d2-20201004-am-27",
+    "d2-20201004-am-31",
+    "d2-20201004-am-44",
+    "d2-20201004-am-45",
+    "d2-20201004-pm-32",
+    "d2-20201004-pm-37",
+    "d2-20201004-pm-44",
+    "d2-20201004-pm-49",
+    "d2-20201004-pm-50",
+    "d2-20210530-am-34",
+    "d2-20210530-am-49",
+    "d2-20210530-am-50",
+    "d2-20210530-pm-33",
+    "d2-20210530-pm-36",
+    "d2-20210530-pm-38",
+    "d2-20211024-am-31",
+    "d2-20211024-am-32",
+    "d2-20211024-am-37",
+    "d2-20211024-am-48",
+    "d2-20211024-pm-33",
+    "d2-20211024-pm-40",
+    "d2-20220529-am-27",
+    "d2-20220529-am-34",
+    "d2-20220529-pm-32",
+    "d2-20220529-pm-37",
+    "d2-20220529-pm-39",
+    "d2-20220529-pm-41",
+    "d2-20220529-pm-48",
+    "d2-20221030-am-31",
+    "d2-20221030-am-32",
+    "d2-20221030-am-36",
+    "d2-20221030-am-48",
+    "d2-20221030-am-49",
+    "d2-20221030-pm-31",
+    "d2-20221030-pm-32",
+    "d2-20221030-pm-48",
+    "d2-20230528-am-31",
+    "d2-20230528-am-32",
+    "d2-20230528-am-35",
+    "d2-20230528-am-37",
+    "d2-20230528-pm-31",
+    "d2-20230528-pm-32",
+    "d2-20230528-pm-36",
+    "d2-20230528-pm-43",
+    "d2-20230528-pm-48",
+    "d2-20231029-am-33",
+    "d2-20231029-am-44",
+    "d2-20231029-am-46",
+    "d2-20231029-am-49",
+    "d2-20231029-pm-31",
+    "d2-20231029-pm-38",
+    "d2-20231029-pm-39",
+    "d2-20231029-pm-49",
+    "d2-20240526-27",
+    "d2-20240526-31",
+    "d2-20240526-32",
+    "d2-20240526-34",
+    "d2-20240526-37",
+    "d2-20240526-47",
+    "d2-20240526-50",
+    "d2-20241027-33",
+    "d2-20241027-40",
+    "d2-20241027-45",
+    "d2-20250525-27",
+    "d2-20250525-33",
+    "d2-20250525-34",
+    "d2-20250525-38",
+    "d2-20250525-43",
+    "d2-20250525-49",
+    "d2-20250525-50",
+    "d2-20251026-27",
+    "d2-20251026-32",
+    "d2-20251026-36",
+    "d2-20251026-38",
+    "d2-20251026-42",
+    "d2-20251026-43",
+    "d2-20251026-48",
+    "d2-20260524-33",
+    "d2-20260524-35",
+    "d2-20260524-40",
+    "d2-20260524-45",
+    "d2-20260524-46",
+    "d2-20260524-48",
+    "d2-20260524-50"
+  ],
+  "deferred": [
+    {
+      "id": "d2-20251026-43",
+      "option": "ニ",
+      "reason": "Grounding-pin/photo identification not sufficiently resolved; no potentially misleading generic E annotation added."
+    },
+    {
+      "category": "general and grip push buttons",
+      "reason": "No verified symbol definition for these alternatives; original explanatory text retained."
+    }
+  ],
+  "variants": {
+    "groups": {
+      "light-guidance": {
+        "kind": "type-variant",
+        "ids": [
+          "light-guidance-incandescent"
+        ]
+      },
+      "light-emergency": {
+        "kind": "type-variant",
+        "ids": [
+          "light-emergency-incandescent"
+        ]
+      },
+      "light-security": {
+        "kind": "type-variant",
+        "ids": [
+          "light-security-incandescent"
+        ]
+      },
+      "breaker-motor": {
+        "kind": "equivalent",
+        "ids": [
+          "breaker-motor-M"
+        ]
+      },
+      "socket-wall": {
+        "kind": "equivalent",
+        "ids": [
+          "socket-wall-dots"
+        ]
+      },
+      "socket-E": {
+        "kind": "equivalent",
+        "ids": [
+          "socket-E-dots"
+        ]
+      },
+      "socket-ET": {
+        "kind": "equivalent",
+        "ids": [
+          "socket-ET-dots"
+        ]
+      },
+      "socket-EET": {
+        "kind": "equivalent",
+        "ids": [
+          "socket-EET-dots"
+        ]
+      },
+      "socket-emergency": {
+        "kind": "equivalent",
+        "ids": [
+          "socket-emergency-dots"
+        ]
+      }
+    },
+    "behavior": "Primary diagram remains visible; optional keyboard-accessible button reveals labelled examples. Equivalent notation is kept separate from source-type variants. No generic keyword selection or automatic interchange of answer choices.",
+    "exclusions": "E alone does not identify overload protection, so it is not an equivalent alternative for BE. General/wide switches, H/L, E/ET/EET and with/without junction box are not equivalence groups.",
+    "additionalDefinitions": 9,
+    "groupCount": 9
+  }
+}

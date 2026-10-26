@@ -1,4 +1,4 @@
-import {CHOICES,uid,makeEvent,makeAttempt,freshHistory,validateHistory,conditions,questionStats} from './core.mjs?v=1.8.4';
+import {CHOICES,uid,makeEvent,makeAttempt,freshHistory,validateHistory,conditions,questionStats} from './core.mjs?v=1.8.5';
 export const PAPER_PREFIX='denki.official-pastpapers.paper.v1.';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
 export function paperSummary(run,questions){const eligible=questions.filter(q=>!q.excluded);const answered=eligible.filter(q=>CHOICES.includes(run.answers[q.id]));return {total:questions.length,eligible:eligible.length,excluded:questions.length-eligible.length,answered:answered.length,unanswered:eligible.length-answered.length,correct:answered.filter(q=>run.answers[q.id]===q.answer).length,incorrect:answered.filter(q=>run.answers[q.id]!==q.answer).length};}
