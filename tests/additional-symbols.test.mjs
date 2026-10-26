@@ -57,3 +57,9 @@ test('functional and form differences are not silently treated as equivalent',()
   const alt=SYMBOLS[SYMBOL_VARIANTS[base].ids[0]];assert.ok(alt.parts.some(([tag,,text])=>tag==='text'&&text===marker));
  }
 });
+test('question and learning-card loaders use the same fresh symbol module version',()=>{
+ const read=p=>fs.readFileSync(new URL('../past-exams/'+p,import.meta.url),'utf8');
+ assert.match(read('app.mjs'),/knowledge-router\.mjs\?v=1\.8\.6/);
+ assert.match(read('knowledge-router.mjs'),/knowledge-beginner\.mjs\?v=1\.8\.6/);
+ for(const file of ['app.mjs','knowledge-beginner.mjs'])assert.match(read(file),/inline-symbols\.mjs\?v=1\.8\.6/);
+});

@@ -1,13 +1,13 @@
 {
-  "version": "1.8.5",
+  "version": "1.8.6",
   "reviewedAt": "2026-10-26",
   "scope": {
     "screenedQuestions": 1250,
     "screening": "All question explanation text fields scanned; semantic review of every added exact-text pin. Not a full independent re-solution or photograph re-identification of all 1,250 questions.",
     "existingReuse": {
-      "questions": 69,
-      "fields": 144,
-      "references": 159
+      "questions": 75,
+      "fields": 150,
+      "references": 165
     },
     "newDefinitions": 39,
     "newDefinitionFields": {
@@ -16,12 +16,12 @@
       "references": 126
     },
     "totalAddedQuestions": 113,
-    "totalAddedFields": 270,
-    "totalAddedReferences": 285,
+    "totalAddedFields": 276,
+    "totalAddedReferences": 291,
     "totalQuestionAnnotations": {
       "questions": 113,
-      "fields": 307,
-      "references": 325
+      "fields": 313,
+      "references": 331
     },
     "totalSymbols": 61,
     "primaryNewDefinitions": 30
