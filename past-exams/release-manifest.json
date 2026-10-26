@@ -1,6 +1,6 @@
 {
-  "createdAt": "2026-10-25T13:54:23Z",
-  "appVersion": "1.8.0",
+  "createdAt": "2026-10-26T00:42:37.527507Z",
+  "appVersion": "1.8.1",
   "exams": [
     "d2-20170604",
     "d2-20170930",
@@ -35,12 +35,12 @@
   "inlineSymbolCount": 22,
   "inlineAnnotationCount": 51,
   "files": {
-    "app.mjs": "4c0c9ebf412a07f40b0f58d1fdf6726e5b1618a92d5a81d738dcac61d5e61374",
-    "core.mjs": "2aad7afd50d52bc836920a89a1ac5bc4f6bffa4fc690bf69cc22a5ccc154d80c",
-    "data/exams.json": "0689b435aa04c7badd904e66e948aad5ee8f92b3ee996de6108ac8989eba6dae",
+    "app.mjs": "8e9ef59438545d4ac15b3287d87f02e3c86d0cc66987bec6c15893b1f3f2fb40",
+    "core.mjs": "748a470e0f20bcd990e624d39b897ea2c5d0b0c4e5113b2ffe1fe6c4a6dc7f93",
+    "data/exams.json": "d5f4713ce4168a89273c0e3fe54368f689ac85130d0a85e273e0982becbfa060",
     "data/knowledge-beginner.json": "dba99d4aec4cc3981a148e059453964de989bb936bd62e2b05413b3c3561e1b8",
     "data/knowledge.json": "e6b1e8cc075ad406f2a5c90d0f12974a522c86386105c2d0512da7a3c5d2c72d",
-    "full-paper.mjs": "bac3bcc2a9a071e059ac1557ff560071b6e8aef35734ab026438dea54dda1596",
+    "full-paper.mjs": "670b1471c2da6bb3d35fa9199fbbc48e37bdffc32a58090ef0fbcec74e897eee",
     "images/20170604/diagram-notes.webp": "73871a9a60a96744e22ea18274ffcf8f01d48cf65a6501b76b6e8fefc7742590",
     "images/20170604/general.webp": "5fc4494e8a78070f3abbf5119bb727bde00bbe7c724c529ae5836b5ae55e82f0",
     "images/20170604/q01.webp": "0112418083a117f8c04e3fe997cc135a4473d3b97373bc8c24db5613bf203598",
@@ -1366,13 +1366,13 @@
     "images/20260524/q49.webp": "94d9eed500c3777ddc59017b70b23e551ac4ce456d47f27e1e395cf1578676f9",
     "images/20260524/q50.webp": "88adea450cf516d0cf8fb367cc8b7f9992aeb58c86972db5f598142b7dca93b0",
     "images/20260524/wiring.webp": "fe685e323c92010ddcfe269b4486e8c8f16c66d1f982647a87ebc8e7e53ea2f3",
-    "index.html": "4e3e140993b518abb239a1bbf2a3e0c0a5a3438c3743db55f8bdffad1bbe0329",
+    "index.html": "a0b39166c251dec3d9d568b65045d412e12934ee93866a728307ae61840fa9fb",
     "inline-symbols.mjs": "29e38aee60a5b5cb9007d7885768a23b3ba7beecd4cd686c7362cc2a86b38638",
     "knowledge-beginner.mjs": "0a975631b27a81a70a3ff1fdb575616bf18ae749bc1906a2b8e36d2952b9e253",
     "knowledge-router.mjs": "ad64878ded42221931e3857ee6daa278feca54cb446658cc595f7093fb536be2",
     "knowledge.mjs": "3b2f51343b62d16e70fe265c01f88ebdef82b76fa35d9ec58151247fdad1490a",
     "pilot-scope.mjs": "764b437335d77ec301dd4b205347e7a7bbb065ca08238f1e30ea00cdc03b8caf",
-    "styles.css": "1f19af587f311d413e9f77a0be5436de327354de266282a4676d62606786d2f9",
+    "styles.css": "233465deaac685f3bce4321bb10dad9deccd3cc516e19e209852e628b1ca0ace",
     "symbol-annotations.mjs": "a0b26a86bb9c86cc9e9a4b076b6b541ff23f0721689ef77f4403d599801849e8"
   }
 }

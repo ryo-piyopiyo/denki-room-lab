@@ -16274,8 +16274,8 @@
             ]
           },
           "explanation": {
-            "summary": "正解はハ、防雨形の引掛コンセント。この図にある防雨形は抜止形で、写真の組合せとは異なる。",
-            "reasoning": "写真ハは雨よけのカバーを持ち、差込口が曲線状の引掛形コンセント。平面図の出入口付近にはWPの防雨形コンセントがあるが、指定はLK・EET・2で、抜止形、接地極・接地端子付、2口という組合せ。管理室付近の④には引掛形があるものの、防雨形の指定はない。したがって「防雨形の引掛コンセント」という写真の器具は使われていない。ほかの写真はプルボックス、リモコンセレクタスイッチ、20 A 250 V接地極付コンセントとして図中にある。",
+            "summary": "正解はハ、防雨形の抜け止め形コンセント。写真は1口で接地極・接地端子がなく、図の「2・LK・EET・WP」と仕様が異なる。",
+            "reasoning": "写真ハは防雨形の1口抜け止め形コンセント。雨よけの下の2つの差込口は平刃プラグを差して回す抜け止め形で、引掛形ではない。図の出入口付近にある防雨形コンセントの指定は2・LK・EET・WPで、2口・抜け止め形・接地極と接地端子付き・防雨形を表す。写真ハには接地極用の刃受けも別の接地端子もなく、口数も異なるので、この図で使用されていない。イのプルボックス、ロのリモコンセレクタスイッチ、ニの20 A 250 V接地極付コンセントは図中にある。",
             "prerequisites": [
               "同じコンセントでもTは引掛形、LKは抜止形、WPは防雨形。",
               "複数の機能が付く器具は傍記を組み合わせて読む。",
@@ -16284,11 +16284,11 @@
             "options": {
               "イ": "金属製プルボックス：電線の引込みや接続場所を設ける箱。受水槽室・ポンプ室等の四角に対角線がある記号として使用されている。",
               "ロ": "リモコンセレクタスイッチ：複数のリモコン回路を選んで操作する器具。L-1付近の3回路のセレクタ記号に対応して使用されている。",
-              "ハ": "防雨形引掛コンセント：図面にはこの機能の組合せがなく、使用されていない。屋外のWPだけを見て一致と判断しない。",
+              "ハ": "防雨形の1口抜け止め形コンセント。図の2口・接地極及び接地端子付（2・LK・EET・WP）とは仕様が異なり、使用されていないので正解。",
               "ニ": "20 A 250 V接地極付コンセント：集会室右下の20 A 250 V・Eの器具に対応して使用されている。接地用の差込口を持つ。"
             },
             "topic": "配線図と器具写真／機能を組み合わせた識別",
-            "pitfall": "Tの器具とWPの器具が別々に存在しても、T＋WPの器具があるとは限らない。",
+            "pitfall": "防雨形や抜け止め形が一致していても、口数・接地極・接地端子まで一致するか確認する。差込口が曲線状というだけで引掛形と判断しない。",
             "sources": [
               {
                 "title": "電気技術者試験センター 2018年度上期 公式問題・問50",
@@ -16310,7 +16310,31 @@
             "lawAuditPending": false,
             "currentApplicability": "正答に影響する規定変更なし（2026年10月10日確認）"
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.summary",
+              "explanation.reasoning",
+              "explanation.options.ハ",
+              "explanation.pitfall"
+            ],
+            "sources": [
+              "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf",
+              "https://www.jewa.or.jp/qa/receptacle.html",
+              "https://jpn.faq.panasonic.com/euf/assets/images/panasonic/answer_images/es/denkoqa/23VHKwiring/img/document/J230003805.pdf"
+            ],
+            "answerChanged": false
+          },
+          "explanationReview": {
+            "status": "verified",
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "f14aef6c4a688d8eec91f3e352c812f2694861146d3122ae0bccec456670d433",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": null
+          }
         }
       ],
       "contexts": [
@@ -21745,18 +21769,18 @@
             ]
           },
           "explanation": {
-            "summary": "正解はニ、3極コンセント。この配線図に、三相用3極コンセントの指定はない。",
-            "reasoning": "ニは接地極用の丸穴ではなく、電源用の3極の刃受を持つコンセント。図には三相200 Vの空調機・冷蔵庫回路があるが、いずれもニの3極コンセントを使う指定ではない。イは2Eの接地極付き2口、ロはLKの抜け止め形、ハはEETの接地極・接地端子付きに対応する。接地極を電源用の1極として数え違えないことがポイント。",
+            "summary": "正解はニ、接地極付き3極コンセント。この配線図に、三相用の接地極付き3極コンセントの指定はない。",
+            "reasoning": "写真ニは3本の電源線用の刃受けと接地極用の刃受けを持つ、接地極付き3極コンセント。穴は合計4つで、接地極の刃受けも必ずしも丸穴とは限らない。図には三相200 Vの空調機・冷蔵庫回路があるが、ニの接地極付き3極コンセントを使う指定はない。イは2Eの接地極付き2口、ロはLKの抜け止め形、ハはEETの接地極・接地端子付きに対応する。",
             "prerequisites": [
               "コンセントの2Eは2口の接地極付き、EETは接地極と別の接地端子を併せ持つ形式。",
               "LKは抜け止め形。差し込んだプラグが不用意に抜けないよう保持する。",
-              "接地極付き2極コンセントと、電源用の3極コンセントは用途が異なる。"
+              "接地極付き2極コンセントと、電源用3極に接地極を加えた接地極付き3極コンセントは用途が異なる。"
             ],
             "options": {
               "イ": "使用されている。接地極付きの2口コンセントで、手洗場周辺や店舗壁面の2E表示に対応する。",
               "ロ": "使用されている。写真は抜け止め形コンセントで、カウンタ付近の天井面などのLK表示に対応する。",
               "ハ": "使用されている。接地極の穴と下部の接地端子を併せ持ち、手洗場のEET表示などに対応する。",
-              "ニ": "使用されていないので正解。3本の電源線用の極を持つ3極コンセント。この図には該当するコンセントの指定がない。"
+              "ニ": "使用されていないので正解。電源用3極に接地極を加えた、接地極付き3極コンセント。この図には該当するコンセントの指定がない。"
             },
             "sources": [
               {
@@ -21783,7 +21807,31 @@
             "lawAuditPending": false,
             "currentApplicability": "正答に影響する規定変更なし（2026年10月10日確認）"
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.summary",
+              "explanation.reasoning",
+              "explanation.options.ニ",
+              "explanation.prerequisites.2"
+            ],
+            "sources": [
+              "https://www.shiken.or.jp/construction/upload/20181007_co_second_q01.pdf",
+              "https://www2.panasonic.biz/jp/ai/products/search/detail?c=search&item_no=WF1420BK&item_cd=WF1420BK&bh_cd=3&b_cd=301",
+              "https://www2.panasonic.biz/jp/content/image_dl/midea/thumbnail/WF1420BK.jpg"
+            ],
+            "answerChanged": false
+          },
+          "explanationReview": {
+            "status": "verified",
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "29330853b9faffa4846f349cc4635f068947024c9aa9cea60185cfca568d5739",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": null
+          }
         }
       ],
       "contexts": [
@@ -38271,13 +38319,13 @@
           },
           "explanation": {
             "summary": "正解はハ、表示灯なしの3路スイッチ。⑭の黒丸に3の傍記がある。",
-            "reasoning": "⑭はリビング照明クを2か所から点滅させる3路スイッチ。端子0を共通端子として1または3へ切り替える接点構成を持つ。選択肢ハの図がこの切替接点だけを示している。イも切替形だが表示灯を含み、ロは遅れ機構付き、ニは表示灯を並列に持つ片切形で、指定の標準3路スイッチとは違う。",
+            "reasoning": "⑭はリビング照明クを2か所から点滅させる3路スイッチ。端子0を共通端子として1または3へ切り替える接点構成を持つ。選択肢ハの図がこの切替接点だけを示している。イは0・1間を入切する片切接点と1・3間の表示灯を持つ確認表示灯内蔵スイッチで、3路の切替接点ではない。ロは遅れ機構付き、ニは表示灯を接点と並列に持つ位置表示灯内蔵の片切スイッチである。",
             "prerequisites": [
               "黒丸の傍記3は3路スイッチ。",
               "写真が似ていても、接点図の共通端子・切替先・表示灯・付加機構で判別する。"
             ],
             "options": {
-              "イ": "表示灯内蔵の3路スイッチ：0・1・3の切替接点に加えて1−3間に表示灯がある。指定にはその表示機能の傍記がない。",
+              "イ": "確認表示灯内蔵の片切スイッチ。0・1間の開閉接点と1・3間の表示灯を持つ。端子が0・1・3でも、0を1または3へ切り替える3路スイッチではない。",
               "ロ": "遅れ機構付きのスイッチ：接点を遅らせて開く機能を持つ。換気扇等の運転継続に使う種類で、3路切替接点ではない。",
               "ハ": "表示灯なしの3路スイッチ：0端子が1または3につながる標準の切替接点で、図記号に一致する。",
               "ニ": "位置表示灯内蔵の片切スイッチ：開閉する一つの接点に表示灯が並列。0を1・3へ選択する3路構成ではない。"
@@ -38303,7 +38351,28 @@
             "authorReview": "source_read_and_self_checked",
             "independentReview": "verified"
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.reasoning",
+              "explanation.options.イ"
+            ],
+            "sources": [
+              "https://www.shiken.or.jp/construction/upload/20201004_co_second_q01.pdf",
+              "https://www2.panasonic.biz/jp/basics/electric/electricity/symbols/switches-outlets/"
+            ],
+            "answerChanged": false
+          },
+          "explanationReview": {
+            "status": "verified",
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "e75ecb8b1a356ba5d56b0a1e3d7c9c564d04674551518f28cbb986e8aed537ad",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": null
+          }
         },
         {
           "id": "d2-20201004-am-45",
@@ -50483,7 +50552,7 @@
             "options": {
               "イ": "イ・接地端子付き防雨形・抜け止め形：ベランダのET WP LKに対応する。雨対策の形と独立した接地端子を持つ。",
               "ロ": "ロ・接地極付き抜け止めダブルコンセント：脱衣室の2 E LKに対応する。曲がった刃受けで差し込んだプラグを回して抜けにくくする。",
-              "ハ": "ハ・接地極付き250 V用コンセント：リビングの20 A・250 V・E表示に対応し、横向きの刃受けと接地穴を持つ。",
+              "ハ": "ハ・接地極付き125 V用コンセント：台所左下のE表示に対応する。写真では器具が横向きに組み込まれているため電源用の刃受けが横に見えるが、接地極との位置関係を含めて判別する。リビングの20 A・250 V用とは異なる。",
               "ニ": "ニ・接地端子付きコンセント：ETの一般形で、図に使用されていない。便所などのEETには接地極の穴も必要であり、これとは違う。"
             },
             "topic": "配線図・器具写真／E・ET・EETと特殊コンセント",
@@ -50505,14 +50574,33 @@
           },
           "explanationReview": {
             "status": "verified",
-            "method": "independent_content_review",
-            "paper": "2021-upper-am",
-            "reviewerFingerprintSha256": "a31b662005228143a3176fa03f6508380242764417f94bd8238ce781526c139b",
-            "contentSha256": "76922c7cdbc1b1b07b0f9c726be6616e113f6a90efcfad98b9bee393ebda92e7",
-            "lawAuditSha256": "bf78bce0fb7c28cbd3eade9ce294610b29ef6c0624871254d352eb64773c12a7",
-            "reportSha256": "6a4b646ad9830a50a5718cd4e65ee42d67e4e8cd79949f50db380ce7340bd5b6"
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "14ec38136896c37c73a6682d7c4151bd9ed619580364da07b978da9dd03772a0",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": {
+              "status": "verified",
+              "method": "independent_content_review",
+              "paper": "2021-upper-am",
+              "reviewerFingerprintSha256": "a31b662005228143a3176fa03f6508380242764417f94bd8238ce781526c139b",
+              "contentSha256": "76922c7cdbc1b1b07b0f9c726be6616e113f6a90efcfad98b9bee393ebda92e7",
+              "lawAuditSha256": "bf78bce0fb7c28cbd3eade9ce294610b29ef6c0624871254d352eb64773c12a7",
+              "reportSha256": "6a4b646ad9830a50a5718cd4e65ee42d67e4e8cd79949f50db380ce7340bd5b6"
+            }
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.options.ハ"
+            ],
+            "sources": [
+              "https://www.shiken.or.jp/construction/upload/20210530_co_second_q01.pdf#page=13",
+              "https://www.cabling-ol.net/homewiring/pdf/WN1101CWsiyousyo.pdf"
+            ],
+            "answerChanged": false
+          }
         },
         {
           "id": "d2-20210530-am-50",
@@ -56623,16 +56711,16 @@
           },
           "explanation": {
             "summary": "正解はニ、接地極付・接地端子付コンセント。自動販売機用のEETに対応する。",
-            "reasoning": "1階集会所の自動販売機にはEETの傍記がある。Eはプラグの接地ピンを受ける接地極、ETは別の接地線をねじで接続する接地端子を意味する。ニは2本の電源刃受に加え接地用の穴があり、下部には接地端子もあるので一致する。屋外のWP・LKは防雨・抜け止め形であり、写真の引掛形とは区別する。",
+            "reasoning": "1階集会所の自動販売機にはEETの傍記がある。Eはプラグの接地ピンを受ける接地極、ETは別の接地線を接続する接地端子を意味する。ニは接地極の穴と独立した接地端子の両方があるので一致する。イ・ハも防雨形の抜け止めコンセントであり、引掛形ではない。図の屋外器具の傍記はWP・LKのみで、イ・ハの接地機能まで含めた指定ではない。",
             "prerequisites": [
               "接地極と接地端子は同じものではなく、両方ある器具をEETで示す。",
               "接地極はプラグと同時に接地接続するための極、接地端子は別の接地線を接続する端子。",
               "外観にふたがあっても、差込口の極数と引掛形・抜け止め形の違いまで照合する。"
             ],
             "options": {
-              "イ": "3極の引掛形防雨コンセント。図の屋外WP・LKは抜け止め形であり、この引掛形3極の組合せとは一致しない。",
+              "イ": "接地極・接地端子付きの防雨形抜け止めコンセント（EET・WP・LK）。電源用2極に加えて接地極がある。図の屋外器具はWP・LKのみで、接地機能の指定が一致しない。",
               "ロ": "接地端子はあるが、差込口に接地極がないETの器具。自動販売機のEETに必要な接地極が不足する。",
-              "ハ": "2極の引掛形防雨コンセント。図の屋外WP・LKは抜け止め形なので、引掛形Tの写真とは一致しない。",
+              "ハ": "接地端子付きの防雨形抜け止めコンセント（ET・WP・LK）。差込口に接地極はないが、独立した接地端子がある。図の屋外器具はWP・LKのみで、ETの指定がない。",
               "ニ": "正しい。接地極の穴と、別の接地線を接続する端子の両方を備え、自動販売機用EETに対応する。"
             },
             "sources": [
@@ -56656,14 +56744,36 @@
           },
           "explanationReview": {
             "status": "verified",
-            "method": "independent_content_review",
-            "paper": "2021-upper-pm",
-            "reviewerFingerprintSha256": "6389fd0f2d132dc1994e7099b4acaa7af1a62884618189b39118054b4b4ffc1d",
-            "contentSha256": "9a2631a461bcd87401c254f99e6fbc8ca9c05bfaf4a03bca710ff08c81c86563",
-            "lawAuditSha256": "3bbb45a6385998b20787a57f71bcafc7ff244456377352a423b33e69c12ba47b",
-            "reportSha256": "ee3dcd8390a9d4f9cede12631c27df52cb5a5476a2dc0841e6d770bdf4a5e97e"
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "be41deb84040355a3a40097d03442f0c803bf2a6ae5c6b04d9334adbea243951",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": {
+              "status": "verified",
+              "method": "independent_content_review",
+              "paper": "2021-upper-pm",
+              "reviewerFingerprintSha256": "6389fd0f2d132dc1994e7099b4acaa7af1a62884618189b39118054b4b4ffc1d",
+              "contentSha256": "9a2631a461bcd87401c254f99e6fbc8ca9c05bfaf4a03bca710ff08c81c86563",
+              "lawAuditSha256": "3bbb45a6385998b20787a57f71bcafc7ff244456377352a423b33e69c12ba47b",
+              "reportSha256": "ee3dcd8390a9d4f9cede12631c27df52cb5a5476a2dc0841e6d770bdf4a5e97e"
+            }
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.reasoning",
+              "explanation.options.イ",
+              "explanation.options.ハ"
+            ],
+            "sources": [
+              "https://www.shiken.or.jp/construction/upload/20210530_co_second_q02.pdf#page=13",
+              "https://jpn.faq.panasonic.com/euf/assets/images/panasonic/answer_images/es/denkoqa/23VHKwiring/img/document/J230003805.pdf",
+              "https://www.jewa.or.jp/qa/receptacle.html"
+            ],
+            "answerChanged": false
+          }
         },
         {
           "id": "d2-20210530-pm-50",
@@ -56740,8 +56850,8 @@
             ]
           },
           "explanation": {
-            "summary": "正解はニ、位置表示灯内蔵の3路スイッチ。階段の3路スイッチにはHの指定がない。",
-            "reasoning": "ニの接点図は0端子が1・3端子を切り替え、その間に表示灯があるので、位置表示灯内蔵の3路スイッチ。図面の階段には通常の3路スイッチ3アがあるが、3Hの記号はない。ロは表示灯を片切接点と並列にした位置表示灯内蔵スイッチで、集会所のHエに対応する。写真が似ているため、添付された接点図まで読んで区別する。",
+            "summary": "正解はニ、確認表示灯内蔵の片切スイッチ。この図にはLを傍記した内蔵形スイッチの指定がない。",
+            "reasoning": "ニの接点図は0–1を開閉する片切接点と、1–3間の表示灯で構成され、確認表示灯内蔵の片切スイッチである。端子が0・1・3でも、0が1または3へ切り替わる3路接点ではない。この配線図にはLを傍記した確認表示灯内蔵スイッチの指定がない。ロは表示灯を片切接点と並列にした位置表示灯内蔵スイッチで、集会所のHエに対応する。",
             "prerequisites": [
               "3路は0端子を1か3へ切り替える構造で、単なるON・OFFの片切とは異なる。",
               "スイッチと並列の表示灯は、負荷OFF時にスイッチの位置を示す。",
@@ -56751,7 +56861,7 @@
               "イ": "使用される。表示灯付の電磁開閉器用押しボタンで、受水槽室のBLに対応する。運転・停止の信号を送る。",
               "ロ": "使用される。接点図は表示灯内蔵の片切スイッチで、集会所のHエに対応する。",
               "ハ": "使用される。フロートレススイッチの電極棒で、湧水ポンプ脇のLF3に対応する。",
-              "ニ": "使用されておらず、本問の正解。位置表示灯内蔵3路スイッチだが、図面の階段は通常の3路で3Hではない。"
+              "ニ": "使用されておらず、本問の正解。確認表示灯内蔵の片切スイッチだが、図にそのL傍記はない。接点は0–1の開閉だけで、3端子は表示灯用。位置表示灯内蔵3路スイッチではない。"
             },
             "sources": [
               {
@@ -56774,14 +56884,35 @@
           },
           "explanationReview": {
             "status": "verified",
-            "method": "independent_content_review",
-            "paper": "2021-upper-pm",
-            "reviewerFingerprintSha256": "6389fd0f2d132dc1994e7099b4acaa7af1a62884618189b39118054b4b4ffc1d",
-            "contentSha256": "9a2631a461bcd87401c254f99e6fbc8ca9c05bfaf4a03bca710ff08c81c86563",
-            "lawAuditSha256": "3bbb45a6385998b20787a57f71bcafc7ff244456377352a423b33e69c12ba47b",
-            "reportSha256": "ee3dcd8390a9d4f9cede12631c27df52cb5a5476a2dc0841e6d770bdf4a5e97e"
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "f3c53bf93cccdf83fff449f724191f294e6000f97447863865df121b867d73c4",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": {
+              "status": "verified",
+              "method": "independent_content_review",
+              "paper": "2021-upper-pm",
+              "reviewerFingerprintSha256": "6389fd0f2d132dc1994e7099b4acaa7af1a62884618189b39118054b4b4ffc1d",
+              "contentSha256": "9a2631a461bcd87401c254f99e6fbc8ca9c05bfaf4a03bca710ff08c81c86563",
+              "lawAuditSha256": "3bbb45a6385998b20787a57f71bcafc7ff244456377352a423b33e69c12ba47b",
+              "reportSha256": "ee3dcd8390a9d4f9cede12631c27df52cb5a5476a2dc0841e6d770bdf4a5e97e"
+            }
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.summary",
+              "explanation.reasoning",
+              "explanation.options.ニ"
+            ],
+            "sources": [
+              "https://www.shiken.or.jp/construction/upload/20210530_co_second_q02.pdf#page=13",
+              "https://www2.panasonic.biz/jp/densetsu/haisen/switch_concent/fullcolor/switch.html"
+            ],
+            "answerChanged": false
+          }
         }
       ],
       "contexts": [
@@ -64928,13 +65059,13 @@
         {
           "id": "d2-20211024-pm-16",
           "number": 16,
-          "title": "材料写真・コンビネーションカップリング・異種電線管",
+          "title": "材料写真・合成樹脂製可とう電線管用カップリング・管相互の接続",
           "topic": "equipment",
           "topicLabel": "電気機器・配線器具・材料・工具",
           "conceptTags": [
             "材料写真",
-            "コンビネーションカップリング",
-            "異種電線管"
+            "合成樹脂製可とう電線管用カップリング",
+            "管相互の接続"
           ],
           "calculation": false,
           "requiresDiagramTracing": false,
@@ -65027,7 +65158,19 @@
             "lawAuditSha256": "25173866b6778619c1c437214d26965d083809142507642f131c6409adec67bf",
             "reportSha256": "779ca4f31e268acd137eefa3d54578566dc6b69568a78cb3bf2426d71189cde0"
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "title",
+              "conceptTags"
+            ],
+            "sources": [
+              "https://www.shiken.or.jp/construction/upload/220211024_co_second_q02.pdf#page=7"
+            ],
+            "answerChanged": false
+          }
         },
         {
           "id": "d2-20211024-pm-17",
@@ -113480,7 +113623,7 @@
           },
           "explanation": {
             "summary": "正解はイ、アウトレットボックス。⑯は車庫内の配管接続部にある箱を示す。",
-            "reasoning": "⑯は車庫のねじなし電線管が集まる位置の四角いボックス記号を指す。写真イはノックアウト穴がある金属製アウトレットボックスとふたで、管を接続し、その内部で電線の接続や分岐を行う。写真ロのプルボックス、ハの露出スイッチボックス、ニの防雨形の器具用ボックスとは区別する。",
+            "reasoning": "⑯は車庫のねじなし電線管が集まる位置の四角いボックス記号を指す。写真イはノックアウト穴がある金属製アウトレットボックスとふたで、管を接続し、その内部で電線の接続や分岐を行う。写真ロのプルボックス、ハの露出スイッチボックス、ニのVVF用ジョイントボックスとは区別する。",
             "prerequisites": [
               "アウトレットボックスは配管の接続や電線の接続・分岐を収める箱。",
               "ノックアウト穴は必要な管口だけを開けて用いる。"
@@ -113489,7 +113632,7 @@
               "イ": "アウトレットボックス：金属管を接続して電線の接続部を収める箱で、⑯の記号と一致する。",
               "ロ": "プルボックス：電線の引入れ・引替えを容易にするためなどに用いる比較的大きな箱。⑯のアウトレットボックス記号とは異なる。",
               "ハ": "露出スイッチボックス：露出のスイッチやコンセントを取り付ける細長い箱。⑯の分岐接続用箱ではない。",
-              "ニ": "防雨形の器具用ボックス：透明な開閉カバーで内部の器具を雨から保護する箱。⑯の金属製アウトレットボックスとは異なる。"
+              "ニ": "VVF用ジョイントボックス：透明な樹脂製カバーと取付台で、VVFケーブルの接続部を収めて保護する箱。防雨形の器具用ボックスではなく、⑯の金属製アウトレットボックスとも異なる。"
             },
             "topic": "配線図・材料写真／アウトレットボックス",
             "pitfall": "箱の材料だけでなく、形状・管口・取付けるものを見比べる。",
@@ -113524,14 +113667,33 @@
           },
           "explanationReview": {
             "status": "verified",
-            "method": "independent_content_review",
-            "paper": "2023-lower-am",
-            "reviewerFingerprintSha256": "f9328cd04264250f0ba78fdc87e8e9971f7121c9b6f6c17b647c678aab54a614",
-            "contentSha256": "19cfc0f320aa756848ca00cbaea8d1ed7b635d35d5f37b25647445e9c93ae89e",
-            "lawAuditSha256": "e80f8932a1cae8d0c37e8d4e97d09b4672a7aed5bf4a386fe33530d294047f1e",
-            "reportSha256": "2e183985e56eb7a6fa924681713335d45d4a2fc46690d45e509440a8f17021bd"
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "aa600cc810ae4f8f185eca2e73f97a41d27d84c84f1a2f17d74b804787197b53",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": {
+              "status": "verified",
+              "method": "independent_content_review",
+              "paper": "2023-lower-am",
+              "reviewerFingerprintSha256": "f9328cd04264250f0ba78fdc87e8e9971f7121c9b6f6c17b647c678aab54a614",
+              "contentSha256": "19cfc0f320aa756848ca00cbaea8d1ed7b635d35d5f37b25647445e9c93ae89e",
+              "lawAuditSha256": "e80f8932a1cae8d0c37e8d4e97d09b4672a7aed5bf4a386fe33530d294047f1e",
+              "reportSha256": "2e183985e56eb7a6fa924681713335d45d4a2fc46690d45e509440a8f17021bd"
+            }
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.reasoning",
+              "explanation.options.ニ"
+            ],
+            "sources": [
+              "https://www.mirai.co.jp/densetu/pdf-catalog_2026/0009121.pdf"
+            ],
+            "answerChanged": false
+          }
         },
         {
           "id": "d2-20231029-am-47",
@@ -132894,7 +133056,7 @@
             "options": {
               "イ": "ねじなし電線管用コネクタ：ねじで管を固定する金属管用の材料だが、指定のF2用ではない。",
               "ロ": "金属製可とう電線管用コネクタ：F2管を機器の接続口へ取り付ける材料で、正しい。",
-              "ハ": "合成樹脂製可とう電線管用コネクタ：樹脂製の波形管を接続する材料で、金属製F2管用ではない。",
+              "ハ": "FEP管用コネクタ（エフレックスクランプ）：波付硬質ポリエチレン管をボックス等へ接続する材料。金属製可とう電線管F2用ではない。",
               "ニ": "合成樹脂製可とう電線管用カップリング：樹脂製可とう管同士をつなぐ材料で、F2管と電動機の接続には用いない。"
             },
             "topic": "材料写真／F2管の接続金具",
@@ -132920,14 +133082,34 @@
           },
           "explanationReview": {
             "status": "verified",
-            "method": "independent_content_review",
-            "paper": "2024-lower",
-            "reviewerFingerprintSha256": "55768883a95e13b6ff85fe1f1c139f46bc1bd3008f1c2fa4820a90868e163035",
-            "contentSha256": "115c88ccbaa5fe4a0c9a18d756520f99f4e787654f6b6088484b076d31fe7fe4",
-            "lawAuditSha256": "f5f98a8124137018739b8ce7f5f6715e1dd689152c2fdc6e8f08b06c2705906a",
-            "reportSha256": "2d78dadf43a29e30c082edcb7271ea04d7aa9bd06d0adf6c6984e5d1abeeb6d7"
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "760c76e88629c7b8503cf56557a8cd5bd5c1f146b0655bd98bddd532610645de",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": {
+              "status": "verified",
+              "method": "independent_content_review",
+              "paper": "2024-lower",
+              "reviewerFingerprintSha256": "55768883a95e13b6ff85fe1f1c139f46bc1bd3008f1c2fa4820a90868e163035",
+              "contentSha256": "115c88ccbaa5fe4a0c9a18d756520f99f4e787654f6b6088484b076d31fe7fe4",
+              "lawAuditSha256": "f5f98a8124137018739b8ce7f5f6715e1dd689152c2fdc6e8f08b06c2705906a",
+              "reportSha256": "2d78dadf43a29e30c082edcb7271ea04d7aa9bd06d0adf6c6984e5d1abeeb6d7"
+            }
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.options.ハ"
+            ],
+            "sources": [
+              "https://www.furukawaelectric.com/eflex/product/eflex/parts/eflex_cl.html",
+              "https://www.furukawaelectric.com/eflex/product/eflex/parts/images/eflex_cl_img.jpg",
+              "https://www.shiken.or.jp/construction/upload/20241027_co_second_q01.pdf#page=13"
+            ],
+            "answerChanged": false
+          }
         }
       ],
       "contexts": [
@@ -145332,19 +145514,19 @@
             "auditMethod": "2017～2024年の2026-10-10確認済み一次根拠を再利用し、2025年の公式原問・全選択肢・配線図の条件差分に集中。規定値・法的分類に依存しない問題は不要な改正沿革調査を省略。法令適用性の監査は接続本数等を独立再解答する解説QAとは別。"
           },
           "explanation": {
-            "summary": "正解はロ。塩ビ管用のこぎりは、ケーブル工事の2階部分では一般に使用しない。",
-            "reasoning": "写真ロは合成樹脂管を切断するためののこぎり。2階の配線には電線管の特記がなく、共通注意によりVVFケーブル工事であるため、一般には必要ない。リングスリーブの圧着、VVFの被覆除去、電工ナイフによる被覆処理は2階のケーブル接続工事で使う。1階の屋外にはVE管の指定があるが、設問は2階部分に限定されている。",
+            "summary": "正解はロ。プリカナイフは金属可とう電線管の切断用で、VVFケーブル工事の2階部分では一般に使用しない。",
+            "reasoning": "写真ロは金属可とう電線管（プリカチューブ）を切断するプリカナイフ。2階の配線は共通注意によりVVFケーブル工事で、金属可とう電線管の指定がないため一般には使用しない。イのリングスリーブ用圧着工具、ハのVVFストリッパ、ニの電工ナイフはケーブル接続や被覆除去に使用する。",
             "prerequisites": [
               "作業範囲を2階に限定し、共通注意の配線方法を適用する。"
             ],
             "options": {
               "イ": "リングスリーブ用圧着工具：ケーブル心線の終端接続にリングスリーブを用いるときに使用する。",
-              "ロ": "塩ビ管用のこぎり：硬質塩化ビニル電線管等の切断用。2階には管の指定がなく、使用しないものとして正しい。",
+              "ロ": "プリカナイフ：金属可とう電線管の切断用。2階にはその管種の指定がなく、使用しないものとして正しい。",
               "ハ": "VVFストリッパ：VVFのシースや絶縁被覆を除去して接続を準備するため使用する。",
               "ニ": "電工ナイフ：ケーブルのシースや電線の絶縁被覆を除去する作業に使用する。"
             },
             "topic": "工具写真／2階ケーブル工事の工具",
-            "pitfall": "1階のVE28の工事まで含めて判断せず、問題の「2階部分」を守る。",
+            "pitfall": "細長い刃という外観だけで塩ビ管用のこぎりと判断しない。写真はプリカナイフであり、用途は金属可とう電線管の切断。",
             "sources": [
               {
                 "title": "電気技術者試験センター 2025年度下期 公式問題・問49",
@@ -145362,14 +145544,37 @@
           },
           "explanationReview": {
             "status": "verified",
-            "method": "independent_content_review",
-            "paper": "2025-lower",
-            "reviewerFingerprintSha256": "d3fd88c6ae6f759acdd16428d8b35271a7b31e2364554300571a2e462c1bd802",
-            "contentSha256": "ec5f3878e9b5be606974546a06c71fc97e01f893a8250de0d86c1c700f51c478",
-            "lawAuditSha256": "87eb55d73deb2380763112d8eecb7713f35b6221dfb57184f39e020610a6466e",
-            "reportSha256": "f8936e979ab29e3fe41f763b223ed84fe95ef29114bfe7d1cd380a0e2e1d077b"
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "5d70ae28c32a3e14288ab7c9ce5da53b1625a03155f0f6805cde35764fab1757",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": {
+              "status": "verified",
+              "method": "independent_content_review",
+              "paper": "2025-lower",
+              "reviewerFingerprintSha256": "d3fd88c6ae6f759acdd16428d8b35271a7b31e2364554300571a2e462c1bd802",
+              "contentSha256": "ec5f3878e9b5be606974546a06c71fc97e01f893a8250de0d86c1c700f51c478",
+              "lawAuditSha256": "87eb55d73deb2380763112d8eecb7713f35b6221dfb57184f39e020610a6466e",
+              "reportSha256": "f8936e979ab29e3fe41f763b223ed84fe95ef29114bfe7d1cd380a0e2e1d077b"
+            }
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.summary",
+              "explanation.reasoning",
+              "explanation.options.ロ",
+              "explanation.pitfall"
+            ],
+            "sources": [
+              "https://www.sankei-ss.co.jp/news_product_modific_2025007.html",
+              "https://www.sankei-ss.co.jp/img/PTTL201_OPT25_031_mods_02.jpg",
+              "https://www.shiken.or.jp/construction/upload/20251026_co_second_q01.pdf#page=13"
+            ],
+            "answerChanged": false
+          }
         },
         {
           "id": "d2-20251026-50",
@@ -151554,16 +151759,16 @@
           },
           "explanation": {
             "summary": "正解はイ。⑲では5本接続が2組、2本接続が1組なので、5本用2個と2本用1個を使う。",
-            "reasoning": "⑲の常時非接地側は、電源a・上側コンセント・右側コンセント・スイッチル・下の⑱への送りの5本。接地側は、電源a・同じ2個のコンセント・照明ル・⑱への送りの5本。照明ルの返り線はスイッチと照明の2本。写真の小さい赤色は2穴、大きい橙色は5穴、黄緑色は3穴であり、必要な3組を一つずつ接続できるのはイ。",
+            "reasoning": "⑲の常時非接地側は、電源a・上側コンセント・右側コンセント・スイッチル・下の⑱への送りの5本。接地側は、電源a・同じ2個のコンセント・照明ル・⑱への送りの5本。照明ルの返り線はスイッチと照明の2本。写真の小さい赤色は2穴、大きい橙色は5穴、黄緑色は4穴であり、必要な3組を一つずつ接続できるのはイ。",
             "prerequisites": [
               "差込形コネクタは同じ電位につなぐ電線の本数ごとに選ぶ。",
               "コンセントの傍記2は2口を意味し、ボックスからの電源線を2組に増やす意味ではない。"
             ],
             "options": {
               "イ": "2本用1個・5本用2個：返り2本と、非接地側・接地側の5本ずつを各1個で接続でき、最少の3個で足りる。",
-              "ロ": "2本用2個・3本用1個：5本の接続群2組を受けられるコネクタがなく、必要な接続を構成できない。",
+              "ロ": "2本用2個・4本用1個：5本の接続群2組を受けられるコネクタがなく、必要な接続を構成できない。",
               "ハ": "2本用2個・5本用1個：5本接続は1組だけでなく2組あるため、5本用がもう1個必要になる。",
-              "ニ": "2本用1個・3本用2個：2本の返り線は接続できるが、5本ずつ集まる電源側2組に3本用では穴が不足する。"
+              "ニ": "2本用1個・4本用2個：2本の返り線は接続できるが、5本ずつ集まる電源側2組に4本用では穴が不足する。"
             },
             "topic": "配線図／差込形コネクタの穴数と接続群",
             "pitfall": "橙色のコネクタは5穴。色の記憶だけで判断せず、原写真の挿入口と金属部の数を確認する。",
@@ -151592,14 +151797,34 @@
           },
           "explanationReview": {
             "status": "verified",
-            "method": "independent_content_review",
-            "paper": "2026-upper",
-            "reviewerFingerprintSha256": "a2ed69589965df0b8670224dfcde2b1c50f484d73168a3bddfa062a21c5d3af9",
-            "contentSha256": "80e87a61e3bc76bf2761bd6a953cb84a795c4d7b4253dd847607f11ce62c8e3b",
-            "lawAuditSha256": "3734535928e0adf7c456c15727dbd06625329e86610cc8b9acd4e237695fb12c",
-            "reportSha256": "a008101267b8345000243c9876d6086ea8347346b625d38db69a7349f500dae6"
+            "method": "scoped_visual_identification_correction",
+            "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
+            "contentSha256": "b14bb6cc3b679e19f82e9d3155425eb3a717ef412027ae8613b9b17cc63abcb0",
+            "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
+            "previousReview": {
+              "status": "verified",
+              "method": "independent_content_review",
+              "paper": "2026-upper",
+              "reviewerFingerprintSha256": "a2ed69589965df0b8670224dfcde2b1c50f484d73168a3bddfa062a21c5d3af9",
+              "contentSha256": "80e87a61e3bc76bf2761bd6a953cb84a795c4d7b4253dd847607f11ce62c8e3b",
+              "lawAuditSha256": "3734535928e0adf7c456c15727dbd06625329e86610cc8b9acd4e237695fb12c",
+              "reportSha256": "a008101267b8345000243c9876d6086ea8347346b625d38db69a7349f500dae6"
+            }
           },
-          "excluded": false
+          "excluded": false,
+          "visualCorrectionAudit": {
+            "checkedAt": "2026-10-26",
+            "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
+            "fields": [
+              "explanation.reasoning",
+              "explanation.options.ロ",
+              "explanation.options.ニ"
+            ],
+            "sources": [
+              "https://www.shiken.or.jp/construction/upload/20260524_co_second_q01.pdf#page=13"
+            ],
+            "answerChanged": false
+          }
         },
         {
           "id": "d2-20260524-50",

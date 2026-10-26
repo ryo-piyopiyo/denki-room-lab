@@ -51,3 +51,6 @@
 .paper-note textarea { display:block; width:100%; box-sizing:border-box; min-height:6rem; font:inherit; padding:.75rem; border:1px solid #b8c7c2; border-radius:.6rem; resize:vertical; }
 .paper-note-text { white-space:pre-wrap; overflow-wrap:anywhere; flex-basis:100%; margin:.25rem 0; }
 .paper-result-row { flex-wrap:wrap; }
+
+.paper-exclusions { padding:.75rem; border:1px solid #b8c7c2; border-radius:.5rem; background:#f4f6f4; overflow-wrap:anywhere; }
+#paper-screen .question-number.excluded { white-space:normal; font-size:.85rem; border-style:dashed; background:#f4f6f4; color:#37443e; }
