@@ -16275,7 +16275,7 @@
           },
           "explanation": {
             "summary": "正解はハ、防雨形の抜け止め形コンセント。写真は1口で接地極・接地端子がなく、図の「2・LK・EET・WP」と仕様が異なる。",
-            "reasoning": "写真ハは防雨形の1口抜け止め形コンセント。雨よけの下の2つの差込口は平刃プラグを差して回す抜け止め形で、引掛形ではない。図の出入口付近にある防雨形コンセントの指定は2・LK・EET・WPで、2口・抜け止め形・接地極と接地端子付き・防雨形を表す。写真ハには接地極用の刃受けも別の接地端子もなく、口数も異なるので、この図で使用されていない。イのプルボックス、ロのリモコンセレクタスイッチ、ニの20 A 250 V接地極付コンセントは図中にある。",
+            "reasoning": "写真ハは防雨形の1口抜け止め形コンセント。雨よけの下の2つの電源用刃受け穴は平刃プラグを差して回す抜け止め形で、引掛形ではない。図の出入口付近にある防雨形コンセントの指定は2・LK・EET・WPで、2口・抜け止め形・接地極と接地端子付き・防雨形を表す。写真ハには接地極用の刃受けも別の接地端子もなく、口数も異なるので、この図で使用されていない。イのプルボックス、ロのVVF用ジョイントボックス、ニの20 A 250 V接地極付コンセントは図中にある。",
             "prerequisites": [
               "同じコンセントでもTは引掛形、LKは抜止形、WPは防雨形。",
               "複数の機能が付く器具は傍記を組み合わせて読む。",
@@ -16283,7 +16283,7 @@
             ],
             "options": {
               "イ": "金属製プルボックス：電線の引込みや接続場所を設ける箱。受水槽室・ポンプ室等の四角に対角線がある記号として使用されている。",
-              "ロ": "リモコンセレクタスイッチ：複数のリモコン回路を選んで操作する器具。L-1付近の3回路のセレクタ記号に対応して使用されている。",
+              "ロ": "VVF用ジョイントボックス：VVFケーブルの接続部を収めて保護する箱。管理室や集会室内の斜線入り丸印に対応して使用されている。",
               "ハ": "防雨形の1口抜け止め形コンセント。図の2口・接地極及び接地端子付（2・LK・EET・WP）とは仕様が異なり、使用されていないので正解。",
               "ニ": "20 A 250 V接地極付コンセント：集会室右下の20 A 250 V・Eの器具に対応して使用されている。接地用の差込口を持つ。"
             },
@@ -16318,20 +16318,25 @@
               "explanation.summary",
               "explanation.reasoning",
               "explanation.options.ハ",
-              "explanation.pitfall"
+              "explanation.pitfall",
+              "explanation.options.ロ"
             ],
             "sources": [
               "https://www.shiken.or.jp/construction/upload/20180603_co_second_q01.pdf",
               "https://www.jewa.or.jp/qa/receptacle.html",
-              "https://jpn.faq.panasonic.com/euf/assets/images/panasonic/answer_images/es/denkoqa/23VHKwiring/img/document/J230003805.pdf"
+              "https://jpn.faq.panasonic.com/euf/assets/images/panasonic/answer_images/es/denkoqa/23VHKwiring/img/document/J230003805.pdf",
+              "https://www.mirai.co.jp/densetu/pdf-catalog_2026/0009121.pdf",
+              "https://denkou2-siken.com/kakomon/2018_1/50.html"
             ],
-            "answerChanged": false
+            "answerChanged": false,
+            "residualConsistencyCheckedAt": "2026-10-26",
+            "residualConsistencyScope": "Previously authorized visual corrections: current explanation, metadata and law-audit note checked together; not a new full-paper or legal audit."
           },
           "explanationReview": {
             "status": "verified",
             "method": "scoped_visual_identification_correction",
             "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
-            "contentSha256": "f14aef6c4a688d8eec91f3e352c812f2694861146d3122ae0bccec456670d433",
+            "contentSha256": "9582c58877d485f79dd1e3073d191f35e212e70ffb7fee17bdf13fdd58e2d4ff",
             "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
             "previousReview": null
           }
@@ -133048,7 +133053,7 @@
           },
           "explanation": {
             "summary": "正解はロ。F2の金属製可とう電線管を機器へ接続するコネクタを使う。",
-            "reasoning": "⑳には(F2 30)と傍記され、2種金属製可とう電線管の指定である。電動機などへ接続する際は、可とう管の構造に合ったコネクタを用いる。写真ロは管のらせん状の構造に対応する内側形状と、機器の接続口へ取り付けるねじ部を持つ。写真イはねじなし金属電線管用、ハ・ニは合成樹脂製可とう電線管用の接続材料である。",
+            "reasoning": "⑳には(F2 30)と傍記され、2種金属製可とう電線管の指定である。電動機などへ接続する際は、可とう管の構造に合ったコネクタを用いる。写真ロは管のらせん状の構造に対応する内側形状と、機器の接続口へ取り付けるねじ部を持つ。写真イはねじなし電線管用、ハはFEP管用、ニはPF管用のコネクタであり、指定されたF2管用ではない。",
             "prerequisites": [
               "F2は2種金属製可とう電線管。",
               "管と機器の接続には、双方に適合するコネクタを選ぶ。"
@@ -133057,7 +133062,7 @@
               "イ": "ねじなし電線管用コネクタ：ねじで管を固定する金属管用の材料だが、指定のF2用ではない。",
               "ロ": "金属製可とう電線管用コネクタ：F2管を機器の接続口へ取り付ける材料で、正しい。",
               "ハ": "FEP管用コネクタ（エフレックスクランプ）：波付硬質ポリエチレン管をボックス等へ接続する材料。金属製可とう電線管F2用ではない。",
-              "ニ": "合成樹脂製可とう電線管用カップリング：樹脂製可とう管同士をつなぐ材料で、F2管と電動機の接続には用いない。"
+              "ニ": "合成樹脂製可とう電線管（PF管）用コネクタ：PF管をボックスに接続する材料。管同士をつなぐカップリングではなく、指定のF2管用でもない。"
             },
             "topic": "材料写真／F2管の接続金具",
             "pitfall": "柔らかく曲げられる管という共通点だけで、樹脂管用と金属管用を混同しない。",
@@ -133084,7 +133089,7 @@
             "status": "verified",
             "method": "scoped_visual_identification_correction",
             "scope": "Only the fields listed in visualCorrectionAudit were independently rechecked. Previous review is retained as historical evidence, not certification of the current full explanation.",
-            "contentSha256": "760c76e88629c7b8503cf56557a8cd5bd5c1f146b0655bd98bddd532610645de",
+            "contentSha256": "9655fba37a08be8befb9826e54e4777cac2336fda0cd3e0df44def079dc6c7dc",
             "contentHashFormat": "SHA256 of UTF-8 JSON with sorted keys, compact separators, Unicode retained",
             "previousReview": {
               "status": "verified",
@@ -133101,14 +133106,19 @@
             "checkedAt": "2026-10-26",
             "scope": "Changed visual-identification explanation or metadata fields only; not a full calculation or legal re-audit.",
             "fields": [
-              "explanation.options.ハ"
+              "explanation.options.ハ",
+              "explanation.reasoning",
+              "explanation.options.ニ"
             ],
             "sources": [
               "https://www.furukawaelectric.com/eflex/product/eflex/parts/eflex_cl.html",
               "https://www.furukawaelectric.com/eflex/product/eflex/parts/images/eflex_cl_img.jpg",
-              "https://www.shiken.or.jp/construction/upload/20241027_co_second_q01.pdf#page=13"
+              "https://www.shiken.or.jp/construction/upload/20241027_co_second_q01.pdf#page=13",
+              "https://www2.panasonic.biz/jp/densetsu/haikan/conduit/synthetic_resin_flexible_conduit/pf.html"
             ],
-            "answerChanged": false
+            "answerChanged": false,
+            "residualConsistencyCheckedAt": "2026-10-26",
+            "residualConsistencyScope": "Previously authorized visual corrections: current explanation, metadata and law-audit note checked together; not a new full-paper or legal audit."
           }
         }
       ],
@@ -145502,7 +145512,7 @@
             "checkedAt": "2026-10-10",
             "version": "2025-audit-20261010.1",
             "sources": [],
-            "note": "2階の工事に一般に用いない写真ロは合成樹脂管用のこぎり。2階の配管条件と1階屋外VE28を混同しない。工具の用途識別で法定規定値は問わない。",
+            "note": "2階の工事に一般に用いない写真ロは、金属可とう電線管（プリカチューブ）切断用のプリカナイフ。2階はVVFケーブル工事で金属可とう電線管の指定がない。工具の用途識別であり、法定規定値は問わない。",
             "historicalCorrect": "ロ",
             "currentCorrect": "ロ",
             "normalPracticeIncluded": true,
@@ -145556,7 +145566,8 @@
               "contentSha256": "ec5f3878e9b5be606974546a06c71fc97e01f893a8250de0d86c1c700f51c478",
               "lawAuditSha256": "87eb55d73deb2380763112d8eecb7713f35b6221dfb57184f39e020610a6466e",
               "reportSha256": "f8936e979ab29e3fe41f763b223ed84fe95ef29114bfe7d1cd380a0e2e1d077b"
-            }
+            },
+            "lawAuditSha256": "4b9c4a870a5b5687e1132b98c26631657466d26853cffe28ac98b4578c94365f"
           },
           "excluded": false,
           "visualCorrectionAudit": {
@@ -145566,14 +145577,17 @@
               "explanation.summary",
               "explanation.reasoning",
               "explanation.options.ロ",
-              "explanation.pitfall"
+              "explanation.pitfall",
+              "lawAudit.note"
             ],
             "sources": [
               "https://www.sankei-ss.co.jp/news_product_modific_2025007.html",
               "https://www.sankei-ss.co.jp/img/PTTL201_OPT25_031_mods_02.jpg",
               "https://www.shiken.or.jp/construction/upload/20251026_co_second_q01.pdf#page=13"
             ],
-            "answerChanged": false
+            "answerChanged": false,
+            "residualConsistencyCheckedAt": "2026-10-26",
+            "residualConsistencyScope": "Previously authorized visual corrections: current explanation, metadata and law-audit note checked together; not a new full-paper or legal audit."
           }
         },
         {
