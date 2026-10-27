@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.8';
+export const APP_VERSION = '1.8.9';
 export const SCHEMA_VERSION = 3;
 // Keep the existing key so every prior history is loaded and protected before migration.
 export const STORAGE_KEY = 'denki.official-pastpapers.history.v2';
@@ -6,7 +6,7 @@ export const LEGACY_KEY = 'denki.official-pastpapers.history.v1';
 export const CHOICES = ['イ', 'ロ', 'ハ', 'ニ'];
 let lastClock = 0;
 const eventTime = () => { lastClock = Math.max(Date.now(),lastClock+1); return new Date(lastClock).toISOString(); };
-const TYPES = new Set(['view', 'help', 'prior-exposure', 'reveal', 'attempt', 'review-flag', 'review-priority']);
+const TYPES = new Set(['view', 'help', 'prior-exposure', 'reveal', 'attempt', 'review-flag', 'review-priority', 'question-note']);
 const LIMIT = 100000;
 export const freshHistory = () => ({ format: 'denki-pastpaper-history', schemaVersion: SCHEMA_VERSION, appVersion: APP_VERSION, events: [] });
 export const uid = () => globalThis.crypto?.randomUUID?.() || `e-${Date.now()}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
@@ -40,6 +40,13 @@ export function validateHistory(value, questions=null) {
       assert(!('officialCorrectAnswer' in e) && !('selectedAnswer' in e), '未解答の記録に解答が含まれています。');
     }
     if ('note' in e) assert(typeof e.note === 'string' && [...e.note].length <= 200, 'メモは200字以内の文字列にしてください。');
+    if(e.type==='question-note'){
+      assert(typeof e.note==='string','メモの本文が必要です。');
+      assert(['before-answer','after-answer'].includes(e.notePhase),'メモを書いた段階が不正です。');
+      assert(!('reviewRequired' in e)&&!('paperId' in e),'単問メモで要復習や通し練習は変更できません。');
+      if(e.notePhase==='after-answer')assert(text(e.relatedAttemptId,160),'採点後メモの解答識別情報が必要です。');
+      else assert(!('relatedAttemptId' in e),'採点前メモに採点後の解答は指定できません。');
+    }else assert(!('notePhase' in e)&&!('relatedAttemptId' in e),'単問メモは専用の記録にしてください。');
     if ('reviewRequiredAtSubmission' in e) assert(typeof e.reviewRequiredAtSubmission === 'boolean', '採点時の要復習情報が不正です。');
     if ('paperId' in e) assert(text(e.paperId,160), '通し練習の識別情報が不正です。');
     for(const key of ['paperStartedAt','paperSubmittedAt']) if(key in e) assert(typeof e[key] === 'string' && Number.isFinite(Date.parse(e[key])), '通し練習の日時が不正です。');
@@ -54,6 +61,11 @@ export function validateHistory(value, questions=null) {
     }
     if (seen.has(e.id)) assert(stable(seen.get(e.id)) === stable(e), '同じ記録IDに異なる内容があります。取り込みを中止しました。');
     seen.set(e.id,e);
+  }
+  // Partial backups may omit a linked attempt. When present, the link must match.
+  for(const e of seen.values())if(e.type==='question-note'&&e.relatedAttemptId&&seen.has(e.relatedAttemptId)){
+    const a=seen.get(e.relatedAttemptId);
+    assert(a.type==='attempt'&&a.questionId===e.questionId&&a.examId===e.examId,'採点後メモと解答の対応が不正です。');
   }
   return { ...freshHistory(), events: ordered([...seen.values()]), migratedFrom: value.schemaVersion !== SCHEMA_VERSION ? value.schemaVersion : undefined };
 }
@@ -72,6 +84,28 @@ export function previewMerge(current, incoming) {
 export function eventsFor(history, id) { return ordered(history.events.filter(e=>e.questionId===id)); }
 export function makeEvent(type, question, context, extra={}) {
   return {id:uid(),type,questionId:question.id,examId:question.examId,number:question.number,topic:question.topic,occurredAt:eventTime(),visitId:context.visitId,sessionId:context.sessionId,appVersion:APP_VERSION,dataVersion:context.dataVersion,...extra};
+}
+const questionNoteKey=e=>JSON.stringify([e.questionId,e.visitId,e.notePhase,e.relatedAttemptId||'']);
+export function latestQuestionNotes(history,questionId=null){
+  const latest=new Map();
+  for(const e of ordered(history.events))if(e.type==='question-note'&&(!questionId||e.questionId===questionId))latest.set(questionNoteKey(e),e);
+  return ordered([...latest.values()]);
+}
+export function saveQuestionNote(store,question,context,note,{phase,relatedAttemptId}={}){
+  assert(typeof note==='string'&&[...note].length<=200,'メモは200字以内の文字列にしてください。');
+  assert(['before-answer','after-answer'].includes(phase),'メモを書いた段階が不正です。');
+  store.refresh();
+  if(phase==='after-answer'){
+    const attempt=store.history.events.find(e=>e.id===relatedAttemptId);
+    assert(attempt?.type==='attempt'&&attempt.questionId===question.id,'採点後メモに対応する解答が見つかりません。');
+  }else assert(!relatedAttemptId,'採点前メモに採点後の解答は指定できません。');
+  const extra={note,notePhase:phase,...(phase==='after-answer'?{relatedAttemptId}:{})};
+  const event=makeEvent('question-note',question,context,extra);
+  const previous=latestQuestionNotes(store.history,question.id).find(e=>questionNoteKey(e)===questionNoteKey(event));
+  if(previous?.note===note||(!previous&&!note))return previous||null;
+  if(previous&&Date.parse(event.occurredAt)<=Date.parse(previous.occurredAt))event.occurredAt=new Date(Date.parse(previous.occurredAt)+1).toISOString();
+  store.append(event);
+  return event;
 }
 export function conditions(history, questionId, visitId) {
   const es=eventsFor(history,questionId), previousAttempts=es.filter(e=>e.type==='attempt').length;
@@ -155,7 +189,13 @@ export function exportScope(history,scope={}) {
   const base=history.events.filter(e=>(!examId||e.examId===examId)&&(!paperId||e.paperId===paperId||e.sessionId===paperId));
   const noted=base.filter(e=>e.type==='attempt'&&typeof e.note==='string'&&e.note.trim());
   const attempts=new Set(noted.map(e=>e.id)),contexts=new Set(noted.map(e=>JSON.stringify([e.questionId,e.sessionId])));
-  const events=ordered(notesOnly?base.filter(e=>e.type==='attempt'?attempts.has(e.id):contexts.has(JSON.stringify([e.questionId,e.sessionId]))):base);
+  const activeNotes=latestQuestionNotes({events:base}).filter(e=>e.note.trim()),noteIds=new Set(activeNotes.map(e=>e.id));
+  const noteVisits=new Set(activeNotes.map(e=>JSON.stringify([e.questionId,e.visitId])));
+  for(const n of activeNotes){
+    if(n.relatedAttemptId)attempts.add(n.relatedAttemptId);
+    else for(const a of base)if(a.type==='attempt'&&a.questionId===n.questionId&&a.visitId===n.visitId)attempts.add(a.id);
+  }
+  const events=ordered(notesOnly?base.filter(e=>e.type==='attempt'?attempts.has(e.id):e.type==='question-note'?noteIds.has(e.id):contexts.has(JSON.stringify([e.questionId,e.sessionId]))||noteVisits.has(JSON.stringify([e.questionId,e.visitId]))):base);
   return {examId,paperId,notesOnly,events,isFiltered:!!(examId||paperId||notesOnly)};
 }
 export function exportHistory(history,dataVersion,questions=null,scope={}) {
@@ -173,12 +213,20 @@ export function scopedSummaryText(history,questions,dataVersion,scope){
   const index=new Map(out.attemptIndex.map(a=>[a.eventId,a])),s=out.selectionSummary;
   const statCache=new Map();const stat=id=>{if(!statCache.has(id))statCache.set(id,questionStats(history,id));return statCache.get(id);};
   const title=questions.find(q=>q.examId===scope.examId)?.examTitle||scope.examId||'すべての実施回';
-  const lines=['第二種電気工事士 公式過去問｜piyoへ共有する学習記録（抽出）',`作成日時: ${out.exportedAt}`,`アプリ: ${APP_VERSION} / 問題データ: ${dataVersion}`,`実施回: ${title}`,`通し練習: ${scope.paperId||'すべての練習・試行'}`,`メモありの解答のみ: ${scope.notesOnly?'はい（正解・不正解を問わず）':'いいえ'}`,`対象の解答試行: ${s.attempts}件 / 正解 ${s.correct} / 不正解 ${s.incorrect} / 未解答・スキップ ${s.skipped}`,`初見・自力 ${s.cleanFirstEncounter}件 / 再挑戦 ${s.retryAttempts}件`,out.classificationNote,'※ 採点時の要復習は当時の状態、現在の要復習は抽出前の全履歴での状態です。旧記録にない情報は未記録と表示します。','','解答記録'];
+  const lines=['第二種電気工事士 公式過去問｜piyoへ共有する学習記録（抽出）',`作成日時: ${out.exportedAt}`,`アプリ: ${APP_VERSION} / 問題データ: ${dataVersion}`,`実施回: ${title}`,`通し練習: ${scope.paperId||'すべての練習・試行'}`,`メモありの記録のみ: ${scope.notesOnly?'はい（正解・不正解を問わず、未解答・採点後メモも含む）':'いいえ'}`,`対象の解答試行: ${s.attempts}件 / 正解 ${s.correct} / 不正解 ${s.incorrect} / 未解答・スキップ ${s.skipped}`,`初見・自力 ${s.cleanFirstEncounter}件 / 再挑戦 ${s.retryAttempts}件`,out.classificationNote,'※ 採点時の要復習は当時の状態、現在の要復習は抽出前の全履歴での状態です。旧記録にない情報は未記録と表示します。','','解答記録'];
   for(const e of out.events){if(e.type!=='attempt')continue;const q=qmap.get(e.questionId),a=index.get(e.id);lines.push(`${e.occurredAt} | ${q?.examTitle||e.examId} 問${e.number} | ${e.questionId} | 全履歴の第${a.attemptNumber}試行（${a.attemptNumber===1?'初回試行':'再挑戦'}） | 選択:${e.selectedAnswer||'なし'} / 公式正答:${e.officialCorrectAnswer} | ${e.result==='correct'?'正解':e.result==='incorrect'?'不正解':'未解答・スキップ'} | 初見自力:${a.cleanFirstEncounter?'はい':'いいえ'} / 既見:${e.priorExposure?'あり':'なし'} / ヒント:${e.helpUsed?'あり':'なし'} / 正答表示:${e.answerRevealed?'あり':'なし'}`, ...attemptNoteLines(e,stat(e.questionId).manualReview));}
+  lines.push(...questionNoteTextLines(out.events,qmap));
   lines.push('','表示・補助・要復習の記録');
-  for(const e of out.events)if(e.type!=='attempt')lines.push(`${e.occurredAt} | ${e.questionId} | ${e.type==='review-flag'?`要復習:${e.reviewRequired?'設定':'解除'}`:e.type==='review-priority'?`復習優先度:${e.reviewPriority}/100 / 理由:${e.reviewPriorityReason}`:e.type}`);
-  lines.push('','piyoへ: メモは解答時の本人の考えです。正解した問題も必ず読み、迷った点・知らなかったこと・正解していても残る知識不足を優先して整理してください。正答だけで理解済みと判断せず、初見と再挑戦、知識不足と読み落としを区別し、次に確認すべき点を助言してください。');
+  for(const e of out.events)if(!['attempt','question-note'].includes(e.type))lines.push(`${e.occurredAt} | ${e.questionId} | ${e.type==='review-flag'?`要復習:${e.reviewRequired?'設定':'解除'}`:e.type==='review-priority'?`復習優先度:${e.reviewPriority}/100 / 理由:${e.reviewPriorityReason}`:e.type}`);
+  lines.push('','piyoへ: 解答時メモは採点前の考え、採点後メモは正答や解説を見た後の疑問です。両者を混同しないでください。正解した問題も必ず読み、迷った点・知らなかったこと・正解していても残る知識不足を優先して整理してください。正答だけで理解済みと判断せず、初見と再挑戦、知識不足と読み落としを区別し、次に確認すべき点を助言してください。');
   return lines.join('\n');
+}
+function questionNoteTextLines(events,qmap){
+  const notes=latestQuestionNotes({events}).filter(e=>e.note.trim());
+  if(!notes.length)return [];
+  const lines=['','単問メモ（各入力欄の最新内容。解答時メモの原記録は変更しません）'];
+  for(const e of notes){const q=qmap.get(e.questionId);lines.push(`${e.occurredAt} | ${q?.examTitle||e.examId} 問${e.number} | ${e.questionId} | ${e.notePhase==='after-answer'?'採点後メモ':'採点前メモ（未解答の場合もあります）'}${e.relatedAttemptId?` | 対応する解答ID:${e.relatedAttemptId}`:''}`,`  メモ: ${JSON.stringify(e.note)}`);}
+  return lines;
 }
 function attemptNoteLines(e,manualReview){
   return [`  通し練習ID: ${e.paperId||'なし'} / 採点時の要復習: ${typeof e.reviewRequiredAtSubmission==='boolean'?(e.reviewRequiredAtSubmission?'あり':'なし'):'未記録'} / 現在の要復習: ${manualReview?'あり':'なし'}`,`  解答時メモ: ${'note' in e?(e.note?JSON.stringify(e.note):'なし'):'未記録'}`];
@@ -193,9 +241,10 @@ export function summaryText(history,questions,dataVersion,scope={}){
   const count=new Map(), chosen=new Set(), statCache=new Map();
   const stat=id=>{if(!statCache.has(id))statCache.set(id,questionStats(history,id));return statCache.get(id);};
   for(const e of ordered(history.events)){if(e.type!=='attempt')continue;count.set(e.questionId,(count.get(e.questionId)||0)+1);const q=qmap.get(e.questionId);const firstChoice=e.result!=='skip'&&!chosen.has(e.questionId);if(e.result!=='skip')chosen.add(e.questionId);const effectiveClean=count.get(e.questionId)===1&&stat(e.questionId).cleanFirst;lines.push(`${e.occurredAt} | ${q?.examTitle||e.examId} 問${e.number} | ${e.questionId} | ${q?.topicLabel||e.topic} | ${count.get(e.questionId)===1?'初回試行':'再挑戦'} | 選択:${e.selectedAnswer||'なし'} / 公式正答:${e.officialCorrectAnswer} | ${e.result==='correct'?'正解':e.result==='incorrect'?'不正解':'スキップ'} | 初見自力:${effectiveClean?'はい':'いいえ'} / 既見:${e.priorExposure?'あり':'なし'} / ヒント:${e.helpUsed?'あり':'なし'} / 正答表示:${e.answerRevealed?'あり':'なし'} / 最初の選択回答:${firstChoice?'はい':'いいえ'} / 採点基準:当時の公式解答 / 現行確認:${e.lawStatus||'未記録'}`, ...attemptNoteLines(e,stat(e.questionId).manualReview));}
+  lines.push(...questionNoteTextLines(history.events,qmap));
   lines.push('','表示・補助・要復習の記録（解答試行以外には正答を含みません）');
-  for(const e of ordered(history.events))if(e.type!=='attempt')lines.push(`${e.occurredAt} | ${e.questionId} | ${e.type==='review-flag'?`要復習:${e.reviewRequired?'設定':'解除'}`:e.type==='review-priority'?`復習優先度:${e.reviewPriority}/100 / 理由:${e.reviewPriorityReason}`:e.type}`);
-  lines.push('','piyoへ: 正解した問題のメモも必ず読み、迷った点・知らなかったこと・正解していても残る知識不足を優先してください。正答だけで理解済みと判断せず、初見と再挑戦を分けて、次に確認すべき点を整理してください。');
+  for(const e of ordered(history.events))if(!['attempt','question-note'].includes(e.type))lines.push(`${e.occurredAt} | ${e.questionId} | ${e.type==='review-flag'?`要復習:${e.reviewRequired?'設定':'解除'}`:e.type==='review-priority'?`復習優先度:${e.reviewPriority}/100 / 理由:${e.reviewPriorityReason}`:e.type}`);
+  lines.push('','piyoへ: 解答時メモと採点後メモを区別し、未解答の疑問も確認してください。正解した問題のメモも必ず読み、迷った点・知らなかったこと・正解していても残る知識不足を優先してください。正答だけで理解済みと判断せず、初見と再挑戦を分けて、次に確認すべき点を整理してください。');
   return lines.join('\n');
 }
 export class HistoryStore {
